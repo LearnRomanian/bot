@@ -6,16 +6,16 @@ export default function pluralise(
 		return undefined;
 	}
 
-	if (quantity === "1" || quantity === "-1") {
+	const unsignedQuantity = Math.abs(Number.parseInt(quantity));
+	if (unsignedQuantity === 1) {
 		return singular;
 	}
 
-	// Until the number 20, Romanian nouns follow the standard number + plural rule.
-	const quantityAsNumber = Number.parseInt(quantity);
-	if (quantityAsNumber > -20 && quantityAsNumber < 20) {
+	// If the last two digits make a number less than 20, Romanian nouns follow the standard number + plural rule.
+	if (unsignedQuantity % 100 < 20) {
 		return pluralSmall;
 	}
 
-	// Once the number reaches 20, Romanian begins slotting a 'de' between the number and the plural form of the word.
+	// Once the last two digits reach 20, Romanian begins slotting a 'de' between the number and the plural form of the word.
 	return pluralLarge;
 }
