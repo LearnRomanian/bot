@@ -1,27 +1,26 @@
-import { isDefined } from "logos:core/utilities";
-import type { Client } from "logos/client";
-import type { Guild } from "logos/models/guild";
-import { AlertService } from "logos/services/alert";
-import { AntiFloodService } from "logos/services/anti-flood";
-import { DynamicVoiceChannelService } from "logos/services/dynamic-voice-channels";
-import { EntryService } from "logos/services/entry";
-import { InteractionRepetitionService } from "logos/services/interaction-repetition";
-import { LavalinkService } from "logos/services/lavalink";
-import { MusicService } from "logos/services/music";
-import { InformationNoticeService } from "logos/services/notices/information";
-import { ResourceNoticeService } from "logos/services/notices/resources";
-import { RoleNoticeService } from "logos/services/notices/roles";
-import { WelcomeNoticeService } from "logos/services/notices/welcome";
-import { ReportPromptService } from "logos/services/prompts/reports";
-import { ResourcePromptService } from "logos/services/prompts/resources";
-import { SuggestionPromptService } from "logos/services/prompts/suggestions";
-import { TicketPromptService } from "logos/services/prompts/tickets";
-import { VerificationPromptService } from "logos/services/prompts/verification";
-import { RoleIndicatorService } from "logos/services/role-indicators";
-import type { GlobalService, LocalService, Service } from "logos/services/service";
-import { StatusService } from "logos/services/status";
-import { WordSigilService } from "logos/services/word-sigils";
+import { isDefined } from "rost:core/utilities";
 import type pino from "pino";
+import type { Client } from "rost/client";
+import type { Guild } from "rost/models/guild";
+import { AlertService } from "rost/services/alert";
+import { AntiFloodService } from "rost/services/anti-flood";
+import { DynamicVoiceChannelService } from "rost/services/dynamic-voice-channels";
+import { EntryService } from "rost/services/entry";
+import { InteractionRepetitionService } from "rost/services/interaction-repetition";
+import { LavalinkService } from "rost/services/lavalink";
+import { MusicService } from "rost/services/music";
+import { InformationNoticeService } from "rost/services/notices/information";
+import { ResourceNoticeService } from "rost/services/notices/resources";
+import { RoleNoticeService } from "rost/services/notices/roles";
+import { WelcomeNoticeService } from "rost/services/notices/welcome";
+import { ReportPromptService } from "rost/services/prompts/reports";
+import { ResourcePromptService } from "rost/services/prompts/resources";
+import { SuggestionPromptService } from "rost/services/prompts/suggestions";
+import { TicketPromptService } from "rost/services/prompts/tickets";
+import { VerificationPromptService } from "rost/services/prompts/verification";
+import { RoleIndicatorService } from "rost/services/role-indicators";
+import type { GlobalService, LocalService, Service } from "rost/services/service";
+import { StatusService } from "rost/services/status";
 
 interface GlobalServices {
 	readonly lavalink?: LavalinkService;
@@ -45,7 +44,6 @@ interface LocalServices {
 	readonly ticketPrompts: TicketPromptService;
 	readonly verificationPrompts: VerificationPromptService;
 	readonly roleIndicators: RoleIndicatorService;
-	readonly wordSigils: WordSigilService;
 }
 
 interface CustomServices {
@@ -77,7 +75,7 @@ class ServiceStore {
 		const lavalinkService = LavalinkService.tryCreate(client);
 		if (lavalinkService === undefined) {
 			this.log.warn(
-				"One or more of `LAVALINK_HOST`, `LAVALINK_PORT` or `LAVALINK_PASSWORD` have not been provided. Logos will not serve audio sessions.",
+				"One or more of `LAVALINK_HOST`, `LAVALINK_PORT` or `LAVALINK_PASSWORD` have not been provided. Rost will not serve audio sessions.",
 			);
 		}
 
@@ -103,7 +101,6 @@ class ServiceStore {
 			ticketPrompts: new Map(),
 			verificationPrompts: new Map(),
 			roleIndicators: new Map(),
-			wordSigils: new Map(),
 		};
 		this.#custom = {
 			global: [],
@@ -124,7 +121,7 @@ class ServiceStore {
 		this.log.info("Setting up service store...");
 
 		await this.#startGlobalServices();
-		// Local services are started when Logos receives a guild.
+		// Local services are started when Rost receives a guild.
 
 		this.log.info("Service store set up.");
 	}
@@ -236,13 +233,6 @@ class ServiceStore {
 			services.push(service);
 
 			this.#local.roleIndicators.set(guildId, service);
-		}
-
-		if (guildDocument.hasEnabled("wordSigils")) {
-			const service = new WordSigilService(this.#client, { guildId });
-			services.push(service);
-
-			this.#local.wordSigils.set(guildId, service);
 		}
 
 		if (guildDocument.hasEnabled("suggestions")) {

@@ -1,10 +1,10 @@
 import { EventEmitter } from "node:events";
-import { mention } from "logos:constants/formatting";
-import type { Client } from "logos/client";
-import { Collector } from "logos/collectors";
-import type { Guild } from "logos/models/guild";
-import { LocalService } from "logos/services/service";
+import { mention } from "rost:constants/formatting";
 import type pino from "pino";
+import type { Client } from "rost/client";
+import { Collector } from "rost/collectors";
+import type { Guild } from "rost/models/guild";
+import { LocalService } from "rost/services/service";
 import * as shoukaku from "shoukaku";
 
 type PlaybackActionType = "manage" | "check";
@@ -28,7 +28,7 @@ class MusicService extends LocalService {
 		return this.#session!;
 	}
 
-	get #isLogosAlone(): boolean | undefined {
+	get #isRostAlone(): boolean | undefined {
 		const botVoiceState = this.guild.voiceStates.get(this.client.bot.id);
 		if (botVoiceState?.channelId === undefined) {
 			return undefined;
@@ -114,7 +114,7 @@ class MusicService extends LocalService {
 	}
 
 	async #handleVoiceStateUpdate(_: Discord.VoiceState): Promise<void> {
-		if (this.#isLogosAlone) {
+		if (this.#isRostAlone) {
 			await this.#handleSessionAbandoned();
 		}
 	}
@@ -196,7 +196,7 @@ class MusicService extends LocalService {
 			.catch((error) => this.log.warn(error, "Failed to send audio restored message."));
 	}
 
-	#canPerformAction(interaction: Logos.Interaction, { action }: { action: PlaybackActionType }): boolean {
+	#canPerformAction(interaction: Rost.Interaction, { action }: { action: PlaybackActionType }): boolean {
 		if (this.hasSession && this.session.isDisconnected) {
 			const strings = constants.contexts.cannotManageDuringOutage({
 				localise: this.client.localise,
@@ -241,15 +241,15 @@ class MusicService extends LocalService {
 		return true;
 	}
 
-	canCheckPlayback(interaction: Logos.Interaction): boolean {
+	canCheckPlayback(interaction: Rost.Interaction): boolean {
 		return this.#canPerformAction(interaction, { action: "check" });
 	}
 
-	canManagePlayback(interaction: Logos.Interaction): boolean {
+	canManagePlayback(interaction: Rost.Interaction): boolean {
 		return this.#canPerformAction(interaction, { action: "manage" });
 	}
 
-	canRequestPlayback(interaction: Logos.Interaction): boolean {
+	canRequestPlayback(interaction: Rost.Interaction): boolean {
 		if (!this.hasSession) {
 			return true;
 		}

@@ -1,5 +1,5 @@
-import type { Collection } from "logos:constants/database";
-import type { WithRequired } from "logos:core/utilities";
+import type { Collection } from "rost:constants/database";
+import type { WithRequired } from "rost:core/utilities";
 import type * as ravendb from "ravendb";
 
 interface RavenDBDocumentMetadataContainer {

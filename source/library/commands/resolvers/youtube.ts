@@ -1,14 +1,14 @@
-import { trim } from "logos:constants/formatting";
-import type { Client } from "logos/client";
-import { InteractionCollector } from "logos/collectors";
-import { Song, SongCollection, SongListing } from "logos/services/music";
+import { trim } from "rost:constants/formatting";
+import type { Client } from "rost/client";
+import { InteractionCollector } from "rost/collectors";
+import { Song, SongCollection, SongListing } from "rost/services/music";
 import * as youtubei from "youtubei";
 
 const youtube = new youtubei.Client();
 
 async function resolveYouTubeSongListings(
 	client: Client,
-	interaction: Logos.Interaction,
+	interaction: Rost.Interaction,
 	{ query }: { query: string },
 ): Promise<SongListing | undefined> {
 	if (!constants.patterns.youtubeUrl.test(query)) {
@@ -36,7 +36,7 @@ async function resolveYouTubeSongListings(
 	return undefined;
 }
 
-async function search(client: Client, interaction: Logos.Interaction, query: string): Promise<SongListing | undefined> {
+async function search(client: Client, interaction: Rost.Interaction, query: string): Promise<SongListing | undefined> {
 	const resultsAll = await youtube.search(query, { limit: 20, type: "all", safeSearch: false });
 	const results = resultsAll.items.filter((element) => isPlaylist(element) || isVideo(element));
 	if (results.length === 0) {

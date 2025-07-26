@@ -1,13 +1,13 @@
-import type { Client } from "logos/client";
-import type { PraiseDocument } from "logos/models/documents/praise";
+import type { Client } from "rost/client";
+import type { PraiseDocument } from "rost/models/documents/praise";
 import {
 	type ClientOrDatabaseStore,
 	type CreateModelOptions,
 	type IdentifierData,
 	Model,
 	PraiseModel,
-} from "logos/models/model";
-import type { DatabaseStore } from "logos/stores/database";
+} from "rost/models/model";
+import type { DatabaseStore } from "rost/stores/database";
 
 type CreatePraiseOptions = CreateModelOptions<Praise, PraiseDocument>;
 

@@ -1,8 +1,8 @@
-import { type Collection, isValidCollection } from "logos:constants/database";
-import { DocumentConventions } from "logos/adapters/databases/adapter";
-import type { RavenDBDocument, RavenDBDocumentMetadataContainer } from "logos/adapters/databases/ravendb/document";
-import type { IdentifierDataOrMetadata, Model } from "logos/models/model";
-import { DatabaseStore } from "logos/stores/database";
+import { type Collection, isValidCollection } from "rost:constants/database";
+import { DocumentConventions } from "rost/adapters/databases/adapter";
+import type { RavenDBDocument, RavenDBDocumentMetadataContainer } from "rost/adapters/databases/ravendb/document";
+import type { IdentifierDataOrMetadata, Model } from "rost/models/model";
+import { DatabaseStore } from "rost/stores/database";
 
 class RavenDBDocumentConventions extends DocumentConventions<RavenDBDocumentMetadataContainer> {
 	get id(): string {
@@ -28,7 +28,7 @@ class RavenDBDocumentConventions extends DocumentConventions<RavenDBDocumentMeta
 	static instantiateModel<M extends Model>(database: DatabaseStore, payload: RavenDBDocument): M {
 		if (!isValidCollection(payload["@metadata"]["@collection"])) {
 			throw new Error(
-				`Document ${payload.id} is part of an unknown collection: "${payload["@metadata"]["@collection"]}"`,
+				`Document ${payload.id} is part of an unknown collection: '${payload["@metadata"]["@collection"]}'`,
 			);
 		}
 

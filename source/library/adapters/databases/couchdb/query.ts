@@ -1,8 +1,8 @@
-import type { Collection } from "logos:constants/database";
-import { DocumentQuery } from "logos/adapters/databases/adapter";
-import type { CouchDBDocumentSession } from "logos/adapters/databases/couchdb/session";
-import { Model } from "logos/models/model";
+import type { Collection } from "rost:constants/database";
 import type nano from "nano";
+import { DocumentQuery } from "rost/adapters/databases/adapter";
+import type { CouchDBDocumentSession } from "rost/adapters/databases/couchdb/session";
+import { Model } from "rost/models/model";
 
 class CouchDBDocumentQuery<M extends Model> extends DocumentQuery<M> {
 	readonly #documents: nano.DocumentScope<unknown>;

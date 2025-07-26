@@ -1,6 +1,6 @@
-import type { WithRequired } from "logos:core/utilities";
-import type { Client } from "logos/client";
-import { InteractionCollector } from "logos/collectors";
+import type { WithRequired } from "rost:core/utilities";
+import type { Client } from "rost/client";
+import { InteractionCollector } from "rost/collectors";
 
 type TypedInputTextComponent<CustomID> = WithRequired<Discord.InputTextComponent, "value"> & { customId: CustomID };
 interface ModalElement<FormData> {
@@ -11,7 +11,7 @@ interface Modal<FormData> {
 	title: string;
 	elements: ModalElement<FormData>[];
 }
-type SubmitEvent<FormData> = (interaction: Logos.Interaction, { formData }: { formData: FormData }) => Promise<void>;
+type SubmitEvent<FormData> = (interaction: Rost.Interaction, { formData }: { formData: FormData }) => Promise<void>;
 /**
  * @remarks
  * IMPORTANT: When creating a new modal composer and implementing {@link buildModal}, make sure to link all of the
@@ -20,7 +20,7 @@ type SubmitEvent<FormData> = (interaction: Logos.Interaction, { formData }: { fo
  */
 abstract class ModalComposer<FormData, ValidationError extends string> {
 	readonly client: Client;
-	anchor: Logos.Interaction;
+	anchor: Rost.Interaction;
 
 	readonly #submissions: InteractionCollector;
 	#formData: FormData;
@@ -28,7 +28,7 @@ abstract class ModalComposer<FormData, ValidationError extends string> {
 
 	constructor(
 		client: Client,
-		{ interaction, initialFormData }: { interaction: Logos.Interaction; initialFormData?: FormData },
+		{ interaction, initialFormData }: { interaction: Rost.Interaction; initialFormData?: FormData },
 	) {
 		this.client = client;
 
@@ -42,7 +42,7 @@ abstract class ModalComposer<FormData, ValidationError extends string> {
 		});
 	}
 
-	static getFormData<FormData>(submission: Logos.Interaction): FormData | undefined {
+	static getFormData<FormData>(submission: Rost.Interaction): FormData | undefined {
 		const content: Record<string, string | undefined> = {};
 
 		const fields = submission.data?.components?.map((component) => component.components?.at(0));
@@ -72,14 +72,14 @@ abstract class ModalComposer<FormData, ValidationError extends string> {
 		return content as FormData;
 	}
 
-	abstract buildModal(interaction: Logos.Interaction, { formData }: { formData: FormData }): Modal<FormData>;
+	abstract buildModal(interaction: Rost.Interaction, { formData }: { formData: FormData }): Modal<FormData>;
 
 	validate(_: { formData: FormData }): ValidationError | undefined {
 		return undefined;
 	}
 
 	getErrorMessage(
-		_: Logos.Interaction,
+		_: Rost.Interaction,
 		__: { error: ValidationError },
 	): Discord.Camelize<Discord.DiscordEmbed> | undefined {
 		return undefined;
@@ -96,10 +96,10 @@ abstract class ModalComposer<FormData, ValidationError extends string> {
 	}
 
 	async handleInvalid(
-		submission: Logos.Interaction,
+		submission: Rost.Interaction,
 		{ error }: { error: ValidationError },
-	): Promise<Logos.Interaction | undefined> {
-		const { promise, resolve } = Promise.withResolvers<Logos.Interaction | undefined>();
+	): Promise<Rost.Interaction | undefined> {
+		const { promise, resolve } = Promise.withResolvers<Rost.Interaction | undefined>();
 
 		const continueButton = new InteractionCollector(this.client, { only: [submission.user.id], isSingle: true });
 		const cancelButton = new InteractionCollector(this.client, { only: [submission.user.id] });
@@ -216,7 +216,7 @@ abstract class ModalComposer<FormData, ValidationError extends string> {
 		return promise;
 	}
 
-	async #dispatchSubmit(submission: Logos.Interaction, { formData }: { formData: FormData }): Promise<void> {
+	async #dispatchSubmit(submission: Rost.Interaction, { formData }: { formData: FormData }): Promise<void> {
 		this.#onSubmit?.(submission, { formData });
 		await this.close();
 	}

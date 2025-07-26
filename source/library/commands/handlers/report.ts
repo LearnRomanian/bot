@@ -1,9 +1,9 @@
-import type { Client } from "logos/client";
-import { ReportComposer } from "logos/commands/components/modal-composers/report-composer";
-import { Guild } from "logos/models/guild";
-import { Report } from "logos/models/report";
+import type { Client } from "rost/client";
+import { ReportComposer } from "rost/commands/components/modal-composers/report-composer";
+import { Guild } from "rost/models/guild";
+import { Report } from "rost/models/report";
 
-async function handleMakeReport(client: Client, interaction: Logos.Interaction): Promise<void> {
+async function handleMakeReport(client: Client, interaction: Rost.Interaction): Promise<void> {
 	const guildDocument = await Guild.getOrCreate(client, { guildId: interaction.guildId.toString() });
 
 	const guild = client.entities.guilds.get(interaction.guildId);

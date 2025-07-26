@@ -1,79 +1,47 @@
-import type { DictionarySearchMode } from "logos:constants/dictionaries";
-import { handleDisplayAcknowledgements } from "logos/commands/handlers/acknowledgements";
-import { handleAnswer } from "logos/commands/handlers/answer";
-import { handleDisplayCefrGuide } from "logos/commands/handlers/cefr";
-import { handleFindInContext, handleFindInContextAutocomplete } from "logos/commands/handlers/context";
-import { handleMakeFullCorrection, handleMakePartialCorrection } from "logos/commands/handlers/correction";
-import { handleDisplayCredits } from "logos/commands/handlers/credits";
-import { handleStartGame } from "logos/commands/handlers/game";
-import type { InteractionHandler } from "logos/commands/handlers/handler";
-import { handleDisplayBotInformation } from "logos/commands/handlers/information/bot";
-import { handleDisplayGuildInformation } from "logos/commands/handlers/information/guild";
-import {
-	handleDisplayDetectorLicence,
-	handleDisplayDetectorLicenceAutocomplete,
-} from "logos/commands/handlers/licence/detector";
-import {
-	handleDisplayDictionaryLicence,
-	handleDisplayDictionaryLicenceAutocomplete,
-} from "logos/commands/handlers/licence/dictionary";
-import {
-	handleDisplaySoftwareLicence,
-	handleDisplaySoftwareLicenceAutocomplete,
-} from "logos/commands/handlers/licence/software";
-import {
-	handleDisplayTranslatorLicence,
-	handleDisplayTranslatorLicenceAutocomplete,
-} from "logos/commands/handlers/licence/translator";
+import { handleDisplayAcknowledgements } from "rost/commands/handlers/acknowledgements";
+import { handleDisplayCredits } from "rost/commands/handlers/credits";
+import type { InteractionHandler } from "rost/commands/handlers/handler";
+import { handleDisplayBotInformation } from "rost/commands/handlers/information/bot";
+import { handleDisplayGuildInformation } from "rost/commands/handlers/information/guild";
 import {
 	handleDisplayAuthorPraises,
 	handleDisplayPraisesAutocomplete,
 	handleDisplayTargetPraises,
-} from "logos/commands/handlers/list/praises";
-import { handleDisplayWarnings, handleDisplayWarningsAutocomplete } from "logos/commands/handlers/list/warnings";
-import { handleFastForward, handleFastForwardAutocomplete } from "logos/commands/handlers/music/fast-forward";
-import { handleDisplayPlaybackHistory } from "logos/commands/handlers/music/history";
-import { handleLoopPlayback } from "logos/commands/handlers/music/loop";
-import { handleDisplayCurrentlyPlaying } from "logos/commands/handlers/music/now";
-import { handlePausePlayback } from "logos/commands/handlers/music/pause";
-import { handleRequestStreamPlayback, handleRequestYouTubePlayback } from "logos/commands/handlers/music/play";
-import { handleDisplayPlaybackQueue } from "logos/commands/handlers/music/queue";
-import { handleRemoveSongListing } from "logos/commands/handlers/music/remove";
-import { handleReplayAction } from "logos/commands/handlers/music/replay";
-import { handleResumePlayback } from "logos/commands/handlers/music/resume";
-import { handleRewind, handleRewindAutocomplete } from "logos/commands/handlers/music/rewind";
-import { handleSkipAction } from "logos/commands/handlers/music/skip";
-import { handleSkipToTimestamp, handleSkipToTimestampAutocomplete } from "logos/commands/handlers/music/skip-to";
-import { handleStopPlayback } from "logos/commands/handlers/music/stop";
-import { handleUnskipAction } from "logos/commands/handlers/music/unskip";
-import { handleDisplayVolume } from "logos/commands/handlers/music/volume/display";
-import { handleSetVolume } from "logos/commands/handlers/music/volume/set";
-import { handlePardonUser, handlePardonUserAutocomplete } from "logos/commands/handlers/pardon";
-import { handleDisplayModerationPolicy } from "logos/commands/handlers/policy";
-import { handlePraiseUser, handlePraiseUserAutocomplete } from "logos/commands/handlers/praise";
-import { handleOpenRoleSelectionMenu } from "logos/commands/handlers/profile/roles";
-import { handleDisplayProfile, handleDisplayProfileAutocomplete } from "logos/commands/handlers/profile/view";
-import { handlePurgeMessages, handlePurgeMessagesAutocomplete } from "logos/commands/handlers/purge";
-import { handleRecogniseLanguageChatInput, handleRecogniseLanguageMessage } from "logos/commands/handlers/recognise";
-import { handleMakeReport } from "logos/commands/handlers/report";
-import { handleSubmitResource } from "logos/commands/handlers/resource";
-import { handleDisplayResources } from "logos/commands/handlers/resources";
-import { handleCiteRule, handleCiteRuleAutocomplete } from "logos/commands/handlers/rule";
-import { handleClearLanguage } from "logos/commands/handlers/settings/language/clear";
-import { handleSetLanguage, handleSetLanguageAutocomplete } from "logos/commands/handlers/settings/language/set";
-import { handleDisplaySettings } from "logos/commands/handlers/settings/view";
-import { handleToggleSlowmode, handleToggleSlowmodeAutocomplete } from "logos/commands/handlers/slowmode";
-import { handleMakeSuggestion } from "logos/commands/handlers/suggestion";
-import { handleOpenTicket } from "logos/commands/handlers/ticket/open";
-import { handleClearTimeout, handleClearTimeoutAutocomplete } from "logos/commands/handlers/timeout/clear";
-import { handleSetTimeout, handleSetTimeoutAutocomplete } from "logos/commands/handlers/timeout/set";
-import {
-	handleTranslateChatInput,
-	handleTranslateChatInputAutocomplete,
-	handleTranslateMessage,
-} from "logos/commands/handlers/translate";
-import { handleWarnUser, handleWarnUserAutocomplete } from "logos/commands/handlers/warn";
-import { handleFindWord, handleFindWordAutocomplete } from "logos/commands/handlers/word";
+} from "rost/commands/handlers/list/praises";
+import { handleDisplayWarnings, handleDisplayWarningsAutocomplete } from "rost/commands/handlers/list/warnings";
+import { handleFastForward, handleFastForwardAutocomplete } from "rost/commands/handlers/music/fast-forward";
+import { handleDisplayPlaybackHistory } from "rost/commands/handlers/music/history";
+import { handleLoopPlayback } from "rost/commands/handlers/music/loop";
+import { handleDisplayCurrentlyPlaying } from "rost/commands/handlers/music/now";
+import { handlePausePlayback } from "rost/commands/handlers/music/pause";
+import { handleRequestStreamPlayback, handleRequestYouTubePlayback } from "rost/commands/handlers/music/play";
+import { handleDisplayPlaybackQueue } from "rost/commands/handlers/music/queue";
+import { handleRemoveSongListing } from "rost/commands/handlers/music/remove";
+import { handleReplayAction } from "rost/commands/handlers/music/replay";
+import { handleResumePlayback } from "rost/commands/handlers/music/resume";
+import { handleRewind, handleRewindAutocomplete } from "rost/commands/handlers/music/rewind";
+import { handleSkipAction } from "rost/commands/handlers/music/skip";
+import { handleSkipToTimestamp, handleSkipToTimestampAutocomplete } from "rost/commands/handlers/music/skip-to";
+import { handleStopPlayback } from "rost/commands/handlers/music/stop";
+import { handleUnskipAction } from "rost/commands/handlers/music/unskip";
+import { handleDisplayVolume } from "rost/commands/handlers/music/volume/display";
+import { handleSetVolume } from "rost/commands/handlers/music/volume/set";
+import { handlePardonUser, handlePardonUserAutocomplete } from "rost/commands/handlers/pardon";
+import { handleDisplayModerationPolicy } from "rost/commands/handlers/policy";
+import { handlePraiseUser, handlePraiseUserAutocomplete } from "rost/commands/handlers/praise";
+import { handleOpenRoleSelectionMenu } from "rost/commands/handlers/profile/roles";
+import { handleDisplayProfile, handleDisplayProfileAutocomplete } from "rost/commands/handlers/profile/view";
+import { handlePurgeMessages, handlePurgeMessagesAutocomplete } from "rost/commands/handlers/purge";
+import { handleMakeReport } from "rost/commands/handlers/report";
+import { handleSubmitResource } from "rost/commands/handlers/resource";
+import { handleDisplayResources } from "rost/commands/handlers/resources";
+import { handleCiteRule, handleCiteRuleAutocomplete } from "rost/commands/handlers/rule";
+import { handleToggleSlowmode, handleToggleSlowmodeAutocomplete } from "rost/commands/handlers/slowmode";
+import { handleMakeSuggestion } from "rost/commands/handlers/suggestion";
+import { handleOpenTicket } from "rost/commands/handlers/ticket/open";
+import { handleClearTimeout, handleClearTimeoutAutocomplete } from "rost/commands/handlers/timeout/clear";
+import { handleSetTimeout, handleSetTimeoutAutocomplete } from "rost/commands/handlers/timeout/set";
+import { handleWarnUser, handleWarnUserAutocomplete } from "rost/commands/handlers/warn";
 
 /**
  * @remarks
@@ -135,57 +103,6 @@ const commands = Object.freeze({
 			},
 		},
 	},
-	answerMessage: {
-		identifier: "answer.message",
-		type: Discord.ApplicationCommandTypes.Message,
-		defaultMemberPermissions: ["VIEW_CHANNEL"],
-		handle: handleAnswer,
-	},
-	cefr: {
-		identifier: "cefr",
-		type: Discord.ApplicationCommandTypes.ChatInput,
-		defaultMemberPermissions: ["VIEW_CHANNEL"],
-		handle: handleDisplayCefrGuide,
-		options: { show: constants.parameters.show },
-		flags: { isShowable: true },
-	},
-	correctionPartialMessage: {
-		identifier: "correction.options.partial.message",
-		type: Discord.ApplicationCommandTypes.Message,
-		defaultMemberPermissions: ["VIEW_CHANNEL"],
-		handle: handleMakePartialCorrection,
-	},
-	correctionFullMessage: {
-		identifier: "correction.options.full.message",
-		type: Discord.ApplicationCommandTypes.Message,
-		defaultMemberPermissions: ["VIEW_CHANNEL"],
-		handle: handleMakeFullCorrection,
-	},
-	game: {
-		identifier: "game",
-		type: Discord.ApplicationCommandTypes.ChatInput,
-		defaultMemberPermissions: ["VIEW_CHANNEL"],
-		handle: handleStartGame,
-	},
-	recognise: {
-		identifier: "recognise",
-		type: Discord.ApplicationCommandTypes.ChatInput,
-		defaultMemberPermissions: ["VIEW_CHANNEL"],
-		handle: handleRecogniseLanguageChatInput,
-		options: {
-			text: {
-				identifier: "text",
-				type: Discord.ApplicationCommandOptionTypes.String,
-				required: true,
-			},
-		},
-	},
-	recogniseMessage: {
-		identifier: "recognise.message",
-		type: Discord.ApplicationCommandTypes.Message,
-		defaultMemberPermissions: ["VIEW_CHANNEL"],
-		handle: handleRecogniseLanguageMessage,
-	},
 	resources: {
 		identifier: "resources",
 		type: Discord.ApplicationCommandTypes.ChatInput,
@@ -193,94 +110,6 @@ const commands = Object.freeze({
 		handle: handleDisplayResources,
 		options: { show: constants.parameters.show },
 		flags: { isShowable: true },
-	},
-	translate: {
-		identifier: "translate",
-		type: Discord.ApplicationCommandTypes.ChatInput,
-		defaultMemberPermissions: ["VIEW_CHANNEL"],
-		handle: handleTranslateChatInput,
-		handleAutocomplete: handleTranslateChatInputAutocomplete,
-		options: {
-			text: {
-				identifier: "text",
-				type: Discord.ApplicationCommandOptionTypes.String,
-				required: true,
-			},
-			to: {
-				identifier: "to",
-				type: Discord.ApplicationCommandOptionTypes.String,
-				autocomplete: true,
-			},
-			from: {
-				identifier: "from",
-				type: Discord.ApplicationCommandOptionTypes.String,
-				autocomplete: true,
-			},
-			show: constants.parameters.show,
-		},
-		flags: { hasRateLimit: true, isShowable: true },
-	},
-	translateMessage: {
-		identifier: "translate.message",
-		type: Discord.ApplicationCommandTypes.Message,
-		defaultMemberPermissions: ["VIEW_CHANNEL"],
-		handle: handleTranslateMessage,
-		flags: { isShowable: true },
-	},
-	...(Object.fromEntries(
-		constants.dictionaries.searchModes.map((searchMode): [DictionarySearchMode, CommandTemplate] => [
-			searchMode,
-			{
-				identifier: searchMode,
-				type: Discord.ApplicationCommandTypes.ChatInput,
-				defaultMemberPermissions: ["VIEW_CHANNEL"],
-				handle: (client, interaction) => handleFindWord(client, interaction, { searchMode }),
-				handleAutocomplete: handleFindWordAutocomplete,
-				options: {
-					word: {
-						identifier: "parameters.word",
-						type: Discord.ApplicationCommandOptionTypes.String,
-						required: true,
-					},
-					language: {
-						identifier: "parameters.language",
-						type: Discord.ApplicationCommandOptionTypes.String,
-						autocomplete: true,
-					},
-					verbose: {
-						identifier: "parameters.verbose",
-						type: Discord.ApplicationCommandOptionTypes.Boolean,
-					},
-					show: constants.parameters.show,
-				},
-				flags: { hasRateLimit: true, isShowable: true },
-			},
-		]),
-	) as Record<DictionarySearchMode, CommandTemplate>),
-	context: {
-		identifier: "context",
-		type: Discord.ApplicationCommandTypes.ChatInput,
-		defaultMemberPermissions: ["VIEW_CHANNEL"],
-		handle: handleFindInContext,
-		handleAutocomplete: handleFindInContextAutocomplete,
-		options: {
-			phrase: {
-				identifier: "phrase",
-				type: Discord.ApplicationCommandOptionTypes.String,
-				required: true,
-			},
-			language: {
-				identifier: "language",
-				type: Discord.ApplicationCommandOptionTypes.String,
-				autocomplete: true,
-			},
-			"case-sensitive": {
-				identifier: "caseSensitive",
-				type: Discord.ApplicationCommandOptionTypes.Boolean,
-			},
-			show: constants.parameters.show,
-		},
-		flags: { hasRateLimit: true, isShowable: true },
 	},
 	acknowledgements: {
 		identifier: "acknowledgements",
@@ -293,106 +122,6 @@ const commands = Object.freeze({
 		type: Discord.ApplicationCommandTypes.ChatInput,
 		handle: handleDisplayCredits,
 		defaultMemberPermissions: ["VIEW_CHANNEL"],
-	},
-	licence: {
-		identifier: "licence",
-		type: Discord.ApplicationCommandTypes.ChatInput,
-		defaultMemberPermissions: ["VIEW_CHANNEL"],
-		options: {
-			detector: {
-				identifier: "detector",
-				type: Discord.ApplicationCommandOptionTypes.SubCommand,
-				handle: handleDisplayDetectorLicence,
-				handleAutocomplete: handleDisplayDetectorLicenceAutocomplete,
-				options: {
-					dictionary: {
-						identifier: "detector",
-						type: Discord.ApplicationCommandOptionTypes.String,
-						required: true,
-						autocomplete: true,
-					},
-				},
-			},
-			dictionary: {
-				identifier: "dictionary",
-				type: Discord.ApplicationCommandOptionTypes.SubCommand,
-				handle: handleDisplayDictionaryLicence,
-				handleAutocomplete: handleDisplayDictionaryLicenceAutocomplete,
-				options: {
-					dictionary: {
-						identifier: "dictionary",
-						type: Discord.ApplicationCommandOptionTypes.String,
-						required: true,
-						autocomplete: true,
-					},
-				},
-			},
-			software: {
-				identifier: "software",
-				type: Discord.ApplicationCommandOptionTypes.SubCommand,
-				handle: handleDisplaySoftwareLicence,
-				handleAutocomplete: handleDisplaySoftwareLicenceAutocomplete,
-				options: {
-					package: {
-						identifier: "package",
-						type: Discord.ApplicationCommandOptionTypes.String,
-						required: true,
-						autocomplete: true,
-					},
-				},
-			},
-			translator: {
-				identifier: "translator",
-				type: Discord.ApplicationCommandOptionTypes.SubCommand,
-				handle: handleDisplayTranslatorLicence,
-				handleAutocomplete: handleDisplayTranslatorLicenceAutocomplete,
-				options: {
-					dictionary: {
-						identifier: "translator",
-						type: Discord.ApplicationCommandOptionTypes.String,
-						required: true,
-						autocomplete: true,
-					},
-				},
-			},
-		},
-	},
-	settings: {
-		identifier: "settings",
-		type: Discord.ApplicationCommandTypes.ChatInput,
-		defaultMemberPermissions: ["VIEW_CHANNEL"],
-		options: {
-			language: {
-				identifier: "language",
-				type: Discord.ApplicationCommandOptionTypes.SubCommandGroup,
-				options: {
-					clear: {
-						identifier: "clear",
-						type: Discord.ApplicationCommandOptionTypes.SubCommand,
-						handle: handleClearLanguage,
-					},
-					set: {
-						identifier: "set",
-						type: Discord.ApplicationCommandOptionTypes.SubCommand,
-						handle: handleSetLanguage,
-						handleAutocomplete: handleSetLanguageAutocomplete,
-						options: {
-							language: {
-								identifier: "language",
-								type: Discord.ApplicationCommandOptionTypes.String,
-								required: true,
-								autocomplete: true,
-							},
-						},
-					},
-				},
-			},
-			view: {
-				identifier: "view",
-				type: Discord.ApplicationCommandOptionTypes.SubCommand,
-				handle: handleDisplaySettings,
-			},
-		},
 	},
 	pardon: {
 		identifier: "pardon",

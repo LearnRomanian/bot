@@ -1,9 +1,9 @@
-import type { Client } from "logos/client";
-import type { SongListing } from "logos/services/music";
+import type { Client } from "rost/client";
+import type { SongListing } from "rost/services/music";
 
 type SongListingResolver = (
 	client: Client,
-	interaction: Logos.Interaction,
+	interaction: Rost.Interaction,
 	{ query }: { query: string },
 ) => Promise<SongListing | undefined>;
 

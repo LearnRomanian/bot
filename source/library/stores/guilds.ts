@@ -1,11 +1,11 @@
-import type { Client } from "logos/client";
-import { Collector } from "logos/collectors";
-import { ActionLock } from "logos/helpers/action-lock";
-import { Guild } from "logos/models/guild";
-import { Model } from "logos/models/model";
-import type { CommandStore } from "logos/stores/commands";
-import type { ServiceStore } from "logos/stores/services";
 import type pino from "pino";
+import type { Client } from "rost/client";
+import { Collector } from "rost/collectors";
+import { ActionLock } from "rost/helpers/action-lock";
+import { Guild } from "rost/models/guild";
+import { Model } from "rost/models/model";
+import type { CommandStore } from "rost/stores/commands";
+import type { ServiceStore } from "rost/stores/services";
 
 class GuildStore {
 	readonly log: pino.Logger;
@@ -52,12 +52,12 @@ class GuildStore {
 	}
 
 	async #setupGuild(
-		guild: Discord.Guild | Logos.Guild,
+		guild: Discord.Guild | Rost.Guild,
 		{ isReload = false }: { isReload?: boolean } = {},
 	): Promise<void> {
 		// This check prevents the same guild being set up multiple times. This can happen when a shard managing a
 		// given guild is closed and another shard is spun up, causing Discord to dispatch the `GUILD_CREATE` event
-		// again for a guild that Logos would already have been managing.
+		// again for a guild that Rost would already have been managing.
 		if (this.#client.documents.guilds.has(Model.buildPartialId<Guild>({ guildId: guild.id.toString() }))) {
 			return;
 		}
@@ -71,18 +71,15 @@ class GuildStore {
 		await this.#commands.registerGuildCommands({ guildId: guild.id, guildDocument });
 	}
 
-	async #setupGuildForFirstTime(guild: Discord.Guild | Logos.Guild): Promise<void> {
-		this.log.info(`Setting Logos up on ${this.#client.diagnostics.guild(guild)}...`);
+	async #setupGuildForFirstTime(guild: Discord.Guild | Rost.Guild): Promise<void> {
+		this.log.info(`Setting Rost up on ${this.#client.diagnostics.guild(guild)}...`);
 
-		const guildDocument = await Guild.getOrCreate(this.#client, { guildId: guild.id.toString() });
-		if (guildDocument.isNative) {
-			await this.#prefetchMembers(guild);
-		}
+		await this.#prefetchMembers(guild);
 
-		this.log.info(`Logos has been set up on ${this.#client.diagnostics.guild(guild)}.`);
+		this.log.info(`Rost has been set up on ${this.#client.diagnostics.guild(guild)}.`);
 	}
 
-	async #prefetchMembers(guild: Discord.Guild | Logos.Guild): Promise<void> {
+	async #prefetchMembers(guild: Discord.Guild | Rost.Guild): Promise<void> {
 		this.log.info(`Fetching ~${guild.memberCount} members of ${this.#client.diagnostics.guild(guild)}...`);
 
 		const members = await this.#client.bot.gateway

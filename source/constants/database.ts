@@ -2,7 +2,6 @@ const collections = Object.freeze([
 	"DatabaseMetadata",
 	"EntryRequests",
 	"Guilds",
-	"GuildStatistics",
 	"Praises",
 	"Reports",
 	"Resources",

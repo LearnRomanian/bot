@@ -1,10 +1,10 @@
-import type { Collection } from "logos:constants/database";
-import { DocumentQuery } from "logos/adapters/databases/adapter";
-import { RethinkDBDocumentConventions } from "logos/adapters/databases/rethinkdb/conventions";
-import type { RethinkDBDocument } from "logos/adapters/databases/rethinkdb/document";
-import type { Model } from "logos/models/model";
-import type { DatabaseStore } from "logos/stores/database";
+import type { Collection } from "rost:constants/database";
 import rethinkdb from "rethinkdb-ts";
+import { DocumentQuery } from "rost/adapters/databases/adapter";
+import { RethinkDBDocumentConventions } from "rost/adapters/databases/rethinkdb/conventions";
+import type { RethinkDBDocument } from "rost/adapters/databases/rethinkdb/document";
+import type { Model } from "rost/models/model";
+import type { DatabaseStore } from "rost/stores/database";
 
 class RethinkDBDocumentQuery<M extends Model> extends DocumentQuery<M> {
 	readonly #collection: Collection;

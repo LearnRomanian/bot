@@ -1,10 +1,10 @@
-import { mention } from "logos:constants/formatting";
-import type { Client } from "logos/client";
-import { Guild } from "logos/models/guild";
+import { mention } from "rost:constants/formatting";
+import type { Client } from "rost/client";
+import { Guild } from "rost/models/guild";
 
 async function handleClearTimeoutAutocomplete(
 	client: Client,
-	interaction: Logos.Interaction<any, { user: string }>,
+	interaction: Rost.Interaction<any, { user: string }>,
 ): Promise<void> {
 	await client.autocompleteMembers(interaction, {
 		identifier: interaction.parameters.user,
@@ -12,10 +12,7 @@ async function handleClearTimeoutAutocomplete(
 	});
 }
 
-async function handleClearTimeout(
-	client: Client,
-	interaction: Logos.Interaction<any, { user: string }>,
-): Promise<void> {
+async function handleClearTimeout(client: Client, interaction: Rost.Interaction<any, { user: string }>): Promise<void> {
 	const guildDocument = await Guild.getOrCreate(client, { guildId: interaction.guildId.toString() });
 
 	const member = client.resolveInteractionToMember(interaction, {

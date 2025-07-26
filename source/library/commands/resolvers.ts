@@ -1,3 +1,3 @@
-import { resolveYouTubeListings } from "logos/commands/resolvers/youtube";
+import { resolveYouTubeListings } from "rost/commands/resolvers/youtube";
 
 export default Object.freeze({ youtube: resolveYouTubeListings });

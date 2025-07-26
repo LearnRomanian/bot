@@ -1,5 +1,5 @@
-import type { Client } from "logos/client";
 import type pino from "pino";
+import type { Client } from "rost/client";
 
 interface Plugin {
 	readonly filename: string;

@@ -1,10 +1,10 @@
-import { trim } from "logos:constants/formatting";
-import type { Client } from "logos/client";
-import { parseTimeExpression } from "logos/commands/interactions";
+import { trim } from "rost:constants/formatting";
+import type { Client } from "rost/client";
+import { parseTimeExpression } from "rost/commands/interactions";
 
 async function handleAutocompleteTimestamp(
 	client: Client,
-	interaction: Logos.Interaction<any, { timestamp: string }>,
+	interaction: Rost.Interaction<any, { timestamp: string }>,
 ): Promise<void> {
 	const timestamp = parseTimeExpression(client, interaction, interaction.parameters.timestamp);
 	if (timestamp === undefined) {

@@ -1,9 +1,9 @@
-import type { Client } from "logos/client";
-import { SongCollection } from "logos/services/music";
+import type { Client } from "rost/client";
+import { SongCollection } from "rost/services/music";
 
 async function handleLoopPlayback(
 	client: Client,
-	interaction: Logos.Interaction<any, { collection: boolean | undefined }>,
+	interaction: Rost.Interaction<any, { collection: boolean | undefined }>,
 ): Promise<void> {
 	const musicService = client.services.local("music", { guildId: interaction.guildId });
 	if (!musicService.canManagePlayback(interaction)) {

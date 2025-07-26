@@ -1,24 +1,24 @@
-import type { Client } from "logos/client";
-import { Collector } from "logos/collectors";
-import type { DynamicVoiceChannel } from "logos/models/documents/guild";
-import type { Guild } from "logos/models/guild";
-import { LocalService } from "logos/services/service";
+import type { Client } from "rost/client";
+import { Collector } from "rost/collectors";
+import type { DynamicVoiceChannel } from "rost/models/documents/guild";
+import type { Guild } from "rost/models/guild";
+import { LocalService } from "rost/services/service";
 
-type VoiceChannel = Logos.Channel & { type: Discord.ChannelTypes.GuildVoice };
+type VoiceChannel = Rost.Channel & { type: Discord.ChannelTypes.GuildVoice };
 
-function isVoice(channel: Logos.Channel): channel is VoiceChannel {
+function isVoice(channel: Rost.Channel): channel is VoiceChannel {
 	return channel.type === Discord.ChannelTypes.GuildVoice;
 }
 
-type WithVoiceStates<T> = T & { voiceStates: Logos.VoiceState[] };
+type WithVoiceStates<T> = T & { voiceStates: Rost.VoiceState[] };
 type DynamicVoiceChannelData = {
-	parent: WithVoiceStates<{ channel: Logos.Channel }>;
+	parent: WithVoiceStates<{ channel: Rost.Channel }>;
 	children: WithVoiceStates<{ id: bigint }>[];
 	configuration: DynamicVoiceChannel;
 };
 
 class DynamicVoiceChannelService extends LocalService {
-	readonly oldVoiceStates: Map</*userId:*/ bigint, Logos.VoiceState>;
+	readonly oldVoiceStates: Map</*userId:*/ bigint, Rost.VoiceState>;
 
 	readonly #voiceStateUpdates: Collector<"voiceStateUpdate">;
 
@@ -55,7 +55,7 @@ class DynamicVoiceChannelService extends LocalService {
 		const voiceStateByUserId = this.guild.voiceStates
 			.filter((voiceState) => voiceState.channelId !== undefined)
 			.array();
-		const voiceStatesByChannelId = new Map<bigint, Logos.VoiceState[]>(
+		const voiceStatesByChannelId = new Map<bigint, Rost.VoiceState[]>(
 			channelIds.map((channelId) => [
 				channelId,
 				voiceStateByUserId.filter((voiceState) => voiceState.channelId === channelId),
@@ -153,7 +153,7 @@ class DynamicVoiceChannelService extends LocalService {
 		this.oldVoiceStates.clear();
 	}
 
-	async #handleVoiceStateUpdate(newVoiceState: Logos.VoiceState): Promise<void> {
+	async #handleVoiceStateUpdate(newVoiceState: Rost.VoiceState): Promise<void> {
 		const oldVoiceState = this.oldVoiceStates.get(newVoiceState.userId);
 
 		if (oldVoiceState?.channelId === undefined) {
@@ -168,7 +168,7 @@ class DynamicVoiceChannelService extends LocalService {
 		this.oldVoiceStates.set(newVoiceState.userId, newVoiceState);
 	}
 
-	async #handleConnect(newVoiceState: Logos.VoiceState): Promise<void> {
+	async #handleConnect(newVoiceState: Rost.VoiceState): Promise<void> {
 		const channels = this.channels;
 		if (channels === undefined) {
 			return;
@@ -221,7 +221,7 @@ class DynamicVoiceChannelService extends LocalService {
 			);
 	}
 
-	async #handleDisconnect(oldVoiceState: Logos.VoiceState): Promise<void> {
+	async #handleDisconnect(oldVoiceState: Rost.VoiceState): Promise<void> {
 		const channels = this.channels;
 		if (channels === undefined) {
 			return;

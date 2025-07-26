@@ -1,11 +1,11 @@
-import type { Collection } from "logos:constants/database";
-import { DocumentSession } from "logos/adapters/databases/adapter";
-import { RavenDBDocumentConventions } from "logos/adapters/databases/ravendb/conventions";
-import type { RavenDBDocument } from "logos/adapters/databases/ravendb/document";
-import { RavenDBDocumentQuery } from "logos/adapters/databases/ravendb/query";
-import type { Model } from "logos/models/model";
-import type { DatabaseStore } from "logos/stores/database";
+import type { Collection } from "rost:constants/database";
 import type * as ravendb from "ravendb";
+import { DocumentSession } from "rost/adapters/databases/adapter";
+import { RavenDBDocumentConventions } from "rost/adapters/databases/ravendb/conventions";
+import type { RavenDBDocument } from "rost/adapters/databases/ravendb/document";
+import { RavenDBDocumentQuery } from "rost/adapters/databases/ravendb/query";
+import type { Model } from "rost/models/model";
+import type { DatabaseStore } from "rost/stores/database";
 
 class RavenDBDocumentSession extends DocumentSession {
 	readonly #session: ravendb.IDocumentSession;

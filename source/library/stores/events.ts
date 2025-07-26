@@ -1,6 +1,6 @@
-import type { DesiredProperties, DesiredPropertiesBehaviour } from "logos:constants/properties";
-import type { Collector } from "logos/collectors";
+import type { DesiredProperties, DesiredPropertiesBehaviour } from "rost:constants/properties";
 import type pino from "pino";
+import type { Collector } from "rost/collectors";
 
 type Event = keyof Discord.EventHandlers<DesiredProperties, DesiredPropertiesBehaviour>;
 class EventStore {
@@ -103,7 +103,7 @@ class EventStore {
 	#unregisterCollector(event: Event, collector: Collector<Event>): void {
 		const collectors = this.#collectors.get(event);
 		if (collectors === undefined) {
-			throw new Error(`Collectors for event "${event}" unexpectedly missing.`);
+			throw new Error(`Collectors for event '${event}' unexpectedly missing.`);
 		}
 
 		collectors.delete(collector);

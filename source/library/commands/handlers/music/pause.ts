@@ -1,7 +1,7 @@
-import type { Client } from "logos/client";
-import { handleResumePlayback } from "logos/commands/handlers/music/resume";
+import type { Client } from "rost/client";
+import { handleResumePlayback } from "rost/commands/handlers/music/resume";
 
-async function handlePausePlayback(client: Client, interaction: Logos.Interaction): Promise<void> {
+async function handlePausePlayback(client: Client, interaction: Rost.Interaction): Promise<void> {
 	const musicService = client.services.local("music", { guildId: interaction.guildId });
 	if (!musicService.canManagePlayback(interaction)) {
 		return;

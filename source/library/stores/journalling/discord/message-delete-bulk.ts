@@ -1,7 +1,7 @@
-import { mention } from "logos:constants/formatting";
-import { isDefined } from "logos:core/utilities";
-import { JournallingStore } from "logos/stores/journalling";
-import type { EventLogger } from "logos/stores/journalling/loggers";
+import { mention } from "rost:constants/formatting";
+import { isDefined } from "rost:core/utilities";
+import { JournallingStore } from "rost/stores/journalling";
+import type { EventLogger } from "rost/stores/journalling/loggers";
 
 const logger: EventLogger<"messageDeleteBulk"> = (client, [payload], { guildLocale }) => {
 	const messages = payload.ids

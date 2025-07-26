@@ -1,20 +1,16 @@
-import type { Translation } from "logos:constants/contributions";
-import type { LocalisationLanguage } from "logos:constants/languages/localisation";
-import type { Client } from "logos/client";
+import type { Translation } from "rost:constants/contributions";
+import type { Client } from "rost/client";
 
-async function handleDisplayCredits(client: Client, interaction: Logos.Interaction): Promise<void> {
+async function handleDisplayCredits(client: Client, interaction: Rost.Interaction): Promise<void> {
 	client.notice(interaction, getTranslationView(client, interaction)).ignore();
 }
 
-function getTranslationView(client: Client, interaction: Logos.Interaction): Discord.Camelize<Discord.DiscordEmbed> {
+function getTranslationView(client: Client, interaction: Rost.Interaction): Discord.Camelize<Discord.DiscordEmbed> {
 	const fields: Discord.Camelize<Discord.DiscordEmbedField>[] = [];
 
-	const strings = {
-		...constants.contexts.credits({ localise: client.localise, locale: interaction.locale }),
-		...constants.contexts.language({ localise: client.localise, locale: interaction.locale }),
-	};
+	const strings = constants.contexts.credits({ localise: client.localise, locale: interaction.locale });
 	for (const [language, data] of (
-		Object.entries(constants.contributions.translation) as [LocalisationLanguage, Translation][]
+		Object.entries(constants.contributions.translation) as [string, Translation][]
 	).sort(([_, a], [__, b]) => b.completion - a.completion)) {
 		const contributorsFormatted = data.contributors
 			.map((contributor) => {
@@ -28,7 +24,7 @@ function getTranslationView(client: Client, interaction: Logos.Interaction): Dis
 			.join("\n");
 
 		fields.push({
-			name: `${data.flag} ${strings.language(language)} (${data.completion * 10}%)`,
+			name: `${data.flag} ${language} (${data.completion * 10}%)`,
 			value: contributorsFormatted,
 			inline: true,
 		});

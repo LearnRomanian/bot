@@ -1,0 +1,16 @@
+{
+  "verification.title": "Questions relatives à la vérification",
+  "verification.fields.reason": "Quelle est la raison pour laquelle vous apprenez {language} ?",
+  "verification.fields.aim": "Quels avantages tirerez-vous à être membre ?",
+  "verification.fields.whereFound": "Où avez-vous entendu parler du serveur ?",
+  "report.title": "Rapport de l'utilisateur",
+  "report.fields.reason": "Quel est le motif du rapport ?",
+  "report.fields.users": "Utilisateurs à signaler",
+  "report.fields.link": "Lien vers le message pour le contexte",
+  "suggestion.title": "Suggestion",
+  "suggestion.fields.suggestion": "Quelle est votre suggestion ?",
+  "prompts.continue": "Continuer",
+  "prompts.cancel": "Annuler",
+  "prompts.stay": "Ramenez-moi",
+  "prompts.leave": "Quitter"
+}

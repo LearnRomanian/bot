@@ -1,10 +1,9 @@
-import { getLocalisationLocaleByLanguage } from "logos:constants/languages/localisation";
-import type { Client } from "logos/client";
-import { Collector } from "logos/collectors";
-import loggers from "logos/stores/journalling/loggers";
 import type pino from "pino";
+import type { Client } from "rost/client";
+import { Collector } from "rost/collectors";
+import loggers from "rost/stores/journalling/loggers";
 
-type Events = Logos.Events & Discord.Events;
+type Events = Rost.Events & Discord.Events;
 
 class JournallingStore {
 	readonly log: pino.Logger;
@@ -96,11 +95,7 @@ class JournallingStore {
 			return;
 		}
 
-		const guildLocale = getLocalisationLocaleByLanguage(guildDocument.languages.localisation);
-		const message = await generateMessage(this.#client, args, {
-			guildLocale,
-			featureLanguage: guildDocument.languages.feature,
-		});
+		const message = await generateMessage(this.#client, args, { guildLocale: guildDocument.locales.source });
 		if (message === undefined) {
 			return;
 		}
@@ -112,11 +107,11 @@ class JournallingStore {
 			);
 	}
 
-	static generateMessageLog(client: Client, { messages }: { messages: Logos.Message[] }): string {
+	static generateMessageLog(client: Client, { messages }: { messages: Rost.Message[] }): string {
 		return messages.map((message) => JournallingStore.#messageLogEntry(client, message)).join("\n\n");
 	}
 
-	static #messageLogEntry(client: Client, message: Logos.Message): string {
+	static #messageLogEntry(client: Client, message: Rost.Message): string {
 		const postingTime = new Date(Discord.snowflakeToTimestamp(message.id)).toLocaleString();
 		const username = client.diagnostics.user(message.author);
 
@@ -209,7 +204,7 @@ class JournallingStore {
 	async #getKickInformation({
 		user,
 		guildId,
-	}: { user: Logos.User; guildId: bigint }): Promise<Discord.Camelize<Discord.DiscordAuditLogEntry> | undefined> {
+	}: { user: Rost.User; guildId: bigint }): Promise<Discord.Camelize<Discord.DiscordAuditLogEntry> | undefined> {
 		const now = Date.now();
 
 		const guildDocument = this.#client.documents.guilds.get(guildId.toString());

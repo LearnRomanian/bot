@@ -1,12 +1,12 @@
-import { code } from "logos:constants/formatting";
-import { timeStructToMilliseconds } from "logos:constants/time";
-import type { Client } from "logos/client";
-import { InteractionCollector } from "logos/collectors";
-import { EntryRequestComposer } from "logos/commands/components/modal-composers/entry-request-composer";
-import { EntryRequest } from "logos/models/entry-request";
-import type { Guild } from "logos/models/guild";
-import { User } from "logos/models/user";
-import { LocalService } from "logos/services/service";
+import { code } from "rost:constants/formatting";
+import { timeStructToMilliseconds } from "rost:constants/time";
+import type { Client } from "rost/client";
+import { InteractionCollector } from "rost/collectors";
+import { EntryRequestComposer } from "rost/commands/components/modal-composers/entry-request-composer";
+import { EntryRequest } from "rost/models/entry-request";
+import type { Guild } from "rost/models/guild";
+import { User } from "rost/models/user";
+import { LocalService } from "rost/services/service";
 
 class EntryService extends LocalService {
 	readonly #acceptedRulesButton: InteractionCollector;
@@ -35,7 +35,7 @@ class EntryService extends LocalService {
 		await this.#acceptedRulesButton.close();
 	}
 
-	async #handleAcceptRules(buttonPress: Logos.Interaction): Promise<void> {
+	async #handleAcceptRules(buttonPress: Rost.Interaction): Promise<void> {
 		const languageProficiencyButtons = new InteractionCollector<[index: string]>(this.client, {
 			only: [buttonPress.user.id],
 			dependsOn: this.#acceptedRulesButton,
@@ -47,24 +47,16 @@ class EntryService extends LocalService {
 
 		await this.client.registerInteractionCollector(languageProficiencyButtons);
 
-		const strings = {
-			...constants.contexts.chooseProficiency({
-				localise: this.client.localise,
-				locale: buttonPress.locale,
-			}),
-			...constants.contexts.language({
-				localise: this.client.localise,
-				locale: buttonPress.locale,
-			}),
-		};
+		const strings = constants.contexts.chooseProficiency({
+			localise: this.client.localise,
+			locale: buttonPress.locale,
+		});
 		this.client
 			.notice(buttonPress, {
 				embeds: [
 					{
 						title: strings.title,
-						description: `${strings.description.chooseProficiency({
-							language: strings.language(buttonPress.featureLanguage),
-						})}\n\n${strings.description.canChangeLater({
+						description: `${strings.description.chooseProficiency}\n\n${strings.description.canChangeLater({
 							command: code(
 								this.client.localiseCommand(
 									// @ts-ignore: This is fine for now.
@@ -100,7 +92,7 @@ class EntryService extends LocalService {
 	}
 
 	async #handlePickLanguageProficiency(
-		buttonPress: Logos.Interaction<[index: string]>,
+		buttonPress: Rost.Interaction<[index: string]>,
 		{ collector }: { collector: InteractionCollector<[index: string]> },
 	): Promise<void> {
 		const index = Number.parseInt(buttonPress.metadata[1]);
@@ -205,7 +197,7 @@ class EntryService extends LocalService {
 			);
 	}
 
-	async #handleRequestVerification(buttonPress: Logos.Interaction<[index: string]>): Promise<void> {
+	async #handleRequestVerification(buttonPress: Rost.Interaction<[index: string]>): Promise<void> {
 		const index = Number.parseInt(buttonPress.metadata[1]);
 		const snowflake = (
 			Object.values(constants.roles.language.categories.proficiency.collection.list)[index]?.snowflakes as
@@ -300,7 +292,7 @@ class EntryService extends LocalService {
 		await composer.open();
 	}
 
-	async #vetUser(interaction: Logos.Interaction): Promise<boolean> {
+	async #vetUser(interaction: Rost.Interaction): Promise<boolean> {
 		const [userDocument, entryRequestDocument] = await Promise.all([
 			User.getOrCreate(this.client, { userId: interaction.user.id.toString() }),
 			EntryRequest.get(this.client, { guildId: this.guildIdString, authorId: interaction.user.id.toString() }),
@@ -333,7 +325,7 @@ class EntryService extends LocalService {
 		return true;
 	}
 
-	#requiresVerification(user: Logos.User): boolean | undefined {
+	#requiresVerification(user: Rost.User): boolean | undefined {
 		const verificationConfiguration = this.configuration;
 		if (verificationConfiguration === undefined) {
 			return undefined;

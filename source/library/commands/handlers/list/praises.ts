@@ -1,10 +1,10 @@
-import type { Client } from "logos/client";
-import { getPraisePage } from "logos/commands/praises";
-import { Praise } from "logos/models/praise";
+import type { Client } from "rost/client";
+import { getPraisePage } from "rost/commands/praises";
+import { Praise } from "rost/models/praise";
 
 async function handleDisplayPraisesAutocomplete(
 	client: Client,
-	interaction: Logos.Interaction<any, { user: string | undefined }>,
+	interaction: Rost.Interaction<any, { user: string | undefined }>,
 ): Promise<void> {
 	if (interaction.parameters.user === undefined) {
 		return;
@@ -13,11 +13,11 @@ async function handleDisplayPraisesAutocomplete(
 	await client.autocompleteMembers(interaction, { identifier: interaction.parameters.user });
 }
 
-async function handleDisplayAuthorPraises(client: Client, interaction: Logos.Interaction): Promise<void> {
+async function handleDisplayAuthorPraises(client: Client, interaction: Rost.Interaction): Promise<void> {
 	await handleDisplayPraises(client, interaction, { mode: "author" });
 }
 
-async function handleDisplayTargetPraises(client: Client, interaction: Logos.Interaction): Promise<void> {
+async function handleDisplayTargetPraises(client: Client, interaction: Rost.Interaction): Promise<void> {
 	await handleDisplayPraises(client, interaction, { mode: "target" });
 }
 
@@ -29,7 +29,7 @@ const propertyByUserSearchMode = Object.freeze({
 
 async function handleDisplayPraises(
 	client: Client,
-	interaction: Logos.Interaction<any, { user: string | undefined }>,
+	interaction: Rost.Interaction<any, { user: string | undefined }>,
 	{ mode }: { mode: PraiseSearchMode },
 ): Promise<void> {
 	const member = client.resolveInteractionToMember(interaction, {

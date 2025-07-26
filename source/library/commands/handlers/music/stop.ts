@@ -1,6 +1,6 @@
-import type { Client } from "logos/client";
+import type { Client } from "rost/client";
 
-async function handleStopPlayback(client: Client, interaction: Logos.Interaction): Promise<void> {
+async function handleStopPlayback(client: Client, interaction: Rost.Interaction): Promise<void> {
 	const musicService = client.services.local("music", { guildId: interaction.guildId });
 	if (!musicService.canManagePlayback(interaction)) {
 		return;

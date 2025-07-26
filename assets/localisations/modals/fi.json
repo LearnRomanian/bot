@@ -1,0 +1,16 @@
+{
+  "verification.title": "Varmistuskysymys",
+  "verification.fields.reason": "Miksi opettelet {language}:a?",
+  "verification.fields.aim": "Miten jäsenyys hyödyttäisi sinua?",
+  "verification.fields.whereFound": "Mistä kuulit tästä palvelimesta?",
+  "report.title": "Käyttäjän ilmianto",
+  "report.fields.reason": "Mikä on ilmiannon syy?",
+  "report.fields.users": "Ilmiannettavat käyttäjät",
+  "report.fields.link": "Linkki viestiin asiayhteyttä varten",
+  "suggestion.title": "Ehdotus",
+  "suggestion.fields.suggestion": "Mikä on ehdotuksesi?",
+  "prompts.continue": "Jatka",
+  "prompts.cancel": "Peruuta",
+  "prompts.stay": "Takaisin",
+  "prompts.leave": "Pois"
+}

@@ -1,4 +1,4 @@
-import patterns from "logos:constants/patterns";
+import patterns from "rost:constants/patterns";
 
 /**
  * Parses a 6-digit hex value prefixed with a hashtag to a number.

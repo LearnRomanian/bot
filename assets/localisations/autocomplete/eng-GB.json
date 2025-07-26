@@ -1,6 +1,0 @@
-{
-  "autocomplete.user": "Search for a user using their username, @handle, tag#0000, XxNICKNAMExX, <@mention>, or ID 12345678.",
-  "autocomplete.language": "Search for a language by its name or ISO code.",
-  "autocomplete.warning": "Search for a warning by its contents.",
-  "autocomplete.timestamp": "Enter a timestamp in words (\"5 hours 30 mins 2 s\") or in short format (\"05:30:02\")."
-}

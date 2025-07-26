@@ -1,0 +1,22 @@
+{
+  "verification.title": "Întrebări de verificare",
+  "verification.fields.reason": "Care este motivul pentru care înveți {language}?",
+  "verification.fields.aim": "Ce folos îți va aduce apartenența?",
+  "verification.fields.whereFound": "Unde ai aflat despre server?",
+  "report.title": "Raport",
+  "report.fields.reason": "Care este motivul pentru raport?",
+  "report.fields.users": "Utilizatori de raportat",
+  "report.fields.link": "Link către mesaj pentru context",
+  "suggestion.title": "Sugestie",
+  "suggestion.fields.suggestion": "Care este sugestia ta?",
+  "prompts.continue": "Continuă",
+  "prompts.cancel": "Anulează",
+  "prompts.stay": "Ia-mă înapoi",
+  "prompts.leave": "Părăsește",
+  "resource.title": "Resursă",
+  "resource.fields.resource": "Ce resursă ai vrea să trimiți?",
+  "ticket.title": "Tichet de asistență",
+  "ticket.fields.topic": "Care este subiectul tichetului tău?",
+  "form.failedToSubmit.title": "Ceva a mers prost",
+  "form.failedToSubmit.description": "Depunerea ta nu a putut fi procesată."
+}

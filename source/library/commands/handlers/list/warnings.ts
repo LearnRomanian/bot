@@ -1,11 +1,11 @@
-import { timestamp } from "logos:constants/formatting";
-import type { Client } from "logos/client";
-import { getRuleTitleFormatted } from "logos/commands/rules";
-import { Warning } from "logos/models/warning";
+import { timestamp } from "rost:constants/formatting";
+import type { Client } from "rost/client";
+import { getRuleTitleFormatted } from "rost/commands/rules";
+import { Warning } from "rost/models/warning";
 
 async function handleDisplayWarningsAutocomplete(
 	client: Client,
-	interaction: Logos.Interaction<any, { user: string | undefined }>,
+	interaction: Rost.Interaction<any, { user: string | undefined }>,
 ): Promise<void> {
 	if (interaction.parameters.user === undefined) {
 		return;
@@ -29,7 +29,7 @@ async function handleDisplayWarningsAutocomplete(
 
 async function handleDisplayWarnings(
 	client: Client,
-	interaction: Logos.Interaction<any, { user: string | undefined }>,
+	interaction: Rost.Interaction<any, { user: string | undefined }>,
 ): Promise<void> {
 	const permissions = interaction.member?.permissions;
 	if (permissions === undefined) {
@@ -60,7 +60,7 @@ async function handleDisplayWarnings(
 
 function getWarningPage(
 	client: Client,
-	interaction: Logos.Interaction,
+	interaction: Rost.Interaction,
 	warnings: Warning[],
 	isSelf: boolean,
 ): Discord.Camelize<Discord.DiscordEmbed> {

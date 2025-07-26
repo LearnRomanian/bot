@@ -1,21 +1,14 @@
-import {
-	type Locale,
-	type LocalisationLanguage,
-	getDiscordLocaleByLanguage,
-	getLogosLanguageByLocale,
-	isDiscordLanguage,
-} from "logos:constants/languages/localisation";
 import type pino from "pino";
 
 type RawLocalisationBuilder = (data?: Record<string, unknown>) => string | undefined;
 type LocalisationBuilder = (data?: Record<string, unknown>) => string;
-type RawLocalisations = Map<string, Map<LocalisationLanguage, string>>;
+type RawLocalisations = Map<string, Map<Discord.Locale, string>>;
 type Localisations = Map<
 	// String key.
 	string,
 	Map<
 		// Language the string is localised into.
-		LocalisationLanguage,
+		Discord.Locale,
 		// Generator function for dynamically slotting data into the string.
 		LocalisationBuilder
 	>
@@ -43,9 +36,9 @@ class LocalisationStore {
 	}
 
 	static #buildLocalisations(localisations: RawLocalisations): Localisations {
-		const builders = new Map<string, Map<LocalisationLanguage, LocalisationBuilder>>();
+		const builders = new Map<string, Map<Discord.Locale, LocalisationBuilder>>();
 		for (const [key, languages] of localisations.entries()) {
-			const processors = new Map<LocalisationLanguage, LocalisationBuilder>();
+			const processors = new Map<Discord.Locale, LocalisationBuilder>();
 			for (const [language, string] of languages.entries()) {
 				processors.set(language, (data?: Record<string, unknown>) =>
 					LocalisationStore.#processString(string, { data }),
@@ -86,14 +79,14 @@ class LocalisationStore {
 			return undefined;
 		}
 
-		let localisation: Map<LocalisationLanguage, LocalisationBuilder> | undefined;
+		let localisation: Map<Discord.Locale, LocalisationBuilder> | undefined;
 		if (this.#localisations.has(`${key}.name`)) {
 			localisation = this.#localisations.get(`${key}.name`)!;
 		} else if (this.#localisations.has(`parameters.${optionName}.name`)) {
 			localisation = this.#localisations.get(`parameters.${optionName}.name`)!;
 		}
 
-		const name = localisation?.get(constants.defaults.LOCALISATION_LANGUAGE)?.();
+		const name = localisation?.get(constants.BASE_LOCALE)?.();
 		if (name === undefined) {
 			this.log.warn(`Could not get command name from string with key '${key}'.`);
 			return undefined;
@@ -114,14 +107,14 @@ class LocalisationStore {
 			return undefined;
 		}
 
-		let localisation: Map<LocalisationLanguage, LocalisationBuilder> | undefined;
+		let localisation: Map<Discord.Locale, LocalisationBuilder> | undefined;
 		if (this.#localisations.has(`${key}.description`)) {
 			localisation = this.#localisations.get(`${key}.description`)!;
 		} else if (this.#localisations.has(`parameters.${optionName}.description`)) {
 			localisation = this.#localisations.get(`parameters.${optionName}.description`)!;
 		}
 
-		const description = localisation?.get(constants.defaults.LOCALISATION_LANGUAGE)?.({});
+		const description = localisation?.get(constants.BASE_LOCALE)?.({});
 		if (description === undefined) {
 			this.log.warn(`Could not get command description from string with key '${key}'.`);
 			return undefined;
@@ -137,19 +130,10 @@ class LocalisationStore {
 	}
 
 	static #toDiscordLocalisations(
-		localisations: Map<LocalisationLanguage, (args: Record<string, unknown>) => string>,
+		localisations: Map<Discord.Locale, (args: Record<string, unknown>) => string>,
 	): Discord.Localization {
 		const result: Discord.Localization = {};
-		for (const [language, localise] of localisations.entries()) {
-			if (!isDiscordLanguage(language)) {
-				continue;
-			}
-
-			const locale = getDiscordLocaleByLanguage(language);
-			if (locale === undefined) {
-				continue;
-			}
-
+		for (const [locale, localise] of localisations.entries()) {
 			const string = localise({});
 			if (string.length === 0) {
 				continue;
@@ -165,22 +149,15 @@ class LocalisationStore {
 		return this.#localisations.has(key);
 	}
 
-	localiseRaw(key: string, locale?: Locale): RawLocalisationBuilder {
+	localiseRaw(key: string, locale?: Discord.Locale): RawLocalisationBuilder {
 		return (data) => {
 			const localisation = this.#localisations.get(key);
 			if (localisation === undefined) {
 				return undefined;
 			}
 
-			let language: LocalisationLanguage;
-			if (locale !== undefined) {
-				language = getLogosLanguageByLocale(locale);
-			} else {
-				language = constants.defaults.LOCALISATION_LANGUAGE;
-			}
-
 			const buildLocalisation =
-				localisation.get(language) ?? localisation.get(constants.defaults.LOCALISATION_LANGUAGE);
+				localisation.get(locale ?? constants.BASE_LOCALE) ?? localisation.get(constants.BASE_LOCALE);
 			if (buildLocalisation === undefined) {
 				this.log.error(`Missing localisations for string with key '${key}'.`);
 				return undefined;
@@ -190,7 +167,7 @@ class LocalisationStore {
 		};
 	}
 
-	localise(key: string, locale?: Locale): LocalisationBuilder {
+	localise(key: string, locale?: Discord.Locale): LocalisationBuilder {
 		return (data) => {
 			const localisation = this.localiseRaw(key, locale)(data);
 			if (localisation === undefined) {
@@ -202,7 +179,7 @@ class LocalisationStore {
 		};
 	}
 
-	localiseCommand(key: string, locale?: Locale): string {
+	localiseCommand(key: string, locale?: Discord.Locale): string {
 		const keyParts = key.split(".options.");
 		if (keyParts.length === 0) {
 			return constants.special.missingString;
@@ -218,10 +195,8 @@ class LocalisationStore {
 		return `/${commandName}`;
 	}
 
-	pluralise(key: string, locale: Locale, { quantity }: { quantity: number }): string {
-		const language = getLogosLanguageByLocale(locale);
-
-		const pluralise = constants.localisations.transformers[language].pluralise;
+	pluralise(key: string, locale: Discord.Locale, { quantity }: { quantity: number }): string {
+		const pluralise = constants.localisations.transformers[locale].pluralise;
 		const { one, two, many } = {
 			one: this.localise(`${key}.one`, locale)?.({ one: quantity }),
 			two: this.localise(`${key}.two`, locale)?.({ two: quantity }),
@@ -230,7 +205,7 @@ class LocalisationStore {
 
 		const pluralised = pluralise(`${quantity}`, { one, two, many });
 		if (pluralised === undefined) {
-			this.log.warn(`Could not pluralise string with key '${key}' in ${language}.`);
+			this.log.warn(`Could not pluralise string with key '${key}' in locale '${locale}'.`);
 			return constants.special.missingString;
 		}
 

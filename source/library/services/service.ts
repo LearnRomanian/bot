@@ -1,7 +1,6 @@
-import { type Locale, getLocalisationLocaleByLanguage } from "logos:constants/languages/localisation";
-import type { Client } from "logos/client";
-import type { Guild } from "logos/models/guild";
 import type pino from "pino";
+import type { Client } from "rost/client";
+import type { Guild } from "rost/models/guild";
 
 abstract class Service {
 	readonly identifier: string;
@@ -33,7 +32,7 @@ abstract class LocalService extends Service {
 	readonly guildId: bigint;
 	readonly guildIdString: string;
 
-	get guild(): Logos.Guild {
+	get guild(): Rost.Guild {
 		return this.client.entities.guilds.get(this.guildId)!;
 	}
 
@@ -41,8 +40,8 @@ abstract class LocalService extends Service {
 		return this.client.documents.guilds.get(this.guildIdString)!;
 	}
 
-	get guildLocale(): Locale {
-		return getLocalisationLocaleByLanguage(this.guildDocument.languages.localisation);
+	get guildLocale(): Discord.Locale {
+		return this.guildDocument.locales.source;
 	}
 
 	constructor(client: Client, { identifier, guildId }: { identifier: string; guildId: bigint }) {

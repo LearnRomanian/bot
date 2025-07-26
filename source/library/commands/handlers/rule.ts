@@ -1,10 +1,10 @@
-import { type Rule, isValidRule } from "logos:constants/rules";
-import type { Client } from "logos/client";
-import { getRuleTitleFormatted } from "logos/commands/rules";
+import { type Rule, isValidRule } from "rost:constants/rules";
+import type { Client } from "rost/client";
+import { getRuleTitleFormatted } from "rost/commands/rules";
 
 async function handleCiteRuleAutocomplete(
 	client: Client,
-	interaction: Logos.Interaction<any, { rule: string }>,
+	interaction: Rost.Interaction<any, { rule: string }>,
 ): Promise<void> {
 	const ruleLowercase = interaction.parameters.rule.trim().toLowerCase();
 	const choices = constants.rules
@@ -19,7 +19,7 @@ async function handleCiteRuleAutocomplete(
 	client.respond(interaction, choices).ignore();
 }
 
-async function handleCiteRule(client: Client, interaction: Logos.Interaction<any, { rule: Rule }>): Promise<void> {
+async function handleCiteRule(client: Client, interaction: Rost.Interaction<any, { rule: Rule }>): Promise<void> {
 	if (!isValidRule(interaction.parameters.rule)) {
 		const strings = constants.contexts.ruleInvalid({ localise: client.localise, locale: interaction.locale });
 		client.error(interaction, { title: strings.title, description: strings.description }).ignore();

@@ -1,43 +1,25 @@
-import type { Locale, LocalisationLanguage } from "logos:constants/languages/localisation";
-import type { Client } from "logos/client";
-import type { GameType } from "logos/models/documents/guild-statistics";
-import type { GameScores, UserDocument } from "logos/models/documents/user";
-import { type CreateModelOptions, Model, UserModel } from "logos/models/model";
-import type { DatabaseStore } from "logos/stores/database";
+import type { Client } from "rost/client";
+import type { UserDocument } from "rost/models/documents/user";
+import { type CreateModelOptions, Model, UserModel } from "rost/models/model";
+import type { DatabaseStore } from "rost/stores/database";
 
 type AuthorisationStatus = "authorised" | "rejected";
 
-type CreateUserOptions = CreateModelOptions<User, UserDocument, "account" | "scores">;
+type CreateUserOptions = CreateModelOptions<User, UserDocument, "account">;
 
 interface User extends UserDocument {}
 class User extends UserModel {
-	static readonly #initialScores: GameScores = { totalScore: 0, sessionCount: 1 };
-
 	readonly createdAt: number;
 
 	get userId(): string {
 		return this.idParts[0];
 	}
 
-	get preferredLanguage(): LocalisationLanguage | undefined {
-		return this.account?.language;
-	}
-
-	set preferredLanguage(language: LocalisationLanguage | undefined) {
-		if (this.account === undefined) {
-			this.account = { language };
-			return;
-		}
-
-		this.account.language = language;
-	}
-
-	constructor(database: DatabaseStore, { createdAt, account, scores, ...data }: CreateUserOptions) {
+	constructor(database: DatabaseStore, { createdAt, account, ...data }: CreateUserOptions) {
 		super(database, data, { collection: "Users" });
 
 		this.createdAt = createdAt ?? Date.now();
 		this.account = account;
-		this.scores = scores;
 	}
 
 	static async getOrCreate(client: Client, data: CreateUserOptions): Promise<User> {
@@ -54,42 +36,6 @@ class User extends UserModel {
 
 			return session.set(new User(client.database, data));
 		});
-	}
-
-	registerSession({ game, learningLocale }: { game: GameType; learningLocale: Locale }): void {
-		if (this.scores === undefined) {
-			this.scores = { [learningLocale]: { [game]: { ...User.#initialScores } } };
-			return;
-		}
-
-		const statisticsForLocale = this.scores[learningLocale];
-		if (statisticsForLocale === undefined) {
-			this.scores[learningLocale] = { [game]: { ...User.#initialScores } };
-			return;
-		}
-
-		const statisticsForGame = statisticsForLocale[game];
-		if (statisticsForGame === undefined) {
-			statisticsForLocale[game] = { ...User.#initialScores };
-			return;
-		}
-
-		statisticsForGame.sessionCount += 1;
-	}
-
-	incrementScore({ game, learningLocale }: { game: GameType; learningLocale: Locale }): void {
-		// We don't care about incrementing the score if the scores could not be found since at that point, we'd have a
-		// bigger problem to think about: The scores being gone.
-		const scoresForGame = this.scores?.[learningLocale]?.[game];
-		if (scoresForGame === undefined) {
-			return;
-		}
-
-		scoresForGame.totalScore += 1;
-	}
-
-	getGameScores({ game, learningLocale }: { game: GameType; learningLocale: Locale }): GameScores | undefined {
-		return this.scores?.[learningLocale]?.[game];
 	}
 
 	isAuthorisedOn({ guildId }: { guildId: string }): boolean {

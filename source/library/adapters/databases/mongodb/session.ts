@@ -1,11 +1,11 @@
-import type { Collection } from "logos:constants/database";
-import { DocumentSession } from "logos/adapters/databases/adapter";
-import { MongoDBDocumentConventions } from "logos/adapters/databases/mongodb/conventions";
-import type { MongoDBDocument } from "logos/adapters/databases/mongodb/document";
-import { MongoDBDocumentQuery } from "logos/adapters/databases/mongodb/query";
-import { Model } from "logos/models/model";
-import type { DatabaseStore } from "logos/stores/database";
+import type { Collection } from "rost:constants/database";
 import type mongodb from "mongodb";
+import { DocumentSession } from "rost/adapters/databases/adapter";
+import { MongoDBDocumentConventions } from "rost/adapters/databases/mongodb/conventions";
+import type { MongoDBDocument } from "rost/adapters/databases/mongodb/document";
+import { MongoDBDocumentQuery } from "rost/adapters/databases/mongodb/query";
+import { Model } from "rost/models/model";
+import type { DatabaseStore } from "rost/stores/database";
 
 class MongoDBDocumentSession extends DocumentSession {
 	readonly #mongoDatabase: mongodb.Db;

@@ -1,15 +1,10 @@
-import type { FeatureLanguage } from "logos:constants/languages/feature";
-import type { LearningLanguage } from "logos:constants/languages/learning";
-import type { LocalisationLanguage } from "logos:constants/languages/localisation";
-import type { TimeStruct } from "logos:constants/time";
+import type { TimeStruct } from "rost:constants/time";
 
 interface GuildDocument {
 	createdAt: number;
-	isNative: boolean;
-	languages: {
-		localisation: LocalisationLanguage;
-		target: LearningLanguage;
-		feature: FeatureLanguage;
+	locales: {
+		source: Discord.Locale;
+		target: Discord.Locale;
 	};
 	enabledFeatures: {
 		journalling: boolean;
@@ -18,17 +13,8 @@ interface GuildDocument {
 		resourceNotices: boolean;
 		roleNotices: boolean;
 		welcomeNotices: boolean;
-		answers: boolean;
-		corrections: boolean;
-		cefr: boolean;
-		game: boolean;
 		resources: boolean;
-		translate: boolean;
-		word: boolean;
-		wordSigils: boolean;
-		context: boolean;
 		targetOnly: boolean;
-		roleLanguages: boolean;
 		alerts: boolean;
 		policy: boolean;
 		rules: boolean;
@@ -95,24 +81,11 @@ interface GuildDocument {
 			channelId: string;
 			ruleChannelId: string;
 		};
-		cefr?: {
-			examples?: {
-				a1: string;
-				a2: string;
-				b1: string;
-				b2: string;
-				c1: string;
-				c2: string;
-			};
-		};
 		resources?: {
 			url: string;
 		};
 		targetOnly?: {
 			channelIds: string[];
-		};
-		roleLanguages?: {
-			ids: Record<string, LocalisationLanguage>;
 		};
 		alerts?: {
 			channelId: string;

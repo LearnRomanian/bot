@@ -31,14 +31,13 @@
 		"baseUrl": "",
 		"paths": {
 			"discordeno": ["@discordeno/bot"],
-			"logos/*": ["./source/library/*"],
-			"logos:constants/*": ["./source/constants/*"],
-			"logos:database/*": ["./database/*"],
-			"logos:core/*": ["./source/*"],
-			"logos:test/*": ["./test/*"],
-			"logos:core/constants/*": ["./?"],
-			"logos:core/library/*": ["./?"],
-			"logos:core/index": ["./?"]
+			"rost/*": ["./source/library/*"],
+			"rost:constants/*": ["./source/constants/*"],
+			"rost:database/*": ["./database/*"],
+			"rost:core/*": ["./source/*"],
+			"rost:core/constants/*": ["./?"],
+			"rost:core/library/*": ["./?"],
+			"rost:core/index": ["./?"]
 		},
 		"types": []
 	},

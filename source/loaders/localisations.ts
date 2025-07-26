@@ -1,16 +1,9 @@
 import fs from "node:fs/promises";
-import {
-	type LocalisationLanguage,
-	type LogosLocale,
-	getLogosLanguageByLocale,
-} from "logos:constants/languages/localisation";
 import type pino from "pino";
 
 const decoder = new TextDecoder();
 
-async function loadLocalisations({
-	log,
-}: { log: pino.Logger }): Promise<Map<string, Map<LocalisationLanguage, string>>> {
+async function loadLocalisations({ log }: { log: pino.Logger }): Promise<Map<string, Map<Discord.Locale, string>>> {
 	log = log.child({ name: "Localisations" });
 
 	log.info("Loading localisations...");
@@ -27,7 +20,7 @@ async function loadLocalisations({
 
 	log.debug(`Detected ${directoryPaths.length} localisation director(y/ies). Reading...`);
 
-	const localisationFiles: [language: LocalisationLanguage, path: string, normalise: boolean][] = [];
+	const localisationFiles: [locale: Discord.Locale, path: string, normalise: boolean][] = [];
 	for (const directoryPath of directoryPaths) {
 		const normalise = directoryPath.endsWith("/commands") || directoryPath.endsWith("/parameters");
 
@@ -37,18 +30,17 @@ async function loadLocalisations({
 				continue;
 			}
 
-			const [locale, _] = entryPath.split(".") as [LogosLocale, string];
-			const language = getLogosLanguageByLocale(locale);
-			if (language === undefined) {
+			const [locale, _] = entryPath.split(".") as [Discord.Locale, string];
+			if (locale === undefined) {
 				continue;
 			}
 
-			localisationFiles.push([language, combinedPath, normalise]);
+			localisationFiles.push([locale, combinedPath, normalise]);
 		}
 	}
 
-	const localisations = new Map<string, Map<LocalisationLanguage, string>>();
-	for (const [language, path, normalise] of localisationFiles) {
+	const localisations = new Map<string, Map<Discord.Locale, string>>();
+	for (const [locale, path, normalise] of localisationFiles) {
 		const strings = await fs
 			.readFile(path)
 			.then((contents) => decoder.decode(contents))
@@ -65,11 +57,11 @@ async function loadLocalisations({
 					(value.includes(" ") || value.includes("/") || value.includes("'") || value.toLowerCase() !== value)
 				) {
 					if (!key.startsWith("parameters.") && key.endsWith("message.name")) {
-						localisations.get(key)?.set(language, value);
+						localisations.get(key)?.set(locale, value);
 						continue;
 					}
 
-					log.warn(`${language}: '${key}' is not normalised. Normalising...`);
+					log.warn(`${locale}: '${key}' is not normalised. Normalising...`);
 
 					const valueNormalised = value
 						.toLowerCase()
@@ -77,7 +69,7 @@ async function loadLocalisations({
 						.join("-")
 						.replaceAll("/", "-")
 						.replaceAll("'", "-");
-					localisations.get(key)?.set(language, valueNormalised);
+					localisations.get(key)?.set(locale, valueNormalised);
 
 					continue;
 				}
@@ -87,16 +79,16 @@ async function loadLocalisations({
 					`${key.replace(constants.patterns.localisationDescription, ".name")}` in strings &&
 					value.length > 100
 				) {
-					log.warn(`${language}: '${key}' is too long (>100 characters). Normalising...`);
+					log.warn(`${locale}: '${key}' is too long (>100 characters). Normalising...`);
 
 					const valueNormalised = value.slice(0, 100);
-					localisations.get(key)?.set(language, valueNormalised);
+					localisations.get(key)?.set(locale, valueNormalised);
 
 					continue;
 				}
 			}
 
-			localisations.get(key)?.set(language, value);
+			localisations.get(key)?.set(locale, value);
 		}
 	}
 

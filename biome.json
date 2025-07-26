@@ -78,7 +78,7 @@
     "globals": [
       "Bun",
       "Discord",
-      "Logos",
+      "Rost",
       "constants"
     ]
   }

@@ -1,14 +1,14 @@
-import { mention } from "logos:constants/formatting";
-import { isValidRule } from "logos:constants/rules";
-import { timeStructToMilliseconds } from "logos:constants/time";
-import type { Client } from "logos/client";
-import { getRuleTitleFormatted } from "logos/commands/rules";
-import { Guild } from "logos/models/guild";
-import { Warning } from "logos/models/warning";
+import { mention } from "rost:constants/formatting";
+import { isValidRule } from "rost:constants/rules";
+import { timeStructToMilliseconds } from "rost:constants/time";
+import type { Client } from "rost/client";
+import { getRuleTitleFormatted } from "rost/commands/rules";
+import { Guild } from "rost/models/guild";
+import { Warning } from "rost/models/warning";
 
 async function handleWarnUserAutocomplete(
 	client: Client,
-	interaction: Logos.Interaction<any, { user: string; rule: string; reason: string }>,
+	interaction: Rost.Interaction<any, { user: string; rule: string; reason: string }>,
 ): Promise<void> {
 	if (interaction.parameters.focused === undefined) {
 		return;
@@ -51,7 +51,7 @@ async function handleWarnUserAutocomplete(
 
 async function handleWarnUser(
 	client: Client,
-	interaction: Logos.Interaction<any, { user: string; rule: string; reason: string }>,
+	interaction: Rost.Interaction<any, { user: string; rule: string; reason: string }>,
 ): Promise<void> {
 	const guildDocument = await Guild.getOrCreate(client, { guildId: interaction.guildId.toString() });
 	const configuration = guildDocument.feature("warns");

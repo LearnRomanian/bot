@@ -1,9 +1,9 @@
-import type { Client } from "logos/client";
-import { SuggestionComposer } from "logos/commands/components/modal-composers/suggestion-composer";
-import { Guild } from "logos/models/guild";
-import { Suggestion } from "logos/models/suggestion";
+import type { Client } from "rost/client";
+import { SuggestionComposer } from "rost/commands/components/modal-composers/suggestion-composer";
+import { Guild } from "rost/models/guild";
+import { Suggestion } from "rost/models/suggestion";
 
-async function handleMakeSuggestion(client: Client, interaction: Logos.Interaction): Promise<void> {
+async function handleMakeSuggestion(client: Client, interaction: Rost.Interaction): Promise<void> {
 	const guildDocument = await Guild.getOrCreate(client, { guildId: interaction.guildId.toString() });
 
 	const guild = client.entities.guilds.get(interaction.guildId);

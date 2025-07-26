@@ -1,11 +1,11 @@
-import type { Client } from "logos/client";
-import resolvers from "logos/commands/resolvers";
-import type { SongListingResolver } from "logos/commands/resolvers/resolver";
-import { AudioStream, SongListing } from "logos/services/music";
+import type { Client } from "rost/client";
+import resolvers from "rost/commands/resolvers";
+import type { SongListingResolver } from "rost/commands/resolvers/resolver";
+import { AudioStream, SongListing } from "rost/services/music";
 
 async function handleRequestStreamPlayback(
 	client: Client,
-	interaction: Logos.Interaction<any, { url: string }>,
+	interaction: Rost.Interaction<any, { url: string }>,
 ): Promise<void> {
 	const strings = constants.contexts.stream({ localise: client.localise, locale: interaction.locale });
 	const listing: SongListing = new SongListing({
@@ -18,14 +18,14 @@ async function handleRequestStreamPlayback(
 
 async function handleRequestYouTubePlayback(
 	client: Client,
-	interaction: Logos.Interaction<any, { query: string }>,
+	interaction: Rost.Interaction<any, { query: string }>,
 ): Promise<void> {
 	await handleRequestQueryPlayback(client, interaction, resolvers.youtube);
 }
 
 async function handleRequestQueryPlayback(
 	client: Client,
-	interaction: Logos.Interaction<any, { query: string }>,
+	interaction: Rost.Interaction<any, { query: string }>,
 	resolveToSongListing: SongListingResolver,
 ): Promise<void> {
 	const musicService = client.services.local("music", { guildId: interaction.guildId });
@@ -56,7 +56,7 @@ async function handleRequestQueryPlayback(
 
 async function handleRequestPlayback(
 	client: Client,
-	interaction: Logos.Interaction,
+	interaction: Rost.Interaction,
 	listing: SongListing,
 ): Promise<void> {
 	const guild = client.entities.guilds.get(interaction.guildId);

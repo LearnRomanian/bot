@@ -1,4 +1,4 @@
-import time from "logos:constants/time";
+import time from "rost:constants/time";
 
 const levels = ["lowest", "low", "medium", "high", "highest", "emergency", "lockdown", "beyond"] as const;
 type SlowmodeLevel = (typeof levels)[number];

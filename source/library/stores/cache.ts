@@ -1,36 +1,34 @@
-import type { Collection } from "logos:constants/database";
-import type { DesiredProperties, DesiredPropertiesBehaviour } from "logos:constants/properties";
-import type { PromiseOr } from "logos:core/utilities";
-import type { EntryRequest } from "logos/models/entry-request";
-import type { Guild } from "logos/models/guild";
-import type { GuildStatistics } from "logos/models/guild-statistics";
-import type { Model } from "logos/models/model";
-import type { Praise } from "logos/models/praise";
-import type { Report } from "logos/models/report";
-import type { Resource } from "logos/models/resource";
-import type { Suggestion } from "logos/models/suggestion";
-import type { Ticket } from "logos/models/ticket";
-import type { User } from "logos/models/user";
-import type { Warning } from "logos/models/warning";
+import type { Collection } from "rost:constants/database";
+import type { DesiredProperties, DesiredPropertiesBehaviour } from "rost:constants/properties";
+import type { PromiseOr } from "rost:core/utilities";
 import type pino from "pino";
+import type { EntryRequest } from "rost/models/entry-request";
+import type { Guild } from "rost/models/guild";
+import type { Model } from "rost/models/model";
+import type { Praise } from "rost/models/praise";
+import type { Report } from "rost/models/report";
+import type { Resource } from "rost/models/resource";
+import type { Suggestion } from "rost/models/suggestion";
+import type { Ticket } from "rost/models/ticket";
+import type { User } from "rost/models/user";
+import type { Warning } from "rost/models/warning";
 
 class CacheStore {
 	readonly log: pino.Logger;
 	readonly entities: {
-		readonly guilds: Map<bigint, Logos.Guild>;
-		readonly users: Map<bigint, Logos.User>;
-		readonly members: Map</* guildId: */ bigint, Map</* userId: */ bigint, Logos.Member>>;
-		readonly channels: Map<bigint, Logos.Channel>;
+		readonly guilds: Map<bigint, Rost.Guild>;
+		readonly users: Map<bigint, Rost.User>;
+		readonly members: Map</* guildId: */ bigint, Map</* userId: */ bigint, Rost.Member>>;
+		readonly channels: Map<bigint, Rost.Channel>;
 		readonly messages: {
-			readonly latest: Map<bigint, Logos.Message>;
-			readonly previous: Map<bigint, Logos.Message>;
+			readonly latest: Map<bigint, Rost.Message>;
+			readonly previous: Map<bigint, Rost.Message>;
 		};
-		readonly attachments: Map<bigint, Logos.Attachment>;
-		readonly roles: Map<bigint, Logos.Role>;
+		readonly attachments: Map<bigint, Rost.Attachment>;
+		readonly roles: Map<bigint, Rost.Role>;
 	};
 	readonly documents: {
 		readonly entryRequests: Map<string, EntryRequest>;
-		readonly guildStatistics: Map<string, GuildStatistics>;
 		readonly guilds: Map<string, Guild>;
 		readonly praisesByAuthor: Map<string, Map<string, Praise>>;
 		readonly praisesByTarget: Map<string, Map<string, Praise>>;
@@ -60,7 +58,6 @@ class CacheStore {
 		};
 		this.documents = {
 			entryRequests: new Map(),
-			guildStatistics: new Map(),
 			guilds: new Map(),
 			praisesByAuthor: new Map(),
 			praisesByTarget: new Map(),
@@ -100,7 +97,7 @@ class CacheStore {
 	#cacheGuild(guild_: Discord.Guild): void {
 		const oldGuild = this.entities.guilds.get(guild_.id);
 		const guild = {
-			...(guild_ as unknown as Logos.Guild),
+			...(guild_ as unknown as Rost.Guild),
 			roles: new Discord.Collection([...(oldGuild?.roles ?? []), ...(guild_.roles ?? [])]),
 			emojis: new Discord.Collection([...(oldGuild?.emojis ?? []), ...(guild_.emojis ?? [])]),
 			voiceStates: new Discord.Collection([...(oldGuild?.voiceStates ?? []), ...(guild_.voiceStates ?? [])]),
@@ -201,10 +198,6 @@ class CacheStore {
 				this.documents.entryRequests.set(document.partialId, document);
 				break;
 			}
-			case "GuildStatistics": {
-				this.documents.guildStatistics.set(document.partialId, document);
-				break;
-			}
 			case "Guilds": {
 				this.documents.guilds.set(document.partialId, document);
 				break;
@@ -267,10 +260,6 @@ class CacheStore {
 			}
 			case "Guilds": {
 				this.documents.guilds.delete(document.partialId);
-				break;
-			}
-			case "GuildStatistics": {
-				this.documents.guildStatistics.delete(document.partialId);
 				break;
 			}
 			case "Praises": {

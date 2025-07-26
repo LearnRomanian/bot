@@ -1,5 +1,5 @@
-import colours from "logos:constants/colours";
-import emojis from "logos:constants/emojis";
+import colours from "rost:constants/colours";
+import emojis from "rost:constants/emojis";
 
 const roles = Object.freeze({
 	language: {

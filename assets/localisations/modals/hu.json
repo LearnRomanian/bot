@@ -1,0 +1,16 @@
+{
+  "verification.title": "Hitelesítő kérdések",
+  "verification.fields.reason": "Mi az oka, hogy a(z) {language} nyelvet tanulod?",
+  "verification.fields.aim": "How will you benefit from becoming a member?",
+  "verification.fields.whereFound": "Where did you find out about the server?",
+  "report.title": "User report",
+  "report.fields.reason": "What is the reason for the report?",
+  "report.fields.users": "Users to report",
+  "report.fields.link": "Link to the message for context",
+  "suggestion.title": "Suggestion",
+  "suggestion.fields.suggestion": "What is your suggestion?",
+  "prompts.continue": "Continue",
+  "prompts.cancel": "Cancel",
+  "prompts.stay": "Take me back",
+  "prompts.leave": "Leave"
+}

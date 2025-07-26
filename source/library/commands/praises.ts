@@ -1,9 +1,9 @@
-import type { Client } from "logos/client";
-import type { Praise } from "logos/models/praise";
+import type { Client } from "rost/client";
+import type { Praise } from "rost/models/praise";
 
 function getPraisePage(
 	client: Client,
-	interaction: Logos.Interaction,
+	interaction: Rost.Interaction,
 	praises: Praise[],
 	isSelf: boolean,
 	type: "author" | "target",

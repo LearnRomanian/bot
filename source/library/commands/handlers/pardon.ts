@@ -1,12 +1,12 @@
-import { mention } from "logos:constants/formatting";
-import { timeStructToMilliseconds } from "logos:constants/time";
-import type { Client } from "logos/client";
-import { Guild } from "logos/models/guild";
-import { Warning } from "logos/models/warning";
+import { mention } from "rost:constants/formatting";
+import { timeStructToMilliseconds } from "rost:constants/time";
+import type { Client } from "rost/client";
+import { Guild } from "rost/models/guild";
+import { Warning } from "rost/models/warning";
 
 async function handlePardonUserAutocomplete(
 	client: Client,
-	interaction: Logos.Interaction<any, { user: string; warning: string }>,
+	interaction: Rost.Interaction<any, { user: string; warning: string }>,
 ): Promise<void> {
 	const guildDocument = await Guild.getOrCreate(client, { guildId: interaction.guildId.toString() });
 	const configuration = guildDocument.feature("warns");
@@ -63,7 +63,7 @@ async function handlePardonUserAutocomplete(
 
 async function handlePardonUser(
 	client: Client,
-	interaction: Logos.Interaction<any, { user: string; warning: string }>,
+	interaction: Rost.Interaction<any, { user: string; warning: string }>,
 ): Promise<void> {
 	const guildDocument = await Guild.getOrCreate(client, { guildId: interaction.guildId.toString() });
 	const configuration = guildDocument.feature("warns");

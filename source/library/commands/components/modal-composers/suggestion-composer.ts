@@ -1,15 +1,15 @@
-import { trim } from "logos:constants/formatting";
-import type { Client } from "logos/client";
-import { type Modal, ModalComposer } from "logos/commands/components/modal-composers/modal-composer";
-import type { SuggestionFormData } from "logos/models/documents/suggestion";
+import { trim } from "rost:constants/formatting";
+import type { Client } from "rost/client";
+import { type Modal, ModalComposer } from "rost/commands/components/modal-composers/modal-composer";
+import type { SuggestionFormData } from "rost/models/documents/suggestion";
 
 class SuggestionComposer extends ModalComposer<SuggestionFormData, never> {
-	constructor(client: Client, { interaction }: { interaction: Logos.Interaction }) {
+	constructor(client: Client, { interaction }: { interaction: Rost.Interaction }) {
 		super(client, { interaction, initialFormData: { suggestion: "" } });
 	}
 
 	buildModal(
-		submission: Logos.Interaction,
+		submission: Rost.Interaction,
 		{ formData }: { formData: SuggestionFormData },
 	): Modal<SuggestionFormData> {
 		const strings = constants.contexts.suggestionModal({

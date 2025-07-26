@@ -1,4 +1,4 @@
-import time from "logos:constants/time";
+import time from "rost:constants/time";
 
 export default Object.freeze({
 	// The 10 seconds are to account for potential network lag.

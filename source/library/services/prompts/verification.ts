@@ -1,11 +1,11 @@
-import { mention, timestamp } from "logos:constants/formatting";
-import type { Client } from "logos/client";
-import { InteractionCollector } from "logos/collectors";
-import type { EntryRequest, VoteType } from "logos/models/entry-request";
-import type { Guild } from "logos/models/guild";
-import { Model } from "logos/models/model";
-import { User } from "logos/models/user";
-import { PromptService } from "logos/services/prompts/service";
+import { mention, timestamp } from "rost:constants/formatting";
+import type { Client } from "rost/client";
+import { InteractionCollector } from "rost/collectors";
+import type { EntryRequest, VoteType } from "rost/models/entry-request";
+import type { Guild } from "rost/models/guild";
+import { Model } from "rost/models/model";
+import { User } from "rost/models/user";
+import { PromptService } from "rost/services/prompts/service";
 
 type Configuration = NonNullable<Guild["features"]["verification"]>;
 type VoteInformation = {
@@ -99,7 +99,7 @@ class VerificationPromptService extends PromptService<{
 		return User.getOrCreate(this.client, { userId: entryRequestDocument.authorId });
 	}
 
-	getPromptContent(user: Logos.User, entryRequestDocument: EntryRequest): Discord.CreateMessageOptions | undefined {
+	getPromptContent(user: Rost.User, entryRequestDocument: EntryRequest): Discord.CreateMessageOptions | undefined {
 		const voteInformation = this.#getVoteInformation(entryRequestDocument);
 		if (voteInformation === undefined) {
 			return undefined;
@@ -243,7 +243,7 @@ class VerificationPromptService extends PromptService<{
 
 	getNoPromptsMessageContent(): Discord.CreateMessageOptions {
 		const strings = constants.contexts.noEntryRequests({
-			localise: this.client.localise.bind(this.client),
+			localise: this.client.localise,
 			locale: this.guildLocale,
 		});
 
@@ -266,7 +266,7 @@ class VerificationPromptService extends PromptService<{
 	}
 
 	async handlePromptInteraction(
-		interaction: Logos.Interaction<[partialId: string, isAccept: string]>,
+		interaction: Rost.Interaction<[partialId: string, isAccept: string]>,
 	): Promise<EntryRequest | null | undefined> {
 		const [guildId, authorId] = Model.getDataFromPartialId<EntryRequest>(interaction.metadata[1]);
 		if (guildId === undefined || authorId === undefined) {
@@ -290,7 +290,7 @@ class VerificationPromptService extends PromptService<{
 			const ticketChannel = await this.client.bot.helpers.getChannel(entryRequestDocument.ticketChannelId);
 			if (ticketChannel !== undefined) {
 				const strings = constants.contexts.inquiryInProgress({
-					localise: this.client.localise.bind(this.client),
+					localise: this.client.localise,
 					locale: interaction.locale,
 				});
 				this.client
@@ -547,7 +547,7 @@ class VerificationPromptService extends PromptService<{
 		voter,
 	}: {
 		entryRequestDocument: EntryRequest;
-		voter: Logos.Member;
+		voter: Rost.Member;
 	}): Promise<boolean> {
 		const guild = this.client.entities.guilds.get(this.guildId);
 		if (guild === undefined) {
@@ -644,7 +644,7 @@ class VerificationPromptService extends PromptService<{
 		return true;
 	}
 
-	async #handleOpenInquiry(interaction: Logos.Interaction, partialId: string): Promise<void> {
+	async #handleOpenInquiry(interaction: Rost.Interaction, partialId: string): Promise<void> {
 		await this.client.postponeReply(interaction);
 
 		const entryRequestDocument = this.client.documents.entryRequests.get(partialId);

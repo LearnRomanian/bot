@@ -1,7 +1,7 @@
-import type { Client } from "logos/client";
-import type { Resource } from "logos/models/resource";
-import { User } from "logos/models/user";
-import { PromptService } from "logos/services/prompts/service";
+import type { Client } from "rost/client";
+import type { Resource } from "rost/models/resource";
+import { User } from "rost/models/user";
+import { PromptService } from "rost/services/prompts/service";
 
 class ResourcePromptService extends PromptService<{
 	type: "resources";
@@ -30,7 +30,7 @@ class ResourcePromptService extends PromptService<{
 		return User.getOrCreate(this.client, { userId: resourceDocument.authorId });
 	}
 
-	getPromptContent(user: Logos.User, resourceDocument: Resource): Discord.CreateMessageOptions | undefined {
+	getPromptContent(user: Rost.User, resourceDocument: Resource): Discord.CreateMessageOptions | undefined {
 		const strings = constants.contexts.promptControls({
 			localise: this.client.localise,
 			locale: this.guildLocale,
@@ -82,7 +82,7 @@ class ResourcePromptService extends PromptService<{
 
 	getNoPromptsMessageContent(): Discord.CreateMessageOptions {
 		const strings = constants.contexts.noResources({
-			localise: this.client.localise.bind(this.client),
+			localise: this.client.localise,
 			locale: this.guildLocale,
 		});
 
@@ -105,7 +105,7 @@ class ResourcePromptService extends PromptService<{
 	}
 
 	async handlePromptInteraction(
-		interaction: Logos.Interaction<[partialId: string, isResolve: string]>,
+		interaction: Rost.Interaction<[partialId: string, isResolve: string]>,
 	): Promise<Resource | null | undefined> {
 		const resourceDocument = this.documents.get(interaction.metadata[1]);
 		if (resourceDocument === undefined) {

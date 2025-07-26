@@ -1,8 +1,8 @@
-import { mention } from "logos:constants/formatting";
-import type { Client } from "logos/client";
-import { RemoveSongListingView } from "logos/commands/components/paginated-views/remove-song-listing-view";
+import { mention } from "rost:constants/formatting";
+import type { Client } from "rost/client";
+import { RemoveSongListingView } from "rost/commands/components/paginated-views/remove-song-listing-view";
 
-async function handleRemoveSongListing(client: Client, interaction: Logos.Interaction): Promise<void> {
+async function handleRemoveSongListing(client: Client, interaction: Rost.Interaction): Promise<void> {
 	const musicService = client.services.local("music", { guildId: interaction.guildId });
 	if (!musicService.canManagePlayback(interaction)) {
 		return;

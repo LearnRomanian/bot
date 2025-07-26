@@ -1,11 +1,11 @@
-import { codeMultiline, mention, trim } from "logos:constants/formatting";
-import type { Client } from "logos/client";
-import type { TicketFormData, TicketType } from "logos/models/documents/ticket";
-import type { EntryRequest } from "logos/models/entry-request";
-import { Model } from "logos/models/model";
-import { Ticket } from "logos/models/ticket";
-import { User } from "logos/models/user";
-import { PromptService } from "logos/services/prompts/service";
+import { codeMultiline, mention, trim } from "rost:constants/formatting";
+import type { Client } from "rost/client";
+import type { TicketFormData, TicketType } from "rost/models/documents/ticket";
+import type { EntryRequest } from "rost/models/entry-request";
+import { Model } from "rost/models/model";
+import { Ticket } from "rost/models/ticket";
+import { User } from "rost/models/user";
+import { PromptService } from "rost/services/prompts/service";
 
 class TicketPromptService extends PromptService<{
 	type: "tickets";
@@ -34,7 +34,7 @@ class TicketPromptService extends PromptService<{
 		return User.getOrCreate(this.client, { userId: ticketDocument.authorId });
 	}
 
-	getPromptContent(user: Logos.User, ticketDocument: Ticket): Discord.CreateMessageOptions | undefined {
+	getPromptContent(user: Rost.User, ticketDocument: Ticket): Discord.CreateMessageOptions | undefined {
 		const strings = constants.contexts.promptControls({
 			localise: this.client.localise,
 			locale: this.guildLocale,
@@ -86,7 +86,7 @@ class TicketPromptService extends PromptService<{
 
 	getNoPromptsMessageContent(): Discord.CreateMessageOptions {
 		const strings = constants.contexts.noTickets({
-			localise: this.client.localise.bind(this.client),
+			localise: this.client.localise,
 			locale: this.guildLocale,
 		});
 
@@ -109,7 +109,7 @@ class TicketPromptService extends PromptService<{
 	}
 
 	async handlePromptInteraction(
-		interaction: Logos.Interaction<[partialId: string, isResolve: string]>,
+		interaction: Rost.Interaction<[partialId: string, isResolve: string]>,
 	): Promise<Ticket | null | undefined> {
 		const ticketDocument = this.documents.get(interaction.metadata[1]);
 		if (ticketDocument === undefined) {
@@ -189,7 +189,7 @@ class TicketPromptService extends PromptService<{
 	}: {
 		type: TicketType;
 		formData: TicketFormData;
-		user: Logos.User;
+		user: Rost.User;
 	}): Promise<Ticket | undefined> {
 		const member = this.client.entities.members.get(this.guildId)?.get(user.id);
 		if (member === undefined) {
@@ -266,10 +266,6 @@ class TicketPromptService extends PromptService<{
 					localise: this.client.localise,
 					locale: this.guildLocale,
 				}),
-				...constants.contexts.language({
-					localise: this.client.localise,
-					locale: this.guildLocale,
-				}),
 			};
 			await this.client.bot.helpers.sendMessage(channel.id, {
 				embeds: [
@@ -278,9 +274,7 @@ class TicketPromptService extends PromptService<{
 						color: constants.colours.husky,
 						fields: [
 							{
-								name: strings.fields.reason({
-									language: strings.language(this.guildDocument.languages.feature),
-								}),
+								name: strings.fields.reason,
 								value: codeMultiline(entryRequest.formData.reason),
 							},
 							{

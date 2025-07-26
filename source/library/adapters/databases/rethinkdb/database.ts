@@ -1,13 +1,13 @@
-import type { Collection } from "logos:constants/database";
-import type { Environment } from "logos:core/loaders/environment";
-import { DatabaseAdapter, type DocumentConventions } from "logos/adapters/databases/adapter";
-import { RethinkDBDocumentConventions } from "logos/adapters/databases/rethinkdb/conventions";
-import type { RethinkDBDocumentMetadata } from "logos/adapters/databases/rethinkdb/document";
-import { RethinkDBDocumentSession } from "logos/adapters/databases/rethinkdb/session";
-import type { IdentifierDataOrMetadata, Model } from "logos/models/model";
-import type { DatabaseStore } from "logos/stores/database";
+import type { Collection } from "rost:constants/database";
+import type { Environment } from "rost:core/loaders/environment";
 import type pino from "pino";
 import rethinkdb from "rethinkdb-ts";
+import { DatabaseAdapter, type DocumentConventions } from "rost/adapters/databases/adapter";
+import { RethinkDBDocumentConventions } from "rost/adapters/databases/rethinkdb/conventions";
+import type { RethinkDBDocumentMetadata } from "rost/adapters/databases/rethinkdb/document";
+import { RethinkDBDocumentSession } from "rost/adapters/databases/rethinkdb/session";
+import type { IdentifierDataOrMetadata, Model } from "rost/models/model";
+import type { DatabaseStore } from "rost/stores/database";
 
 class RethinkDBAdapter extends DatabaseAdapter {
 	readonly #connectionOptions: rethinkdb.RConnectionOptions;

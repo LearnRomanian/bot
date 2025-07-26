@@ -1,5 +1,3 @@
-import type { LearningLanguage } from "logos:constants/languages/learning";
-
 interface Contributor {
 	readonly username: string;
 	readonly id: string;
@@ -11,7 +9,6 @@ interface Translation {
 	readonly completion: 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10;
 	readonly contributors: Contributor[];
 }
-type TranslatedLanguage = Exclude<LearningLanguage, "English/American" | "English/British">;
 
 const contributors = Object.freeze({
 	"16wardm": {
@@ -194,7 +191,7 @@ export default Object.freeze({
 			completion: 7,
 			contributors: [contributors.yeetfe, contributors.theodeninmuhafizi],
 		},
-	} satisfies Partial<Record<TranslatedLanguage, Translation>>,
+	} satisfies Record<string, Translation>,
 } as const);
 export { contributors };
 export type { Contributor, Translation };

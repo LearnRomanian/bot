@@ -1,8 +1,8 @@
-name: logos
+name: rost
 
 services:
   mongodb:
-    container_name: logos_mongodb
+    container_name: rost_mongodb
     image: mongo:latest
     restart: unless-stopped
     environment:
@@ -11,7 +11,7 @@ services:
     profiles:
       - mongodb
   ravendb:
-    container_name: logos_ravendb
+    container_name: rost_ravendb
     image: ravendb/ravendb:ubuntu-latest
     restart: unless-stopped
     environment:
@@ -26,7 +26,7 @@ services:
     profiles:
       - ravendb
   couchdb:
-    container_name: logos_couchdb
+    container_name: rost_couchdb
     image: couchdb:latest
     restart: unless-stopped
     environment:
@@ -37,7 +37,7 @@ services:
     profiles:
       - couchdb
   rethinkdb:
-    container_name: logos_rethinkdb
+    container_name: rost_rethinkdb
     image: rethinkdb:2.4.4-bookworm-slim
     restart: unless-stopped
     ports:
@@ -46,7 +46,7 @@ services:
     profiles:
       - rethinkdb
   redis:
-    container_name: logos_redis
+    container_name: rost_redis
     image: redis:alpine
     restart: unless-stopped
     environment:
@@ -56,7 +56,7 @@ services:
     profiles:
       - redis
   lavalink:
-    container_name: logos_lavalink
+    container_name: rost_lavalink
     image: ghcr.io/lavalink-devs/lavalink:4
     restart: unless-stopped
     environment:
@@ -68,8 +68,8 @@ services:
       - ${LAVALINK_PORT:-2333}
     profiles:
       - lavalink
-  logos:
-    container_name: logos
+  rost:
+    container_name: rost
     restart: unless-stopped
     environment:
       REDIS_HOST: redis

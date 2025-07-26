@@ -1,4 +1,4 @@
-import type { EventLogger } from "logos/stores/journalling/loggers";
+import type { EventLogger } from "rost/stores/journalling/loggers";
 
 const logger: EventLogger<"guildBanAdd"> = (client, [user, _], { guildLocale }) => {
 	const strings = constants.contexts.guildBanAdd({ localise: client.localise, locale: guildLocale });

@@ -1,11 +1,11 @@
-import { mention, timestamp } from "logos:constants/formatting";
-import type { Client } from "logos/client";
-import { SongCollectionView } from "logos/commands/components/paginated-views/song-collection-view";
-import { SongCollection } from "logos/services/music";
+import { mention, timestamp } from "rost:constants/formatting";
+import type { Client } from "rost/client";
+import { SongCollectionView } from "rost/commands/components/paginated-views/song-collection-view";
+import { SongCollection } from "rost/services/music";
 
 async function handleDisplayCurrentlyPlaying(
 	client: Client,
-	interaction: Logos.Interaction<any, { collection: boolean | undefined }>,
+	interaction: Rost.Interaction<any, { collection: boolean | undefined }>,
 ): Promise<void> {
 	const musicService = client.services.local("music", { guildId: interaction.guildId });
 	if (!musicService.canCheckPlayback(interaction)) {

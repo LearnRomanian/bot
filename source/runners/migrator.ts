@@ -1,7 +1,7 @@
-import constants from "logos:constants/constants";
-import type { DatabaseMetadata } from "logos/models/database-metadata";
-import type { DatabaseStore } from "logos/stores/database";
+import constants from "rost:constants/constants";
 import type pino from "pino";
+import type { DatabaseMetadata } from "rost/models/database-metadata";
+import type { DatabaseStore } from "rost/stores/database";
 
 async function migrate({
 	log,

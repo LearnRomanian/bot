@@ -1,12 +1,12 @@
-import type { DatabaseMetadataDocument } from "logos/models/documents/database-metadata";
+import type { DatabaseMetadataDocument } from "rost/models/documents/database-metadata";
 import {
 	type ClientOrDatabaseStore,
 	type CreateModelOptions,
 	DatabaseMetadataModel,
 	Model,
 	getDatabase,
-} from "logos/models/model";
-import type { DatabaseStore } from "logos/stores/database";
+} from "rost/models/model";
+import type { DatabaseStore } from "rost/stores/database";
 
 type CreateDatabaseMetadataOptions = CreateModelOptions<DatabaseMetadata, DatabaseMetadataDocument, "migrations">;
 

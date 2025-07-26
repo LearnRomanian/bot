@@ -1,7 +1,7 @@
-import type { Client } from "logos/client";
-import type { Report } from "logos/models/report";
-import { User } from "logos/models/user";
-import { PromptService } from "logos/services/prompts/service";
+import type { Client } from "rost/client";
+import type { Report } from "rost/models/report";
+import { User } from "rost/models/user";
+import { PromptService } from "rost/services/prompts/service";
 
 class ReportPromptService extends PromptService<{
 	type: "reports";
@@ -30,7 +30,7 @@ class ReportPromptService extends PromptService<{
 		return User.getOrCreate(this.client, { userId: reportDocument.authorId });
 	}
 
-	getPromptContent(user: Logos.User, reportDocument: Report): Discord.CreateMessageOptions | undefined {
+	getPromptContent(user: Rost.User, reportDocument: Report): Discord.CreateMessageOptions | undefined {
 		const strings = constants.contexts.reportPrompt({
 			localise: this.client.localise,
 			locale: this.guildLocale,
@@ -111,7 +111,7 @@ class ReportPromptService extends PromptService<{
 
 	getNoPromptsMessageContent(): Discord.CreateMessageOptions {
 		const strings = constants.contexts.noReports({
-			localise: this.client.localise.bind(this.client),
+			localise: this.client.localise,
 			locale: this.guildLocale,
 		});
 
@@ -134,7 +134,7 @@ class ReportPromptService extends PromptService<{
 	}
 
 	async handlePromptInteraction(
-		interaction: Logos.Interaction<[partialId: string, isResolve: string]>,
+		interaction: Rost.Interaction<[partialId: string, isResolve: string]>,
 	): Promise<Report | null | undefined> {
 		const reportDocument = this.documents.get(interaction.metadata[1]);
 		if (reportDocument === undefined) {

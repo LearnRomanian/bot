@@ -1,8 +1,8 @@
-import type { Collection } from "logos:constants/database";
-import { type DocumentQuery, DocumentSession } from "logos/adapters/databases/adapter";
-import { InMemoryDocumentQuery } from "logos/adapters/databases/in-memory/query";
-import { Model } from "logos/models/model";
-import type { DatabaseStore } from "logos/stores/database";
+import type { Collection } from "rost:constants/database";
+import { type DocumentQuery, DocumentSession } from "rost/adapters/databases/adapter";
+import { InMemoryDocumentQuery } from "rost/adapters/databases/in-memory/query";
+import { Model } from "rost/models/model";
+import type { DatabaseStore } from "rost/stores/database";
 
 class InMemoryDocumentSession extends DocumentSession {
 	readonly #documents: Record<Collection, Map<string, Model>>;

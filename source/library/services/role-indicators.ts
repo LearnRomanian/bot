@@ -1,8 +1,8 @@
-import type { Client } from "logos/client";
-import { Collector } from "logos/collectors";
-import type { RoleWithIndicator } from "logos/models/documents/guild";
-import type { Guild } from "logos/models/guild";
-import { LocalService } from "logos/services/service";
+import type { Client } from "rost/client";
+import { Collector } from "rost/collectors";
+import type { RoleWithIndicator } from "rost/models/documents/guild";
+import type { Guild } from "rost/models/guild";
+import { LocalService } from "rost/services/service";
 
 class RoleIndicatorService extends LocalService {
 	readonly #guildMemberUpdates: Collector<"guildMemberUpdate">;
@@ -35,7 +35,7 @@ class RoleIndicatorService extends LocalService {
 		await this.#guildMemberUpdates.close();
 	}
 
-	async guildMemberUpdate(member: Discord.Member | Logos.Member, user: Discord.User | Logos.User): Promise<void> {
+	async guildMemberUpdate(member: Discord.Member | Rost.Member, user: Discord.User | Rost.User): Promise<void> {
 		// Bots cannot change the guild owner's nickname.
 		if (member.id === this.guild.ownerId) {
 			return;

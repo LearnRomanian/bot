@@ -1,13 +1,13 @@
-import type { Client } from "logos/client";
-import type { WarningDocument } from "logos/models/documents/warning";
+import type { Client } from "rost/client";
+import type { WarningDocument } from "rost/models/documents/warning";
 import {
 	type ClientOrDatabaseStore,
 	type CreateModelOptions,
 	type IdentifierData,
 	Model,
 	WarningModel,
-} from "logos/models/model";
-import type { DatabaseStore } from "logos/stores/database";
+} from "rost/models/model";
+import type { DatabaseStore } from "rost/stores/database";
 
 type CreateWarningOptions = CreateModelOptions<Warning, WarningDocument, "reason" | "rule">;
 

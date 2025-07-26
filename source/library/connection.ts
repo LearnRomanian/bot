@@ -1,5 +1,5 @@
-import type { DesiredProperties, DesiredPropertiesBehaviour } from "logos:constants/properties";
-import type { Environment } from "logos:core/loaders/environment";
+import type { DesiredProperties, DesiredPropertiesBehaviour } from "rost:constants/properties";
+import type { Environment } from "rost:core/loaders/environment";
 import type pino from "pino";
 
 class DiscordConnection {
@@ -48,7 +48,7 @@ class DiscordConnection {
 				constants.loggers.discordeno.child({ name: name.toLowerCase() }, { level: "debug" }),
 		});
 
-		this.bot.rest.createBaseHeaders = () => ({ "User-Agent": "Logos (https://github.com/vxern/logos)" });
+		this.bot.rest.createBaseHeaders = () => ({ "User-Agent": constants.USER_AGENT });
 	}
 
 	async open(): Promise<void> {

@@ -1,6 +1,6 @@
-import { codeMultiline, mention } from "logos:constants/formatting";
-import { isDefined } from "logos:core/utilities";
-import type { EventLogger } from "logos/stores/journalling/loggers";
+import { codeMultiline, mention } from "rost:constants/formatting";
+import { isDefined } from "rost:core/utilities";
+import type { EventLogger } from "rost/stores/journalling/loggers";
 
 const logger: EventLogger<"messageDelete"> = (client, [payload, _], { guildLocale }) => {
 	const message = client.entities.messages.latest.get(payload.id);

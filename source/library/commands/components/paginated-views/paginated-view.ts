@@ -1,5 +1,5 @@
-import type { Client } from "logos/client";
-import { InteractionCollector } from "logos/collectors";
+import type { Client } from "rost/client";
+import { InteractionCollector } from "rost/collectors";
 
 interface View {
 	embed: Discord.Camelize<Discord.DiscordEmbed>;
@@ -11,7 +11,7 @@ abstract class PaginatedView<T> {
 	readonly client: Client;
 
 	readonly #pageButtons: InteractionCollector<[action: PageAction]>;
-	readonly #anchor: Logos.Interaction;
+	readonly #anchor: Rost.Interaction;
 	readonly #pages: T[][];
 	readonly #showable: boolean;
 	#index: number;
@@ -103,7 +103,7 @@ abstract class PaginatedView<T> {
 			elements,
 			showable,
 			entriesPerPage,
-		}: { interaction: Logos.Interaction; elements: T[]; showable?: boolean; entriesPerPage?: number },
+		}: { interaction: Rost.Interaction; elements: T[]; showable?: boolean; entriesPerPage?: number },
 	) {
 		this.client = client;
 		this.#anchor = interaction;
@@ -117,7 +117,7 @@ abstract class PaginatedView<T> {
 		});
 	}
 
-	abstract build(interaction: Logos.Interaction, page: T[], index: number): View;
+	abstract build(interaction: Rost.Interaction, page: T[], index: number): View;
 
 	async #display(): Promise<void> {
 		await this.client.reply(this.#anchor, {

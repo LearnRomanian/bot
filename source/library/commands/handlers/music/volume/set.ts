@@ -1,6 +1,6 @@
-import type { Client } from "logos/client";
+import type { Client } from "rost/client";
 
-async function handleSetVolume(client: Client, interaction: Logos.Interaction<any, { volume: number }>): Promise<void> {
+async function handleSetVolume(client: Client, interaction: Rost.Interaction<any, { volume: number }>): Promise<void> {
 	const musicService = client.services.local("music", { guildId: interaction.guildId });
 	if (!musicService.canManagePlayback(interaction)) {
 		return;

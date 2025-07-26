@@ -1,7 +1,7 @@
-import { trim } from "logos:constants/formatting";
-import type { Client } from "logos/client";
-import { PaginatedView, type View } from "logos/commands/components/paginated-views/paginated-view";
-import type { Song, SongCollection } from "logos/services/music";
+import { trim } from "rost:constants/formatting";
+import type { Client } from "rost/client";
+import { PaginatedView, type View } from "rost/commands/components/paginated-views/paginated-view";
+import type { Song, SongCollection } from "rost/services/music";
 
 class SongCollectionView extends PaginatedView<Song> {
 	readonly #title: string;
@@ -13,7 +13,7 @@ class SongCollectionView extends PaginatedView<Song> {
 			interaction,
 			title,
 			collection,
-		}: { interaction: Logos.Interaction; title: string; collection: SongCollection },
+		}: { interaction: Rost.Interaction; title: string; collection: SongCollection },
 	) {
 		super(client, { interaction, elements: collection.songs, showable: true });
 
@@ -21,7 +21,7 @@ class SongCollectionView extends PaginatedView<Song> {
 		this.#collection = collection;
 	}
 
-	build(interaction: Logos.Interaction, page: Song[], pageIndex: number): View {
+	build(interaction: Rost.Interaction, page: Song[], pageIndex: number): View {
 		if (page.length === 0) {
 			const strings = constants.contexts.listEmpty({
 				localise: this.client.localise,

@@ -1,10 +1,10 @@
-import type { Collection } from "logos:constants/database";
-import { DocumentQuery } from "logos/adapters/databases/adapter";
-import { RavenDBDocumentConventions } from "logos/adapters/databases/ravendb/conventions";
-import type { RavenDBDocument } from "logos/adapters/databases/ravendb/document";
-import type { Model } from "logos/models/model";
-import type { DatabaseStore } from "logos/stores/database";
+import type { Collection } from "rost:constants/database";
 import type * as ravendb from "ravendb";
+import { DocumentQuery } from "rost/adapters/databases/adapter";
+import { RavenDBDocumentConventions } from "rost/adapters/databases/ravendb/conventions";
+import type { RavenDBDocument } from "rost/adapters/databases/ravendb/document";
+import type { Model } from "rost/models/model";
+import type { DatabaseStore } from "rost/stores/database";
 
 class RavenDBDocumentQuery<M extends Model> extends DocumentQuery<M> {
 	readonly #database: DatabaseStore;

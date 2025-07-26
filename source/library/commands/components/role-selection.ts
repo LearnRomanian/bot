@@ -1,4 +1,4 @@
-import { trim } from "logos:constants/formatting";
+import { trim } from "rost:constants/formatting";
 import {
 	type Role,
 	type RoleCategory,
@@ -10,32 +10,32 @@ import {
 	isCustom,
 	isGroup,
 	isSingle,
-} from "logos:constants/roles";
-import { isDefined } from "logos:core/utilities";
-import type { Client } from "logos/client";
-import { InteractionCollector } from "logos/collectors";
+} from "rost:constants/roles";
+import { isDefined } from "rost:core/utilities";
+import type { Client } from "rost/client";
+import { InteractionCollector } from "rost/collectors";
 
 class RoleSelectionComponent {
 	readonly #client: Client;
 	readonly #selections: InteractionCollector;
 	readonly #root: RoleCategoryGroup;
 	readonly #history: string[];
-	readonly #interaction: Logos.Interaction;
+	readonly #interaction: Rost.Interaction;
 	roleData!: {
 		emojiIdsByName: Map<string, bigint>;
-		rolesById: Map<bigint, Logos.Role>;
+		rolesById: Map<bigint, Rost.Role>;
 		memberRoleIds: bigint[];
 	};
 	viewData!: {
 		category: RoleCategory;
 		menuRoles: Record<string, Role>;
-		menuRolesResolved: Record<string, Logos.Role | undefined>;
+		menuRolesResolved: Record<string, Rost.Role | undefined>;
 		memberRolesIncludedInMenu: bigint[];
 	};
 
 	constructor(
 		client: Client,
-		{ interaction, categories }: { interaction: Logos.Interaction; categories: Record<string, RoleCategory> },
+		{ interaction, categories }: { interaction: Rost.Interaction; categories: Record<string, RoleCategory> },
 	) {
 		this.#client = client;
 		this.#selections = new InteractionCollector(this.#client, { only: [interaction.user.id] });
@@ -86,7 +86,7 @@ class RoleSelectionComponent {
 		await this.#traverseRoleTreeAndDisplay(this.#interaction, { editResponse: false });
 	}
 
-	async #handleSelection(selection: Logos.Interaction): Promise<void> {
+	async #handleSelection(selection: Rost.Interaction): Promise<void> {
 		this.#client.acknowledge(selection).ignore();
 
 		const identifier = selection.data?.values?.at(0);
@@ -235,7 +235,7 @@ class RoleSelectionComponent {
 	}
 
 	async #traverseRoleTreeAndDisplay(
-		interaction: Logos.Interaction,
+		interaction: Rost.Interaction,
 		{ editResponse }: { editResponse: boolean },
 	): Promise<void> {
 		const categories = this.#traverseRoleSelectionTree();
@@ -268,7 +268,7 @@ class RoleSelectionComponent {
 				});
 			})();
 			const menuRolesResolved = Object.fromEntries(
-				snowflakes.map<[string, Logos.Role | undefined]>(([name, snowflake]) => [
+				snowflakes.map<[string, Rost.Role | undefined]>(([name, snowflake]) => [
 					name,
 					this.roleData.rolesById.get(snowflake),
 				]),
@@ -302,7 +302,7 @@ class RoleSelectionComponent {
 	}
 
 	async #displaySelectMenu(
-		interaction: Logos.Interaction,
+		interaction: Rost.Interaction,
 		categories: [RoleCategory, ...RoleCategory[]],
 		selectOptions: Discord.SelectOption[],
 	): Promise<Discord.InteractionCallbackData> {
@@ -358,7 +358,7 @@ class RoleSelectionComponent {
 	}
 
 	#createSelectOptionsFromCategories(
-		interaction: Logos.Interaction,
+		interaction: Rost.Interaction,
 		categories: Record<string, RoleCategory>,
 	): Discord.SelectOption[] {
 		const categorySelections = getRoleCategories(categories, interaction.guildId);
@@ -380,7 +380,7 @@ class RoleSelectionComponent {
 		return selections;
 	}
 
-	#createSelectOptionsFromCollection(interaction: Logos.Interaction): Discord.SelectOption[] {
+	#createSelectOptionsFromCollection(interaction: Rost.Interaction): Discord.SelectOption[] {
 		const selectOptions: Discord.SelectOption[] = [];
 
 		const viewData = this.viewData;

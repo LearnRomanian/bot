@@ -1,5 +1,5 @@
-import { code } from "logos:constants/formatting";
-import type { Client } from "logos/client";
+import { code } from "rost:constants/formatting";
+import type { Client } from "rost/client";
 
 type ID = bigint | string;
 type IndexOr<T> = T | ID;
@@ -8,13 +8,13 @@ function isId<T>(object: IndexOr<T>): object is bigint | string {
 	return typeof object === "bigint" || typeof object === "string";
 }
 
-type UserLike = Logos.User | Discord.User | Discord.Camelize<Discord.DiscordUser>;
-type MemberLike = Logos.Member | Discord.Member | Discord.Camelize<Discord.DiscordMember>;
-type RoleLike = Logos.Role | Discord.Role | Discord.Camelize<Discord.DiscordRole>;
-type GuildLike = Logos.Guild | Discord.Guild | Discord.Camelize<Discord.DiscordGuild>;
-type MessageLike = Logos.Message | Discord.Message | Discord.Camelize<Discord.DiscordMessage>;
-type ChannelLike = Logos.Channel | Discord.Channel | Discord.Camelize<Discord.DiscordChannel>;
-type InteractionLike = Logos.Interaction | Discord.Interaction;
+type UserLike = Rost.User | Discord.User | Discord.Camelize<Discord.DiscordUser>;
+type MemberLike = Rost.Member | Discord.Member | Discord.Camelize<Discord.DiscordMember>;
+type RoleLike = Rost.Role | Discord.Role | Discord.Camelize<Discord.DiscordRole>;
+type GuildLike = Rost.Guild | Discord.Guild | Discord.Camelize<Discord.DiscordGuild>;
+type MessageLike = Rost.Message | Discord.Message | Discord.Camelize<Discord.DiscordMessage>;
+type ChannelLike = Rost.Channel | Discord.Channel | Discord.Camelize<Discord.DiscordChannel>;
+type InteractionLike = Rost.Interaction | Discord.Interaction;
 
 class Diagnostics {
 	readonly #client: Client;
@@ -76,7 +76,7 @@ class Diagnostics {
 			role = roleOrId;
 		}
 
-		return `role "${role.name}" (ID ${role.id})`;
+		return `role '${role.name}' (ID ${role.id})`;
 	}
 
 	guild(guildOrId: IndexOr<GuildLike>): string {
@@ -91,7 +91,7 @@ class Diagnostics {
 			guild = guildOrId;
 		}
 
-		return `guild "${guild.name}" (ID ${guild.id})`;
+		return `guild '${guild.name}' (ID ${guild.id})`;
 	}
 
 	message(messageOrId: IndexOr<MessageLike>): string {
@@ -180,7 +180,7 @@ class Diagnostics {
 			return `unnamed ${channelTypeFormatted} (ID ${channel.id}) @ ${guildFormatted}`;
 		}
 
-		return `${channelTypeFormatted} "${channel.name}" (ID ${channel.id}) @ ${guildFormatted}`;
+		return `${channelTypeFormatted} '${channel.name}' (ID ${channel.id}) @ ${guildFormatted}`;
 	}
 
 	interaction(interaction: InteractionLike): string {

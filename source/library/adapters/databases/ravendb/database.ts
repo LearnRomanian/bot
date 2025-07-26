@@ -1,14 +1,14 @@
 import fs from "node:fs";
-import type { Collection } from "logos:constants/database";
-import type { Environment } from "logos:core/loaders/environment";
-import { DatabaseAdapter, type DocumentConventions } from "logos/adapters/databases/adapter";
-import { RavenDBDocumentConventions } from "logos/adapters/databases/ravendb/conventions";
-import type { RavenDBDocumentMetadataContainer } from "logos/adapters/databases/ravendb/document";
-import { RavenDBDocumentSession } from "logos/adapters/databases/ravendb/session";
-import type { IdentifierDataOrMetadata, Model } from "logos/models/model";
-import type { DatabaseStore } from "logos/stores/database";
+import type { Collection } from "rost:constants/database";
+import type { Environment } from "rost:core/loaders/environment";
 import type pino from "pino";
 import * as ravendb from "ravendb";
+import { DatabaseAdapter, type DocumentConventions } from "rost/adapters/databases/adapter";
+import { RavenDBDocumentConventions } from "rost/adapters/databases/ravendb/conventions";
+import type { RavenDBDocumentMetadataContainer } from "rost/adapters/databases/ravendb/document";
+import { RavenDBDocumentSession } from "rost/adapters/databases/ravendb/session";
+import type { IdentifierDataOrMetadata, Model } from "rost/models/model";
+import type { DatabaseStore } from "rost/stores/database";
 
 class RavenDBAdapter extends DatabaseAdapter {
 	readonly #documents: ravendb.DocumentStore;

@@ -1,8 +1,8 @@
-import type { Client } from "logos/client";
+import type { Client } from "rost/client";
 
 async function handleSimpleAutocomplete<T>(
 	client: Client,
-	interaction: Logos.Interaction,
+	interaction: Rost.Interaction,
 	{
 		query,
 		elements,

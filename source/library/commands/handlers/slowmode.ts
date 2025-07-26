@@ -1,14 +1,14 @@
-import { timestamp } from "logos:constants/formatting";
-import { getSlowmodeDelayByLevel, getSlowmodeLevelByDelay, isValidSlowmodeLevel } from "logos:constants/slowmode";
-import type { Client } from "logos/client";
-import { handleSimpleAutocomplete } from "logos/commands/fragments/autocomplete/simple";
-import { Guild } from "logos/models/guild";
+import { timestamp } from "rost:constants/formatting";
+import { getSlowmodeDelayByLevel, getSlowmodeLevelByDelay, isValidSlowmodeLevel } from "rost:constants/slowmode";
+import type { Client } from "rost/client";
+import { handleSimpleAutocomplete } from "rost/commands/fragments/autocomplete/simple";
+import { Guild } from "rost/models/guild";
 
 const lastUseByGuildId = new Map<bigint, number>();
 
 async function handleToggleSlowmodeAutocomplete(
 	client: Client,
-	interaction: Logos.Interaction<any, { level: string }>,
+	interaction: Rost.Interaction<any, { level: string }>,
 ): Promise<void> {
 	const strings = constants.contexts.slowmodeLevel({ localise: client.localise, locale: interaction.locale });
 	await handleSimpleAutocomplete(client, interaction, {
@@ -20,7 +20,7 @@ async function handleToggleSlowmodeAutocomplete(
 
 async function handleToggleSlowmode(
 	client: Client,
-	interaction: Logos.Interaction<any, { level: string | undefined }>,
+	interaction: Rost.Interaction<any, { level: string | undefined }>,
 ): Promise<void> {
 	if (interaction.parameters.level !== undefined && !isValidSlowmodeLevel(interaction.parameters.level)) {
 		const strings = constants.contexts.invalidSlowmodeLevel({

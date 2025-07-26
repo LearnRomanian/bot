@@ -1,10 +1,10 @@
 import { parseArgs } from "node:util";
-import { loadEnvironment } from "logos:core/loaders/environment";
-import { getAvailableMigrations, migrate, rollback } from "logos:core/runners/migrator";
+import { loadEnvironment } from "rost:core/loaders/environment";
+import { getAvailableMigrations, migrate, rollback } from "rost:core/runners/migrator";
 import bun from "bun";
-import { DatabaseMetadata } from "logos/models/database-metadata";
-import { CacheStore } from "logos/stores/cache";
-import { DatabaseStore } from "logos/stores/database";
+import { DatabaseMetadata } from "rost/models/database-metadata";
+import { CacheStore } from "rost/stores/cache";
+import { DatabaseStore } from "rost/stores/database";
 
 const log = constants.loggers.feedback;
 

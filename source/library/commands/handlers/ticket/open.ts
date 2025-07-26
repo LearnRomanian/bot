@@ -1,9 +1,9 @@
-import type { Client } from "logos/client";
-import { TicketComposer } from "logos/commands/components/modal-composers/ticket-composer";
-import { Guild } from "logos/models/guild";
-import { Ticket } from "logos/models/ticket";
+import type { Client } from "rost/client";
+import { TicketComposer } from "rost/commands/components/modal-composers/ticket-composer";
+import { Guild } from "rost/models/guild";
+import { Ticket } from "rost/models/ticket";
 
-async function handleOpenTicket(client: Client, interaction: Logos.Interaction): Promise<void> {
+async function handleOpenTicket(client: Client, interaction: Rost.Interaction): Promise<void> {
 	const guildDocument = await Guild.getOrCreate(client, { guildId: interaction.guildId.toString() });
 
 	const guild = client.entities.guilds.get(interaction.guildId);

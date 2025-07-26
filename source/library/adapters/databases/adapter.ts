@@ -1,8 +1,8 @@
-import type { Collection } from "logos:constants/database";
-import type { PromiseOr } from "logos:core/utilities";
-import { type IdentifierData, type IdentifierDataOrMetadata, Model } from "logos/models/model";
-import type { DatabaseStore } from "logos/stores/database";
+import type { Collection } from "rost:constants/database";
+import type { PromiseOr } from "rost:core/utilities";
 import type pino from "pino";
+import { type IdentifierData, type IdentifierDataOrMetadata, Model } from "rost/models/model";
+import type { DatabaseStore } from "rost/stores/database";
 
 abstract class DatabaseAdapter {
 	readonly log: pino.Logger;

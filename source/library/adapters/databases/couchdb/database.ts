@@ -1,13 +1,13 @@
-import type { Collection } from "logos:constants/database";
-import type { Environment } from "logos:core/loaders/environment";
-import { DatabaseAdapter, type DocumentConventions } from "logos/adapters/databases/adapter";
-import { CouchDBDocumentConventions } from "logos/adapters/databases/couchdb/conventions";
-import type { CouchDBDocumentMetadata } from "logos/adapters/databases/couchdb/document";
-import { CouchDBDocumentSession } from "logos/adapters/databases/couchdb/session";
-import type { IdentifierDataOrMetadata, Model } from "logos/models/model";
-import type { DatabaseStore } from "logos/stores/database";
+import type { Collection } from "rost:constants/database";
+import type { Environment } from "rost:core/loaders/environment";
 import nano from "nano";
 import type pino from "pino";
+import { DatabaseAdapter, type DocumentConventions } from "rost/adapters/databases/adapter";
+import { CouchDBDocumentConventions } from "rost/adapters/databases/couchdb/conventions";
+import type { CouchDBDocumentMetadata } from "rost/adapters/databases/couchdb/document";
+import { CouchDBDocumentSession } from "rost/adapters/databases/couchdb/session";
+import type { IdentifierDataOrMetadata, Model } from "rost/models/model";
+import type { DatabaseStore } from "rost/stores/database";
 
 class CouchDBAdapter extends DatabaseAdapter {
 	readonly #server: nano.ServerScope;

@@ -1,12 +1,12 @@
-import { mention, timestamp, trim } from "logos:constants/formatting";
-import { isValidSnowflake } from "logos:constants/patterns";
-import type { Client } from "logos/client";
-import { InteractionCollector } from "logos/collectors";
-import { Guild } from "logos/models/guild";
+import { mention, timestamp, trim } from "rost:constants/formatting";
+import { isValidSnowflake } from "rost:constants/patterns";
+import type { Client } from "rost/client";
+import { InteractionCollector } from "rost/collectors";
+import { Guild } from "rost/models/guild";
 
 async function handlePurgeMessagesAutocomplete(
 	client: Client,
-	interaction: Logos.Interaction<any, { author: string | undefined }>,
+	interaction: Rost.Interaction<any, { author: string | undefined }>,
 ): Promise<void> {
 	if (interaction.parameters.author === undefined) {
 		return;
@@ -20,7 +20,7 @@ async function handlePurgeMessagesAutocomplete(
 
 async function handlePurgeMessages(
 	client: Client,
-	interaction: Logos.Interaction<any, { start: string; end: string; author: string | undefined }>,
+	interaction: Rost.Interaction<any, { start: string; end: string; author: string | undefined }>,
 ): Promise<void> {
 	await client.postponeReply(interaction);
 
@@ -596,7 +596,7 @@ async function handlePurgeMessages(
 
 async function displaySnowflakesInvalidError(
 	client: Client,
-	interaction: Logos.Interaction,
+	interaction: Rost.Interaction,
 	[isStartInvalid, isEndInvalid]: [boolean, boolean],
 ): Promise<void> {
 	const areBothInvalid = isStartInvalid && isEndInvalid;
@@ -625,7 +625,7 @@ async function displaySnowflakesInvalidError(
 
 function getMessageContent(
 	client: Client,
-	interaction: Logos.Interaction,
+	interaction: Rost.Interaction,
 	message: Discord.Message,
 ): string | undefined {
 	if (message.content?.trim().length === 0 && (message.embeds?.length ?? 0) > 0) {

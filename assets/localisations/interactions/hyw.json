@@ -1,9 +1,0 @@
-{
-    "interactions.continuedOnNextPage": "Յաջորդ էջին վրայ շարունակուած...",
-    "interactions.page": "Էջ",
-    "interactions.invalidUser.title": "Անվաւեր օգտատէր",
-    "interactions.invalidUser.description": "Ձեր մասնաւորած օգտատէրը անվաւեր է։",
-    "interactions.rateLimited.title": "Այս հրամանը շատ անգամ օգտագործած էք։",
-    "interactions.rateLimited.description.tooManyUses": "Այս հրամանը շատ անգամ ({times}) վերջերս օգտագործած էք",
-    "interactions.rateLimited.description.cannotUseAgainUntil": "{relative_timestamp}-ին այս հրամանը նորէն օգտագործելու իրաւունքը կ'ունենաս։"
-}

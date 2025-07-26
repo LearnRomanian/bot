@@ -1,7 +1,7 @@
-import type { Client } from "logos/client";
-import type { Suggestion } from "logos/models/suggestion";
-import { User } from "logos/models/user";
-import { PromptService } from "logos/services/prompts/service";
+import type { Client } from "rost/client";
+import type { Suggestion } from "rost/models/suggestion";
+import { User } from "rost/models/user";
+import { PromptService } from "rost/services/prompts/service";
 
 class SuggestionPromptService extends PromptService<{
 	type: "suggestions";
@@ -34,7 +34,7 @@ class SuggestionPromptService extends PromptService<{
 		return User.getOrCreate(this.client, { userId: suggestionDocument.authorId });
 	}
 
-	getPromptContent(user: Logos.User, suggestionDocument: Suggestion): Discord.CreateMessageOptions | undefined {
+	getPromptContent(user: Rost.User, suggestionDocument: Suggestion): Discord.CreateMessageOptions | undefined {
 		const strings = constants.contexts.promptControls({
 			localise: this.client.localise,
 			locale: this.guildLocale,
@@ -86,7 +86,7 @@ class SuggestionPromptService extends PromptService<{
 
 	getNoPromptsMessageContent(): Discord.CreateMessageOptions {
 		const strings = constants.contexts.noSuggestions({
-			localise: this.client.localise.bind(this.client),
+			localise: this.client.localise,
 			locale: this.guildLocale,
 		});
 
@@ -109,7 +109,7 @@ class SuggestionPromptService extends PromptService<{
 	}
 
 	async handlePromptInteraction(
-		interaction: Logos.Interaction<[partialId: string, isResolve: string]>,
+		interaction: Rost.Interaction<[partialId: string, isResolve: string]>,
 	): Promise<Suggestion | null | undefined> {
 		const suggestionDocument = this.documents.get(interaction.metadata[1]);
 		if (suggestionDocument === undefined) {

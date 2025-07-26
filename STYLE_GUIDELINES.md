@@ -1,4 +1,4 @@
-## Logos Style Guidelines
+## Rost Style Guidelines
 
 > Good to know: Time is stored and measured in milliseconds unless required otherwise.
 

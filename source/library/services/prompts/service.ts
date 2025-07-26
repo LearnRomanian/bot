@@ -1,10 +1,10 @@
-import type { Client } from "logos/client";
-import { Collector, InteractionCollector } from "logos/collectors";
-import type { FeatureManagement } from "logos/models/documents/guild";
-import type { Guild } from "logos/models/guild";
-import type { Model } from "logos/models/model";
-import type { User } from "logos/models/user";
-import { LocalService } from "logos/services/service";
+import type { Client } from "rost/client";
+import { Collector, InteractionCollector } from "rost/collectors";
+import type { FeatureManagement } from "rost/models/documents/guild";
+import type { Guild } from "rost/models/guild";
+import type { Model } from "rost/models/model";
+import type { User } from "rost/models/user";
+import { LocalService } from "rost/services/service";
 
 interface Configurations {
 	verification: Guild["features"]["verification"];
@@ -63,7 +63,7 @@ abstract class PromptService<
 	readonly #deleteMode: PromptDeleteMode;
 	readonly #handlerByPartialId: Map<
 		/*partialId: */ string,
-		(interaction: Logos.Interaction<Generic["metadata"]>) => void
+		(interaction: Rost.Interaction<Generic["metadata"]>) => void
 	>;
 	readonly #documentByPromptId: Map</*promptId: */ bigint, Generic["model"]>;
 	readonly #userIdByPromptId: Map</*promptId: */ bigint, bigint>;
@@ -107,7 +107,7 @@ abstract class PromptService<
 		this.#messageDeletes = new Collector<"messageDelete">({ guildId });
 	}
 
-	static encodeMetadataInUserAvatar({ user, partialId }: { user: Logos.User; partialId: string }): string {
+	static encodeMetadataInUserAvatar({ user, partialId }: { user: Rost.User; partialId: string }): string {
 		const iconUrl = Discord.avatarUrl(user.id, user.discriminator, {
 			avatar: user.avatar,
 			size: 64,
@@ -117,7 +117,7 @@ abstract class PromptService<
 		return `${iconUrl}&metadata=${partialId}`;
 	}
 
-	static encodeMetadataInGuildIcon({ guild, partialId }: { guild: Logos.Guild; partialId: string }): string {
+	static encodeMetadataInGuildIcon({ guild, partialId }: { guild: Rost.Guild; partialId: string }): string {
 		const iconUrl = Discord.guildIconUrl(guild.id, guild.icon);
 
 		return `${iconUrl}&metadata=${partialId}`;
@@ -353,7 +353,7 @@ abstract class PromptService<
 		await this.#tryPostNoPromptsMessage();
 	}
 
-	#handleMagicButtonPress(buttonPress: Logos.Interaction<Generic["metadata"], any>): void {
+	#handleMagicButtonPress(buttonPress: Rost.Interaction<Generic["metadata"], any>): void {
 		const handle = this.#handlerByPartialId.get(buttonPress.metadata[1]);
 		if (handle === undefined) {
 			return;
@@ -362,7 +362,7 @@ abstract class PromptService<
 		handle(buttonPress);
 	}
 
-	async #handlePromptRemove(buttonPress: Logos.Interaction): Promise<void> {
+	async #handlePromptRemove(buttonPress: Rost.Interaction): Promise<void> {
 		const customId = buttonPress.data?.customId;
 		if (customId === undefined) {
 			return;
@@ -412,7 +412,7 @@ abstract class PromptService<
 		if (!isAuthorised) {
 			if (this.#deleteMode === "delete") {
 				const strings = constants.contexts.cannotRemovePrompt({
-					localise: this.client.localise.bind(this.client),
+					localise: this.client.localise,
 					locale: buttonPress.locale,
 				});
 				this.client.warning(buttonPress, { title: strings.title, description: strings.description }).ignore();
@@ -422,7 +422,7 @@ abstract class PromptService<
 
 			if (this.#deleteMode === "close") {
 				const strings = constants.contexts.cannotCloseIssue({
-					localise: this.client.localise.bind(this.client),
+					localise: this.client.localise,
 					locale: buttonPress.locale,
 				});
 				this.client.warning(buttonPress, { title: strings.title, description: strings.description }).ignore();
@@ -451,7 +451,7 @@ abstract class PromptService<
 	abstract getAllDocuments(): Map<string, Generic["model"]>;
 	abstract getUserDocument(promptDocument: Generic["model"]): Promise<User>;
 	abstract getPromptContent(
-		user: Logos.User,
+		user: Rost.User,
 		promptDocument: Generic["model"],
 	): Discord.CreateMessageOptions | undefined;
 	abstract getNoPromptsMessageContent(): Discord.CreateMessageOptions;
@@ -490,7 +490,7 @@ abstract class PromptService<
 		return prompt.embeds?.at(-1)?.footer?.iconUrl?.split("&metadata=").at(-1);
 	}
 
-	async savePrompt(user: Logos.User, promptDocument: Generic["model"]): Promise<Discord.Message | undefined> {
+	async savePrompt(user: Rost.User, promptDocument: Generic["model"]): Promise<Discord.Message | undefined> {
 		const content = this.getPromptContent(user, promptDocument);
 		if (content === undefined) {
 			return undefined;
@@ -574,7 +574,7 @@ abstract class PromptService<
 	}
 
 	abstract handlePromptInteraction(
-		interaction: Logos.Interaction<Generic["metadata"]>,
+		interaction: Rost.Interaction<Generic["metadata"]>,
 	): Promise<Generic["model"] | undefined | null>;
 
 	async handleDelete(promptDocument: Generic["model"]): Promise<void> {

@@ -1,6 +1,6 @@
-import type { Client } from "logos/client";
+import type { Client } from "rost/client";
 
-async function handleDisplayModerationPolicy(client: Client, interaction: Logos.Interaction): Promise<void> {
+async function handleDisplayModerationPolicy(client: Client, interaction: Rost.Interaction): Promise<void> {
 	const guild = client.entities.guilds.get(interaction.guildId);
 	if (guild === undefined) {
 		return;

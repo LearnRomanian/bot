@@ -1,13 +1,13 @@
-import type { Client } from "logos/client";
-import type { ReportDocument } from "logos/models/documents/report";
+import type { Client } from "rost/client";
+import type { ReportDocument } from "rost/models/documents/report";
 import {
 	type ClientOrDatabaseStore,
 	type CreateModelOptions,
 	type IdentifierData,
 	Model,
 	ReportModel,
-} from "logos/models/model";
-import type { DatabaseStore } from "logos/stores/database";
+} from "rost/models/model";
+import type { DatabaseStore } from "rost/stores/database";
 
 type CreateReportOptions = CreateModelOptions<Report, ReportDocument, "formData">;
 

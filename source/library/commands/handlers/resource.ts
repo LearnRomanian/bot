@@ -1,9 +1,9 @@
-import type { Client } from "logos/client";
-import { ResourceComposer } from "logos/commands/components/modal-composers/resource-composer";
-import { Guild } from "logos/models/guild";
-import { Resource } from "logos/models/resource";
+import type { Client } from "rost/client";
+import { ResourceComposer } from "rost/commands/components/modal-composers/resource-composer";
+import { Guild } from "rost/models/guild";
+import { Resource } from "rost/models/resource";
 
-async function handleSubmitResource(client: Client, interaction: Logos.Interaction): Promise<void> {
+async function handleSubmitResource(client: Client, interaction: Rost.Interaction): Promise<void> {
 	const guildDocument = await Guild.getOrCreate(client, { guildId: interaction.guildId.toString() });
 
 	const guild = client.entities.guilds.get(interaction.guildId);

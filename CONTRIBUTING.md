@@ -1,20 +1,20 @@
-## Contribute to Logos
+## Contribute to Rost
 
 ### Step 1: Get a local copy
 
-To start contributing, you'll first need to get your own working copy of Logos that you'll be able to freely make
+To start contributing, you'll first need to get your own working copy of Rost that you'll be able to freely make
 changes to.
 
-To do this, go to the [Logos repository](https://github.com/vxern/logos) and
-[fork it](https://github.com/vxern/logos/fork). Forking a repository copies the original repository to your own account.
+To do this, go to the [Rost repository](https://github.com/LearnRomanian/rost) and
+[fork it](https://github.com/LearnRomanian/rost/fork). Forking a repository copies the original repository to your own account.
 
 Once you have forked the repository, clone it to your device:
 
 ```
-git clone https://github.com/<your github username>/logos.git
+git clone https://github.com/<your github username>/rost.git
 ```
 
-### Step 2: Set a Logos instance up for yourself
+### Step 2: Set a Rost instance up for yourself
 
 Before you're able to make changes to the bot and see them live, you'll also need to quickly set the bot up for
 yourself.
@@ -25,7 +25,7 @@ To do this, follow the [setup guide](SETUP.md). It will teach you everything abo
 
 To work on the bot, you'll need an environment to test its behaviour and any changes you may make.
 
-Logos comes with a script that makes setting test environments up child's play.
+Rost comes with a script that makes setting test environments up child's play.
 
 To set up an environment, run the following command:
 
@@ -34,22 +34,22 @@ bun develop
 ```
 
 The script will set up a server and invite you to it. It will also generate an accompanying configuration to enable all
-of Logos' capabilities on the server.
+of Rost' capabilities on the server.
 
 ### Step 4: ✨ Reconnaissance ✨
 
-If all went well, at this point you should have your own modifiable, running copy of Logos, and a complete testing
+If all went well, at this point you should have your own modifiable, running copy of Rost, and a complete testing
 environment. And just like that, you're ready to develop. Congratulations!
 
 If not, and you've had trouble with any of the previous steps, or the setup process,
-[join the Logos support server to get assistance](https://discord.gg/TWdAjkTfah).
+[join the Rost support server to get assistance](https://discord.gg/TWdAjkTfah).
 
 ### Step 5: Before we get ahead of ourselves...
 
 You are now in the position to make changes and submit them for review.
 
 However, before you do that, you will need to familiarise yourself with the
-[Logos style guidelines](STYLE_GUIDELINES.md), which broadly set out how code in the project is written.
+[Rost style guidelines](STYLE_GUIDELINES.md), which broadly set out how code in the project is written.
 
 ## Development checklist
 

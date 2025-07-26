@@ -1,4 +1,4 @@
-import type { OptionTemplate } from "logos/commands/commands";
+import type { OptionTemplate } from "rost/commands/commands";
 
 export default Object.freeze({
 	user: {

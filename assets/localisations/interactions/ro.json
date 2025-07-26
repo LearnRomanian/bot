@@ -1,0 +1,15 @@
+{
+  "interactions.continuedOnNextPage": "Continuat pe următoarea pagină...",
+  "interactions.page": "Pagină",
+  "interactions.invalidUser.title": "Utilizator invalid",
+  "interactions.invalidUser.description": "Utilizatorul pe care l-ai specificat nu este valid.",
+  "interactions.rateLimited.title": "Ești limitat(ă) la rată de acțiuni",
+  "interactions.rateLimited.description.tooManyUses": "Ai folosit comanda de prea multe ori ({times}) într-un interval de timp prea scurt.",
+  "interactions.rateLimited.description.cannotUseAgainUntil": "Vei putea folosi comanda din nou {relative_timestamp}.",
+  "interactions.show": "Arată mesajul pe chat",
+  "interactions.show.sureToShow.title": "Ești sigur(ă)?",
+  "interactions.show.sureToShow.description": "Sigur dorești ca mesajul să fie afișat în canal?",
+  "interactions.show.sureToShow.yes": "Da, afișează-l",
+  "interactions.show.sureToShow.no": "Nu, nu îl afișa",
+  "interactions.thinking": "Rost se gândește..."
+}

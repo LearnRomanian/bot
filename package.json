@@ -1,6 +1,6 @@
 {
   "$schema": "https://json.schemastore.org/package",
-  "name": "logos",
+  "name": "rost",
   "description": "A multi-purpose community bot built to cater to language-learning communities on Discord.",
   "license": "Apache-2.0",
   "version": "4.58.0",
@@ -20,49 +20,36 @@
     "detectors",
     "localised"
   ],
-  "homepage": "https://logos.wordcollector.co.uk",
+  "homepage": "https://dsc.gg/learnromanian",
   "repository": {
     "type": "git",
-    "url": "https://github.com/vxern/logos"
-  },
-  "bugs": {
-    "url": "https://github.com/vxern/logos",
-    "email": "vxern@wordcollector.co.uk"
+    "url": "https://github.com/LearnRomanian/rost"
   },
   "contributors": [
     {
       "name": "Dorian \"vxern\" Oszczęda",
-      "email": "vxern@wordcollector.co.uk",
+      "email": "vxern@learnromanian.co.uk",
       "url": "https://github.com/vxern"
     }
   ],
   "scripts": {
     "### CORE ############################################################": "",
-    "check": "biome check --write --unsafe ./scripts/ ./source/ ./test/ && tsc",
+    "check": "biome check --write --unsafe ./scripts/ ./source/ && tsc",
     "develop": "bun run ./scripts/develop.ts",
     "start": "bun run ./scripts/run.ts",
     "setup": "bun load:sentence_pairs",
-    "### DATABASE ########################################################": "",
+    "### COMMANDS ########################################################": "",
     "database:migrate": "bun run ./scripts/database/migrate.ts",
-    "### LOADERS #########################################################": "",
-    "load:sentences": "bun run ./scripts/load/sentence-pairs.ts",
-    "### GENERATORS ######################################################": "",
     "generate:migration": "bun run ./scripts/generate/migration.ts",
     "### ALIASES #########################################################": "",
     "g:migration": "bun run generate:migration",
     "db:migrate": "bun run database:migrate",
-    "l:sentences": "bun run load:sentences"
+    "db:rollback": "bun run database:migrate --rollback"
   },
   "dependencies": {
     "@discordeno/bot": "^21.0.0",
-    "@vxern/eld": "^1.1.0",
-    "cldpre": "^2.9.0",
     "dexonline-scraper": "^0.2.2",
-    "diff": "^8.0.2",
     "dotenv": "^16.6.1",
-    "fastest-levenshtein": "^1.0.16",
-    "fasttext.wasm.js": "^1.0.0",
-    "ioredis": "^5.6.1",
     "mongodb": "^6.17.0",
     "nano": "^10.1.4",
     "nanoid": "^5.1.5",
@@ -71,16 +58,13 @@
     "ravendb": "^7.0.1",
     "rethinkdb-ts": "^2.7.0",
     "shoukaku": "^4.1.1",
-    "tinyld": "^1.3.4",
     "wiktionary-scraper": "^0.0.4",
     "youtubei": "^1.7.0"
   },
   "devDependencies": {
     "@biomejs/biome": "1.9.4",
     "@types/bun": "^1.2.18",
-    "@types/chai": "^5.2.2",
     "@types/object-hash": "^3.0.6",
-    "chai": "^5.2.1",
     "pino-pretty": "^13.0.0",
     "typescript": "^5.8.3"
   },

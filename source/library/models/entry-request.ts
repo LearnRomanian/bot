@@ -1,13 +1,13 @@
-import type { Client } from "logos/client";
-import type { EntryRequestDocument, VoteVerdict } from "logos/models/documents/entry-request";
+import type { Client } from "rost/client";
+import type { EntryRequestDocument, VoteVerdict } from "rost/models/documents/entry-request";
 import {
 	type ClientOrDatabaseStore,
 	type CreateModelOptions,
 	EntryRequestModel,
 	type IdentifierData,
 	Model,
-} from "logos/models/model";
-import type { DatabaseStore } from "logos/stores/database";
+} from "rost/models/model";
+import type { DatabaseStore } from "rost/stores/database";
 
 type VoteType = "for" | "against";
 

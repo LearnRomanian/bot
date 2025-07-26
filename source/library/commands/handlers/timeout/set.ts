@@ -1,11 +1,11 @@
-import { mention, timestamp, trim } from "logos:constants/formatting";
-import type { Client } from "logos/client";
-import { parseTimeExpression } from "logos/commands/interactions";
-import { Guild } from "logos/models/guild";
+import { mention, timestamp, trim } from "rost:constants/formatting";
+import type { Client } from "rost/client";
+import { parseTimeExpression } from "rost/commands/interactions";
+import { Guild } from "rost/models/guild";
 
 async function handleSetTimeoutAutocomplete(
 	client: Client,
-	interaction: Logos.Interaction<any, { user: string; duration: string }>,
+	interaction: Rost.Interaction<any, { user: string; duration: string }>,
 ): Promise<void> {
 	if (interaction.parameters.focused === undefined) {
 		return;
@@ -39,7 +39,7 @@ async function handleSetTimeoutAutocomplete(
 
 async function handleSetTimeout(
 	client: Client,
-	interaction: Logos.Interaction<any, { user: string; duration: string; reason: string }>,
+	interaction: Rost.Interaction<any, { user: string; duration: string; reason: string }>,
 ): Promise<void> {
 	const guildDocument = await Guild.getOrCreate(client, { guildId: interaction.guildId.toString() });
 

@@ -1,9 +1,9 @@
-import type { Client } from "logos/client";
-import { SongCollection } from "logos/services/music";
+import type { Client } from "rost/client";
+import { SongCollection } from "rost/services/music";
 
 async function handleSkipAction(
 	client: Client,
-	interaction: Logos.Interaction<
+	interaction: Rost.Interaction<
 		any,
 		{ collection: boolean | undefined; by: number | undefined; to: number | undefined }
 	>,

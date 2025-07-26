@@ -1,32 +1,30 @@
-import type { Collection } from "logos:constants/database";
-import type { Environment } from "logos:core/loaders/environment";
-import type { PromiseOr } from "logos:core/utilities";
-import type { DatabaseAdapter, DocumentSession } from "logos/adapters/databases/adapter";
-import { CouchDBAdapter } from "logos/adapters/databases/couchdb/database";
-import { InMemoryAdapter } from "logos/adapters/databases/in-memory/database";
-import { MongoDBAdapter } from "logos/adapters/databases/mongodb/database";
-import { RavenDBAdapter } from "logos/adapters/databases/ravendb/database";
-import { RethinkDBAdapter } from "logos/adapters/databases/rethinkdb/database";
-import { DatabaseMetadata } from "logos/models/database-metadata";
-import { EntryRequest } from "logos/models/entry-request";
-import { Guild } from "logos/models/guild";
-import { GuildStatistics } from "logos/models/guild-statistics";
-import type { Model, ModelConstructor } from "logos/models/model";
-import { Praise } from "logos/models/praise";
-import { Report } from "logos/models/report";
-import { Resource } from "logos/models/resource";
-import { Suggestion } from "logos/models/suggestion";
-import { Ticket } from "logos/models/ticket";
-import { User } from "logos/models/user";
-import { Warning } from "logos/models/warning";
-import type { CacheStore } from "logos/stores/cache";
+import type { Collection } from "rost:constants/database";
+import type { Environment } from "rost:core/loaders/environment";
+import type { PromiseOr } from "rost:core/utilities";
 import type pino from "pino";
+import type { DatabaseAdapter, DocumentSession } from "rost/adapters/databases/adapter";
+import { CouchDBAdapter } from "rost/adapters/databases/couchdb/database";
+import { InMemoryAdapter } from "rost/adapters/databases/in-memory/database";
+import { MongoDBAdapter } from "rost/adapters/databases/mongodb/database";
+import { RavenDBAdapter } from "rost/adapters/databases/ravendb/database";
+import { RethinkDBAdapter } from "rost/adapters/databases/rethinkdb/database";
+import { DatabaseMetadata } from "rost/models/database-metadata";
+import { EntryRequest } from "rost/models/entry-request";
+import { Guild } from "rost/models/guild";
+import type { Model, ModelConstructor } from "rost/models/model";
+import { Praise } from "rost/models/praise";
+import { Report } from "rost/models/report";
+import { Resource } from "rost/models/resource";
+import { Suggestion } from "rost/models/suggestion";
+import { Ticket } from "rost/models/ticket";
+import { User } from "rost/models/user";
+import { Warning } from "rost/models/warning";
+import type { CacheStore } from "rost/stores/cache";
 
 class DatabaseStore {
 	static readonly #classes: Record<Collection, ModelConstructor> = Object.freeze({
 		DatabaseMetadata: DatabaseMetadata,
 		EntryRequests: EntryRequest,
-		GuildStatistics: GuildStatistics,
 		Guilds: Guild,
 		Praises: Praise,
 		Reports: Report,
@@ -91,7 +89,7 @@ class DatabaseStore {
 				);
 			}
 
-			log.info("Logos is running in memory. Data will not persist in-between sessions.");
+			log.info("Rost is running in memory. Data will not persist in-between sessions.");
 
 			adapter = new InMemoryAdapter({ log });
 		}

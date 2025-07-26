@@ -1,9 +1,9 @@
-import type { TimeUnit } from "logos:constants/time";
-import type { Client } from "logos/client";
+import type { TimeUnit } from "rost:constants/time";
+import type { Client } from "rost/client";
 
 function parseTimeExpression(
 	client: Client,
-	interaction: Logos.Interaction,
+	interaction: Rost.Interaction,
 	expression: string,
 ): [correctedExpression: string, period: number] | undefined {
 	const conciseMatch = constants.patterns.conciseTimeExpression.exec(expression) ?? undefined;
@@ -23,7 +23,7 @@ function parseTimeExpression(
 
 function parseConciseTimeExpression(
 	client: Client,
-	interaction: Logos.Interaction,
+	interaction: Rost.Interaction,
 	parts: [hours: string | undefined, minutes: string | undefined, seconds: string],
 ): ReturnType<typeof parseTimeExpression> {
 	const [seconds, minutes, hours] = parts
@@ -76,7 +76,7 @@ const timeUnitsWithAliasesLocalised = new Map<string, Record<TimeUnit, string[]>
 
 function parseVerboseTimeExpressionPhrase(
 	client: Client,
-	interaction: Logos.Interaction,
+	interaction: Rost.Interaction,
 	expression: string,
 ): ReturnType<typeof parseTimeExpression> {
 	if (!timeUnitsWithAliasesLocalised.has(interaction.locale)) {

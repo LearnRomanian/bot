@@ -1,5 +1,5 @@
-import { codeMultiline, mention, trim } from "logos:constants/formatting";
-import type { EventLogger } from "logos/stores/journalling/loggers";
+import { codeMultiline, mention, trim } from "rost:constants/formatting";
+import type { EventLogger } from "rost/stores/journalling/loggers";
 
 const logger: EventLogger<"messageUpdate"> = (client, [message], { guildLocale }) => {
 	const oldMessage = client.entities.messages.previous.get(message.id);

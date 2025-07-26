@@ -1,16 +1,16 @@
-import type { Client } from "logos/client";
-import { handleAutocompleteTimestamp } from "logos/commands/fragments/autocomplete/timestamp";
+import type { Client } from "rost/client";
+import { handleAutocompleteTimestamp } from "rost/commands/fragments/autocomplete/timestamp";
 
 async function handleSkipToTimestampAutocomplete(
 	client: Client,
-	interaction: Logos.Interaction<any, { timestamp: string }>,
+	interaction: Rost.Interaction<any, { timestamp: string }>,
 ): Promise<void> {
 	await handleAutocompleteTimestamp(client, interaction);
 }
 
 async function handleSkipToTimestamp(
 	client: Client,
-	interaction: Logos.Interaction<any, { timestamp: string }>,
+	interaction: Rost.Interaction<any, { timestamp: string }>,
 ): Promise<void> {
 	const musicService = client.services.local("music", { guildId: interaction.guildId });
 	if (!musicService.canManagePlayback(interaction)) {

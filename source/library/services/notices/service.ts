@@ -1,8 +1,8 @@
-import type { Client } from "logos/client";
-import { Collector } from "logos/collectors";
-import type { Guild } from "logos/models/guild";
-import { LocalService } from "logos/services/service";
 import { default as hashObject } from "object-hash";
+import type { Client } from "rost/client";
+import { Collector } from "rost/collectors";
+import type { Guild } from "rost/models/guild";
+import { LocalService } from "rost/services/service";
 
 type HashableProperties = "embeds" | "components";
 type HashableMessageContents = Pick<Discord.CreateMessageOptions, HashableProperties>;
@@ -67,7 +67,7 @@ abstract class NoticeService<Generic extends { type: NoticeTypes }> extends Loca
 		});
 	}
 
-	static encodeHashInGuildIcon({ guild, hash }: { guild: Logos.Guild; hash: string }): string {
+	static encodeHashInGuildIcon({ guild, hash }: { guild: Rost.Guild; hash: string }): string {
 		const iconUrl = Discord.guildIconUrl(guild.id, guild.icon);
 
 		return `${iconUrl}&hash=${hash}`;
@@ -188,7 +188,7 @@ abstract class NoticeService<Generic extends { type: NoticeTypes }> extends Loca
 	}
 
 	// Anti-tampering feature; detects notices being deleted.
-	async #handleMessageDelete(message: Logos.Message): Promise<void> {
+	async #handleMessageDelete(message: Rost.Message): Promise<void> {
 		const [channelId, noticeData] = [this.channelId, this.#noticeData];
 		if (channelId === undefined || noticeData === undefined) {
 			return;

@@ -1,12 +1,9 @@
-import { isAutocomplete, isSubcommand, isSubcommandGroup } from "logos:constants/interactions";
-import { type LearningLanguage, getLearningLocaleByLanguage } from "logos:constants/languages/learning";
-import { getDiscordLanguageByLocale, getLocalisationLocaleByLanguage } from "logos:constants/languages/localisation";
-import type { DesiredProperties, DesiredPropertiesBehaviour } from "logos:constants/properties";
-import type { PromiseOr } from "logos:core/utilities";
-import type { Client } from "logos/client";
-import { Guild } from "logos/models/guild";
-import { User } from "logos/models/user";
+import { isSubcommand, isSubcommandGroup } from "rost:constants/interactions";
+import type { DesiredProperties, DesiredPropertiesBehaviour } from "rost:constants/properties";
+import type { PromiseOr } from "rost:core/utilities";
 import { nanoid } from "nanoid";
+import type { Client } from "rost/client";
+import { Guild } from "rost/models/guild";
 
 type Interaction = Discord.SetupDesiredProps<Discord.Interaction, DesiredProperties, DesiredPropertiesBehaviour>;
 
@@ -126,7 +123,7 @@ class InteractionCollector<
 > extends Collector<"interactionCreate"> {
 	static readonly noneId = constants.components.none;
 
-	static readonly #defaultParameters: Logos.InteractionParameters<Record<string, unknown>> = Object.freeze({
+	static readonly #defaultParameters: Rost.InteractionParameters<Record<string, unknown>> = Object.freeze({
 		"@repeat": false,
 		show: false,
 	});
@@ -247,14 +244,14 @@ class InteractionCollector<
 
 	/**
 	 * @deprecated
-	 * Do not use as this receives raw Discord interaction events, rather than Logos ones.
+	 * Do not use as this receives raw Discord interaction events, rather than Rost ones.
 	 * Use {@link onInteraction()} instead.
 	 */
 	onCollect(_: CollectEvent<"interactionCreate">) {
 		throw new Error("Do not use `onCollect()` on interaction controllers. Use `onInteraction()` instead.");
 	}
 
-	onInteraction(callback: (interaction: Logos.Interaction<Metadata, Parameters>) => PromiseOr<void>): void {
+	onInteraction(callback: (interaction: Rost.Interaction<Metadata, Parameters>) => PromiseOr<void>): void {
 		super.onCollect(async (interactionRaw) => {
 			const locales = await this.#getLocaleData(interactionRaw);
 			const metadata = this.#getMetadata(interactionRaw);
@@ -270,12 +267,11 @@ class InteractionCollector<
 				name = constants.components.none;
 			}
 
-			const interaction: Logos.Interaction<Metadata, Parameters> = {
-				...(interactionRaw as unknown as Logos.Interaction),
+			const interaction: Rost.Interaction<Metadata, Parameters> = {
+				...(interactionRaw as unknown as Rost.Interaction),
 				...locales,
 				...{
 					displayLocale: parameters.show ? locales.guildLocale : locales.locale,
-					displayLanguage: parameters.show ? locales.guildLanguage : locales.language,
 				},
 				commandName: name,
 				metadata,
@@ -286,63 +282,29 @@ class InteractionCollector<
 		});
 	}
 
-	async #getLocaleData(
-		interaction: Interaction,
-	): Promise<Omit<Logos.InteractionLocaleData, "displayLocale" | "displayLanguage">> {
+	async #getLocaleData(interaction: Interaction): Promise<Omit<Rost.InteractionLocaleData, "displayLocale">> {
 		const member = this.#client.entities.members.get(interaction.guildId!)?.get(interaction.user.id);
 		if (member === undefined) {
 			return {
-				locale: constants.defaults.LOCALISATION_LOCALE,
-				language: constants.defaults.LOCALISATION_LANGUAGE,
-				guildLocale: constants.defaults.LOCALISATION_LOCALE,
-				guildLanguage: constants.defaults.LOCALISATION_LANGUAGE,
-				learningLocale: constants.defaults.LEARNING_LOCALE,
-				learningLanguage: constants.defaults.LEARNING_LANGUAGE,
-				featureLanguage: constants.defaults.FEATURE_LANGUAGE,
+				locale: constants.defaults.GUILD_SOURCE_LOCALE,
+				guildLocale: constants.defaults.GUILD_SOURCE_LOCALE,
 			};
 		}
 
-		const [userDocument, guildDocument] = await Promise.all([
-			User.getOrCreate(this.#client, { userId: interaction.user.id.toString() }),
-			Guild.getOrCreate(this.#client, { guildId: interaction.guildId!.toString() }),
-		]);
+		const guildDocument = await Guild.getOrCreate(this.#client, { guildId: interaction.guildId!.toString() });
 
-		const targetLanguage = guildDocument.languages.target;
-		const learningLanguage = this.#determineLearningLanguage(guildDocument, member) ?? targetLanguage;
-		const learningLocale = getLearningLocaleByLanguage(learningLanguage);
-
-		const guildLanguage = guildDocument.isTargetLanguageOnlyChannel(interaction.channelId!.toString())
-			? targetLanguage
-			: guildDocument.languages.localisation;
-		const guildLocale = getLearningLocaleByLanguage(guildLanguage);
-		const featureLanguage = guildDocument.languages.feature;
-
-		// If the user has configured a custom locale, use the user's preferred locale.
-		if (!isAutocomplete(interaction) && userDocument.preferredLanguage !== undefined) {
-			const language = userDocument.preferredLanguage;
-			const locale = getLocalisationLocaleByLanguage(language);
-			return {
-				locale,
-				language,
-				guildLocale,
-				guildLanguage,
-				learningLocale,
-				learningLanguage,
-				featureLanguage,
-			};
-		}
+		const guildLocale = guildDocument.isTargetLanguageOnlyChannel(interaction.channelId!.toString())
+			? guildDocument.locales.target
+			: guildDocument.locales.source;
 
 		// Otherwise default to the user's app language.
-		const appLocale = interaction.locale;
-		const language = getDiscordLanguageByLocale(appLocale) ?? constants.defaults.LOCALISATION_LANGUAGE;
-		const locale = getLocalisationLocaleByLanguage(language);
-		return { locale, language, guildLocale, guildLanguage, learningLocale, learningLanguage, featureLanguage };
+		return { locale: interaction.locale, guildLocale };
 	}
 
-	#getMetadata(interaction: Interaction): Logos.Interaction<Metadata>["metadata"] {
+	#getMetadata(interaction: Interaction): Rost.Interaction<Metadata>["metadata"] {
 		const idEncoded = interaction.data?.customId;
 		if (idEncoded === undefined) {
-			return [constants.components.none] as unknown as Logos.Interaction<Metadata>["metadata"];
+			return [constants.components.none] as unknown as Rost.Interaction<Metadata>["metadata"];
 		}
 
 		return InteractionCollector.decodeId(idEncoded);
@@ -350,16 +312,16 @@ class InteractionCollector<
 
 	#getParameters<Parameters extends Record<string, DiscordParameterType>>(
 		interaction: Interaction,
-	): Logos.InteractionParameters<Parameters> {
+	): Rost.InteractionParameters<Parameters> {
 		const options = interaction.data?.options;
 		if (options === undefined) {
-			return InteractionCollector.#defaultParameters as Logos.InteractionParameters<Parameters>;
+			return InteractionCollector.#defaultParameters as Rost.InteractionParameters<Parameters>;
 		}
 
 		return {
 			...InteractionCollector.#defaultParameters,
 			...InteractionCollector.#parseParameters(options),
-		} as Logos.InteractionParameters<Parameters>;
+		} as Rost.InteractionParameters<Parameters>;
 	}
 
 	static #parseParameters<Parameters extends Record<string, DiscordParameterType>>(
@@ -385,23 +347,6 @@ class InteractionCollector<
 		}
 
 		return result as unknown as Partial<Parameters>;
-	}
-
-	#determineLearningLanguage(guildDocument: Guild, member: Logos.Member): LearningLanguage | undefined {
-		if (!guildDocument.hasEnabled("roleLanguages")) {
-			return undefined;
-		}
-
-		const roleLanguages = guildDocument.feature("roleLanguages");
-
-		const userLearningLanguage = Object.entries(roleLanguages.ids).find(([key, _]) =>
-			member.roles.includes(BigInt(key)),
-		)?.[1];
-		if (userLearningLanguage === undefined) {
-			return undefined;
-		}
-
-		return userLearningLanguage;
 	}
 
 	encodeId<Metadata extends string[] = []>(metadata: Metadata): string {

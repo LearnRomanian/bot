@@ -1,10 +1,10 @@
-import { type RuleOrOther, isValidRule } from "logos:constants/rules";
-import type { Client } from "logos/client";
+import { type RuleOrOther, isValidRule } from "rost:constants/rules";
+import type { Client } from "rost/client";
 
 type RuleTitleMode = "option" | "display";
 function getRuleTitleFormatted(
 	client: Client,
-	interaction: Logos.Interaction,
+	interaction: Rost.Interaction,
 	{ rule, mode }: { rule: RuleOrOther; mode: RuleTitleMode },
 ): string {
 	const index = isValidRule(rule) ? constants.rules.indexOf(rule) : undefined;

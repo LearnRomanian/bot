@@ -1,4 +1,4 @@
-import logTargets from "logos:constants/log-targets";
+import logTargets from "rost:constants/log-targets";
 import pino from "pino";
 
 export default Object.freeze({

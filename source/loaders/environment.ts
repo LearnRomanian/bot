@@ -42,7 +42,7 @@ function loadEnvironment({ log }: { log: pino.Logger }): Environment {
 
 	if (process.env.SECRET_DISCORD === undefined) {
 		log.error(
-			"Logos cannot start without a Discord token. Make sure you've included one in the environment variables with the key `SECRET_DISCORD`.",
+			"Rost cannot start without a Discord token. Make sure you've included one in the environment variables with the key `SECRET_DISCORD`.",
 		);
 		process.exit(1);
 	}

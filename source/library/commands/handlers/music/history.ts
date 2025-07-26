@@ -1,7 +1,7 @@
-import type { Client } from "logos/client";
-import { SongListingView } from "logos/commands/components/paginated-views/song-listing-view";
+import type { Client } from "rost/client";
+import { SongListingView } from "rost/commands/components/paginated-views/song-listing-view";
 
-async function handleDisplayPlaybackHistory(client: Client, interaction: Logos.Interaction): Promise<void> {
+async function handleDisplayPlaybackHistory(client: Client, interaction: Rost.Interaction): Promise<void> {
 	const musicService = client.services.local("music", { guildId: interaction.guildId });
 	if (!musicService.canCheckPlayback(interaction)) {
 		return;

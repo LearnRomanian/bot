@@ -1,18 +1,18 @@
-import { mention } from "logos:constants/formatting";
-import type { Client } from "logos/client";
-import { Praise } from "logos/models/praise";
-import { Warning } from "logos/models/warning";
+import { mention } from "rost:constants/formatting";
+import type { Client } from "rost/client";
+import { Praise } from "rost/models/praise";
+import { Warning } from "rost/models/warning";
 
 async function handleDisplayProfileAutocomplete(
 	client: Client,
-	interaction: Logos.Interaction<any, { user: string }>,
+	interaction: Rost.Interaction<any, { user: string }>,
 ): Promise<void> {
 	await client.autocompleteMembers(interaction, { identifier: interaction.parameters.user });
 }
 
 async function handleDisplayProfile(
 	client: Client,
-	interaction: Logos.Interaction<any, { user: string | undefined }>,
+	interaction: Rost.Interaction<any, { user: string | undefined }>,
 ): Promise<void> {
 	const member = client.resolveInteractionToMember(interaction, {
 		identifier: interaction.parameters.user ?? interaction.user.id.toString(),

@@ -1,7 +1,7 @@
-import type { Client } from "logos/client";
-import { InteractionCollector } from "logos/collectors";
-import { GlobalService } from "logos/services/service";
-import { InteractionStore } from "logos/stores/interactions";
+import type { Client } from "rost/client";
+import { InteractionCollector } from "rost/collectors";
+import { GlobalService } from "rost/services/service";
+import { InteractionStore } from "rost/stores/interactions";
 
 class InteractionRepetitionService extends GlobalService {
 	readonly #commandInteractions: InteractionCollector;
@@ -34,7 +34,7 @@ class InteractionRepetitionService extends GlobalService {
 		await this.#showInChatButtons.close();
 	}
 
-	#handleCommandInteraction(interaction: Logos.Interaction): void {
+	#handleCommandInteraction(interaction: Rost.Interaction): void {
 		if (!this.client.isShowable(interaction)) {
 			return;
 		}
@@ -42,7 +42,7 @@ class InteractionRepetitionService extends GlobalService {
 		this.client.interactions.registerInteraction(interaction);
 	}
 
-	async #handleShowInChat(buttonPress: Logos.Interaction<[interactionId: string]>): Promise<void> {
+	async #handleShowInChat(buttonPress: Rost.Interaction<[interactionId: string]>): Promise<void> {
 		await this.client.postponeReply(buttonPress);
 
 		const confirmButton = new InteractionCollector(this.client, {
@@ -114,7 +114,7 @@ class InteractionRepetitionService extends GlobalService {
 			.ignore();
 	}
 
-	getShowButton(interaction: Logos.Interaction): Discord.ButtonComponent {
+	getShowButton(interaction: Rost.Interaction): Discord.ButtonComponent {
 		const strings = constants.contexts.show({
 			localise: this.client.localise,
 			locale: interaction.locale,

@@ -1,11 +1,11 @@
-import defaults from "logos:constants/defaults";
-import { mention } from "logos:constants/formatting";
-import { type TimeStruct, timeStructToMilliseconds } from "logos:constants/time";
-import { isDefined } from "logos:core/utilities";
-import type { Client } from "logos/client";
-import { Collector } from "logos/collectors";
-import type { Guild } from "logos/models/guild";
-import { LocalService } from "logos/services/service";
+import defaults from "rost:constants/defaults";
+import { mention } from "rost:constants/formatting";
+import { type TimeStruct, timeStructToMilliseconds } from "rost:constants/time";
+import { isDefined } from "rost:core/utilities";
+import type { Client } from "rost/client";
+import { Collector } from "rost/collectors";
+import type { Guild } from "rost/models/guild";
+import { LocalService } from "rost/services/service";
 
 interface CandidateFloodMessage {
 	readonly id: bigint;
@@ -41,7 +41,7 @@ class AntiFloodService extends LocalService {
 		await this.#messageCreates.close();
 	}
 
-	async #handleMessageCreate(message: Logos.Message): Promise<void> {
+	async #handleMessageCreate(message: Rost.Message): Promise<void> {
 		if (message.author.bot) {
 			return;
 		}
@@ -87,7 +87,7 @@ class AntiFloodService extends LocalService {
 		}
 	}
 
-	#registerMessage(message: Logos.Message): void {
+	#registerMessage(message: Rost.Message): void {
 		const buffer = this.#floodBuffers.get(message.guildId!)!.get(message.author.id)!;
 
 		const messageCandidate: CandidateFloodMessage = {

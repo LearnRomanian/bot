@@ -1,16 +1,13 @@
-import { trim } from "logos:constants/formatting";
-import type { Client } from "logos/client";
-import { InteractionCollector } from "logos/collectors";
-import { PaginatedView, type View } from "logos/commands/components/paginated-views/paginated-view";
-import type { SongListing } from "logos/services/music";
+import { trim } from "rost:constants/formatting";
+import type { Client } from "rost/client";
+import { InteractionCollector } from "rost/collectors";
+import { PaginatedView, type View } from "rost/commands/components/paginated-views/paginated-view";
+import type { SongListing } from "rost/services/music";
 
 class RemoveSongListingView extends PaginatedView<SongListing> {
 	readonly #selectMenuSelection: InteractionCollector;
 
-	constructor(
-		client: Client,
-		{ interaction, listings }: { interaction: Logos.Interaction; listings: SongListing[] },
-	) {
+	constructor(client: Client, { interaction, listings }: { interaction: Rost.Interaction; listings: SongListing[] }) {
 		super(client, { interaction, elements: listings, showable: true });
 
 		this.#selectMenuSelection = new InteractionCollector(client, { only: [interaction.user.id] });
@@ -37,7 +34,7 @@ class RemoveSongListingView extends PaginatedView<SongListing> {
 		};
 	}
 
-	build(interaction: Logos.Interaction, page: SongListing[], pageIndex: number): View {
+	build(interaction: Rost.Interaction, page: SongListing[], pageIndex: number): View {
 		if (page.length === 0) {
 			const strings = constants.contexts.queueEmpty({
 				localise: this.client.localise,

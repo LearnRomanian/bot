@@ -13,4 +13,14 @@ function renameProperty(document, { from, to }) {
 	delete document[from];
 }
 
-export { migrateDocuments, renameProperty };
+function deleteProperty(document, property) {
+	delete document?.[property];
+}
+
+function deleteProperties(document, properties) {
+	for (const property of properties) {
+		deleteProperty(document, property);
+	}
+}
+
+export { migrateDocuments, renameProperty, deleteProperty, deleteProperties };

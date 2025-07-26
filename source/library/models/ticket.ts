@@ -1,13 +1,13 @@
-import type { Client } from "logos/client";
-import type { TicketDocument } from "logos/models/documents/ticket";
+import type { Client } from "rost/client";
+import type { TicketDocument } from "rost/models/documents/ticket";
 import {
 	type ClientOrDatabaseStore,
 	type CreateModelOptions,
 	type IdentifierData,
 	Model,
 	TicketModel,
-} from "logos/models/model";
-import type { DatabaseStore } from "logos/stores/database";
+} from "rost/models/model";
+import type { DatabaseStore } from "rost/stores/database";
 
 type CreateTicketOptions = CreateModelOptions<Ticket, TicketDocument, "type" | "formData">;
 

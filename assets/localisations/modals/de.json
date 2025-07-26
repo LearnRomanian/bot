@@ -1,0 +1,16 @@
+{
+  "verification.title": "Verifizierungsfragen",
+  "verification.fields.reason": "Was ist dein Grund, {language} zu lernen?",
+  "verification.fields.aim": "Wie wirst du davon profitieren, Mitglied zu werden?",
+  "verification.fields.whereFound": "Woher hast du über den Server gehört?",
+  "report.title": "Benutzerbericht",
+  "report.fields.reason": "Was ist der Grund für den Bericht?",
+  "report.fields.users": "Benutzer zum Melden",
+  "report.fields.link": "Link zur Nachricht für den Kontext",
+  "suggestion.title": "Vorschlag",
+  "suggestion.fields.suggestion": "Was ist dein Vorschlag?",
+  "prompts.continue": "Weiter",
+  "prompts.cancel": "Abbrechen",
+  "prompts.stay": "Zurücknehmen",
+  "prompts.leave": "Verlassen"
+}

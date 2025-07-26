@@ -1,4 +1,4 @@
-import type { Rule } from "logos:constants/rules";
+import type { Rule } from "rost:constants/rules";
 
 interface WarningDocument {
 	reason: string;

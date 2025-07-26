@@ -1,28 +1,21 @@
-import type constants_ from "logos:constants/constants";
-import type { FeatureLanguage, LearningLanguage, Locale, LocalisationLanguage } from "logos:constants/languages";
+import type constants_ from "rost:constants/constants";
+import type { Locale } from "rost:constants/languages";
 import type {
 	DesiredProperties,
 	DesiredPropertiesBehaviour,
 	SelectedDesiredProperties,
-} from "logos:constants/properties";
-import type { SlowmodeLevel } from "logos:constants/slowmode";
-import type { PromiseOr, WithRequired } from "logos:core/utilities";
-import type { EntryRequest } from "logos/models/entry-request";
-import type { Praise } from "logos/models/praise";
-import type { Report } from "logos/models/report";
-import type { Resource } from "logos/models/resource";
-import type { Suggestion } from "logos/models/suggestion";
-import type { Ticket } from "logos/models/ticket";
-import type { Warning } from "logos/models/warning";
+} from "rost:constants/properties";
+import type { SlowmodeLevel } from "rost:constants/slowmode";
+import type { WithRequired } from "rost:core/utilities";
+import type { EntryRequest } from "rost/models/entry-request";
+import type { Praise } from "rost/models/praise";
+import type { Report } from "rost/models/report";
+import type { Resource } from "rost/models/resource";
+import type { Suggestion } from "rost/models/suggestion";
+import type { Ticket } from "rost/models/ticket";
+import type { Warning } from "rost/models/warning";
 
 declare global {
-	interface PromiseConstructor {
-		createRace<T, R>(
-			elements: T[],
-			doAction: (element: T) => PromiseOr<R | undefined>,
-		): AsyncGenerator<{ element: T; result?: R }, void, void>;
-	}
-
 	interface Promise {
 		/** Ignores the result of the promise. Useful in fire-and-forget situations. */
 		ignore(): void;
@@ -37,19 +30,11 @@ declare global {
 		 */
 		toChunked(size: number): T[][];
 	}
-
-	interface ObjectConstructor {
-		mirror<O extends Record<string, string>>(
-			object: O,
-		): {
-			[K in keyof O as O[K]]: K;
-		};
-	}
 }
 
 declare global {
-	// biome-ignore lint/style/noNamespace: We use Logos types to make a distinction from Discordeno types.
-	namespace Logos {
+	// biome-ignore lint/style/noNamespace: We use Rost types to make a distinction from Discordeno types.
+	namespace Rost {
 		type Guild = Discord.SetupDesiredProps<
 			Omit<Discord.Guild, "roles" | "members" | "channels" | "voiceStates"> & {
 				roles: Discord.Collection<bigint, Role>;
@@ -80,16 +65,8 @@ declare global {
 		interface InteractionLocaleData {
 			// Localisation
 			locale: Locale;
-			language: LocalisationLanguage;
 			guildLocale: Locale;
-			guildLanguage: LocalisationLanguage;
 			displayLocale: Locale;
-			displayLanguage: LocalisationLanguage;
-			// Learning
-			learningLocale: Locale;
-			learningLanguage: LearningLanguage;
-			// Feature
-			featureLanguage: FeatureLanguage;
 		}
 
 		type InteractionParameters<Parameters> = Parameters & {
@@ -114,71 +91,71 @@ declare global {
 		/** Type representing events that occur within a guild. */
 		type Events = {
 			/** Fill-in Discord event for a member having been kicked. */
-			guildMemberKick: [user: Logos.User, by: Logos.Member];
+			guildMemberKick: [user: Rost.User, by: Rost.Member];
 		} & {
 			/** An entry request has been submitted. */
-			entryRequestSubmit: [user: Logos.User, entryRequest: EntryRequest];
+			entryRequestSubmit: [user: Rost.User, entryRequest: EntryRequest];
 
 			/** An entry request has been accepted. */
-			entryRequestAccept: [user: Logos.User, by: Logos.Member];
+			entryRequestAccept: [user: Rost.User, by: Rost.Member];
 
 			/** An entry request has been rejected. */
-			entryRequestReject: [user: Logos.User, by: Logos.Member];
+			entryRequestReject: [user: Rost.User, by: Rost.Member];
 
 			/** A member has been warned. */
-			memberWarnAdd: [member: Logos.Member, warning: Warning, by: Logos.User];
+			memberWarnAdd: [member: Rost.Member, warning: Warning, by: Rost.User];
 
 			/** A member has had a warning removed from their account. */
-			memberWarnRemove: [member: Logos.Member, warning: Warning, by: Logos.User];
+			memberWarnRemove: [member: Rost.Member, warning: Warning, by: Rost.User];
 
 			/** A member has been timed out. */
-			memberTimeoutAdd: [member: Logos.Member, until: number, reason: string, by: Logos.User];
+			memberTimeoutAdd: [member: Rost.Member, until: number, reason: string, by: Rost.User];
 
 			/** A member's timeout has been cleared. */
-			memberTimeoutRemove: [member: Logos.Member, by: Logos.User];
+			memberTimeoutRemove: [member: Rost.Member, by: Rost.User];
 
 			/** A member has been praised. */
-			praiseAdd: [member: Logos.Member, praise: Praise, by: Logos.User];
+			praiseAdd: [member: Rost.Member, praise: Praise, by: Rost.User];
 
 			/** A report has been submitted. */
-			reportSubmit: [author: Logos.Member, report: Report];
+			reportSubmit: [author: Rost.Member, report: Report];
 
 			/** A resource has been submitted. */
-			resourceSend: [member: Logos.Member, resource: Resource];
+			resourceSend: [member: Rost.Member, resource: Resource];
 
 			/** A suggestion has been made. */
-			suggestionSend: [member: Logos.Member, suggestion: Suggestion];
+			suggestionSend: [member: Rost.Member, suggestion: Suggestion];
 
 			/** A ticket has been opened. */
-			ticketOpen: [member: Logos.Member, ticket: Ticket];
+			ticketOpen: [member: Rost.Member, ticket: Ticket];
 
 			/** An inquiry has been opened. */
-			inquiryOpen: [member: Logos.Member, ticket: Ticket];
+			inquiryOpen: [member: Rost.Member, ticket: Ticket];
 
 			/** A purging of messages has been initiated. */
-			purgeBegin: [member: Logos.Member, channel: Logos.Channel, messageCount: number, author?: Logos.User];
+			purgeBegin: [member: Rost.Member, channel: Rost.Channel, messageCount: number, author?: Rost.User];
 
 			/** A purging of messages is complete. */
-			purgeEnd: [member: Logos.Member, channel: Logos.Channel, messageCount: number, author?: Logos.User];
+			purgeEnd: [member: Rost.Member, channel: Rost.Channel, messageCount: number, author?: Rost.User];
 
 			/** A user has enabled slowmode in a channel. */
-			slowmodeEnable: [user: Logos.User, channel: Logos.Channel, level: SlowmodeLevel];
+			slowmodeEnable: [user: Rost.User, channel: Rost.Channel, level: SlowmodeLevel];
 
 			/** A user has disabled slowmode in a channel. */
-			slowmodeDisable: [user: Logos.User, channel: Logos.Channel];
+			slowmodeDisable: [user: Rost.User, channel: Rost.Channel];
 
 			/** A user has upgraded the slowmode level in a channel. */
 			slowmodeUpgrade: [
-				user: Logos.User,
-				channel: Logos.Channel,
+				user: Rost.User,
+				channel: Rost.Channel,
 				previousLevel: SlowmodeLevel,
 				currentLevel: SlowmodeLevel,
 			];
 
 			/** A user has downgraded the slowmode level in a channel. */
 			slowmodeDowngrade: [
-				user: Logos.User,
-				channel: Logos.Channel,
+				user: Rost.User,
+				channel: Rost.Channel,
 				previousLevel: SlowmodeLevel,
 				currentLevel: SlowmodeLevel,
 			];

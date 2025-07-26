@@ -1,5 +1,5 @@
-import type { Client } from "logos/client";
-import { type HashableMessageContents, NoticeService } from "logos/services/notices/service";
+import type { Client } from "rost/client";
+import { type HashableMessageContents, NoticeService } from "rost/services/notices/service";
 
 class InformationNoticeService extends NoticeService<{ type: "information" }> {
 	constructor(client: Client, { guildId }: { guildId: bigint }) {
@@ -7,7 +7,10 @@ class InformationNoticeService extends NoticeService<{ type: "information" }> {
 	}
 
 	generateNotice(): HashableMessageContents | undefined {
-		const strings = constants.contexts.rules({ localise: this.client.localise, locale: this.guildLocale });
+		const strings = constants.contexts.rules({
+			localise: this.client.localise,
+			locale: this.guildLocale,
+		});
 		return {
 			embeds: [
 				{

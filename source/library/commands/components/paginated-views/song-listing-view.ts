@@ -1,20 +1,20 @@
-import type { Client } from "logos/client";
-import { PaginatedView, type View } from "logos/commands/components/paginated-views/paginated-view";
-import type { SongListing } from "logos/services/music";
+import type { Client } from "rost/client";
+import { PaginatedView, type View } from "rost/commands/components/paginated-views/paginated-view";
+import type { SongListing } from "rost/services/music";
 
 class SongListingView extends PaginatedView<SongListing> {
 	readonly #title: string;
 
 	constructor(
 		client: Client,
-		{ interaction, title, listings }: { interaction: Logos.Interaction; title: string; listings: SongListing[] },
+		{ interaction, title, listings }: { interaction: Rost.Interaction; title: string; listings: SongListing[] },
 	) {
 		super(client, { interaction, elements: listings, showable: true });
 
 		this.#title = title;
 	}
 
-	build(interaction: Logos.Interaction, page: SongListing[], pageIndex: number): View {
+	build(interaction: Rost.Interaction, page: SongListing[], pageIndex: number): View {
 		if (page.length === 0) {
 			const strings = constants.contexts.listEmpty({
 				localise: this.client.localise,

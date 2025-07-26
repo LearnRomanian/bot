@@ -1,0 +1,14 @@
+{
+  "interactions.continuedOnNextPage": "Wordt vervolgd op de volgende pagina...",
+  "interactions.page": "Pagina",
+  "interactions.invalidUser.title": "Ongeldige gebruiker",
+  "interactions.invalidUser.description": "De opgegeven gebruiker is ongeldig.",
+  "interactions.rateLimited.description.tooManyUses": "Je hebt dit commando te vaak ({times}) gebruikt in een te korte tijdspanne.",
+  "interactions.rateLimited.description.cannotUseAgainUntil": "Je zult het commando opnieuw kunnen gebruiken {relative_timestamp}.",
+  "interactions.show": "Bericht in chat weergeven",
+  "interactions.show.sureToShow.yes": "Ja, toon het",
+  "interactions.show.sureToShow.no": "Nee, toon het niet",
+  "interactions.show.sureToShow.description": "Weet je zeker dat je het bericht in de chat wilt weergeven?",
+  "interactions.show.sureToShow.title": "Zeker tonen?",
+  "interactions.thinking": "Rost is aan het denken..."
+}

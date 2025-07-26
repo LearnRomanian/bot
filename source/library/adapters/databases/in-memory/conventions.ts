@@ -1,7 +1,7 @@
-import type { Collection } from "logos:constants/database";
-import { DocumentConventions } from "logos/adapters/databases/adapter";
-import type { InMemoryDocumentMetadata } from "logos/adapters/databases/in-memory/document";
-import type { IdentifierDataOrMetadata, Model } from "logos/models/model";
+import type { Collection } from "rost:constants/database";
+import { DocumentConventions } from "rost/adapters/databases/adapter";
+import type { InMemoryDocumentMetadata } from "rost/adapters/databases/in-memory/document";
+import type { IdentifierDataOrMetadata, Model } from "rost/models/model";
 
 class InMemoryDocumentConventions extends DocumentConventions<InMemoryDocumentMetadata> {
 	get id(): string {

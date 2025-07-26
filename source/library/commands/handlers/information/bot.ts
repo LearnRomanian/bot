@@ -1,20 +1,25 @@
-import { list } from "logos:constants/formatting";
-import type { Client } from "logos/client";
+import { list } from "rost:constants/formatting";
+import type { Client } from "rost/client";
 
-async function handleDisplayBotInformation(client: Client, interaction: Logos.Interaction): Promise<void> {
+async function handleDisplayBotInformation(client: Client, interaction: Rost.Interaction): Promise<void> {
 	const botUser = client.entities.users.get(client.bot.id);
 	if (botUser === undefined) {
+		return;
+	}
+
+	const guild = client.entities.guilds.get(interaction.guildId);
+	if (guild === undefined) {
 		return;
 	}
 
 	const strings = constants.contexts.botInformation({ localise: client.localise, locale: interaction.displayLocale });
 
 	const featuresFormatted = list([
-		`${constants.emojis.commands.information.bot.features.definitions} ${strings.function.features.definitions}`,
-		`${constants.emojis.commands.information.bot.features.translations} ${strings.function.features.translations}`,
-		`${constants.emojis.commands.information.bot.features.games} ${strings.function.features.games}`,
-		`${constants.emojis.commands.information.bot.features.messages} ${strings.function.features.messages}`,
-		`${constants.emojis.commands.information.bot.features.guides} ${strings.function.features.guides}`,
+		`${constants.emojis.commands.information.bot.features.information} ${strings.function.features.information}`,
+		`${constants.emojis.commands.information.bot.features.moderation} ${strings.function.features.moderation}`,
+		`${constants.emojis.commands.information.bot.features.roles} ${strings.function.features.roles}`,
+		`${constants.emojis.commands.information.bot.features.music} ${strings.function.features.music}`,
+		`${constants.emojis.commands.information.bot.features.social} ${strings.function.features.social}`,
 	]);
 
 	client
@@ -33,15 +38,11 @@ async function handleDisplayBotInformation(client: Client, interaction: Logos.In
 						fields: [
 							{
 								name: `${constants.emojis.commands.information.bot.features.bot} ${strings.concept.title}`,
-								value: strings.concept.description,
+								value: strings.concept.description({ server_name: guild.name }),
 							},
 							{
 								name: `${constants.emojis.commands.information.bot.features.function} ${strings.function.title}`,
 								value: `${strings.function.description}\n${featuresFormatted}`,
-							},
-							{
-								name: `${constants.emojis.commands.information.bot.features.languages} ${strings.languages.title}`,
-								value: strings.languages.description,
 							},
 						],
 					},

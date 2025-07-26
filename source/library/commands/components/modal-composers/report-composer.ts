@@ -1,9 +1,9 @@
-import { trim } from "logos:constants/formatting";
-import { type Modal, ModalComposer } from "logos/commands/components/modal-composers/modal-composer";
-import type { ReportFormData } from "logos/models/documents/report";
+import { trim } from "rost:constants/formatting";
+import { type Modal, ModalComposer } from "rost/commands/components/modal-composers/modal-composer";
+import type { ReportFormData } from "rost/models/documents/report";
 
 class ReportComposer extends ModalComposer<ReportFormData, never> {
-	buildModal(submission: Logos.Interaction, { formData }: { formData: ReportFormData }): Modal<ReportFormData> {
+	buildModal(submission: Rost.Interaction, { formData }: { formData: ReportFormData }): Modal<ReportFormData> {
 		const strings = constants.contexts.reportModal({
 			localise: this.client.localise,
 			locale: submission.locale,

@@ -1,9 +1,9 @@
-type AutocompleteInteraction = (Discord.Interaction | Logos.Interaction) & {
+type AutocompleteInteraction = (Discord.Interaction | Rost.Interaction) & {
 	type: Discord.InteractionTypes.ApplicationCommandAutocomplete;
 };
 
 function isAutocomplete(
-	interaction: Omit<Discord.Interaction, "bot"> | Logos.Interaction,
+	interaction: Omit<Discord.Interaction, "bot"> | Rost.Interaction,
 ): interaction is AutocompleteInteraction {
 	return interaction.type === Discord.InteractionTypes.ApplicationCommandAutocomplete;
 }

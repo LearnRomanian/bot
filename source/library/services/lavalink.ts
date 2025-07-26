@@ -1,6 +1,6 @@
-import type { Client } from "logos/client";
-import { Collector } from "logos/collectors";
-import { GlobalService } from "logos/services/service";
+import type { Client } from "rost/client";
+import { Collector } from "rost/collectors";
+import { GlobalService } from "rost/services/service";
 import * as shoukaku from "shoukaku";
 
 class ClientConnector extends shoukaku.Connector {

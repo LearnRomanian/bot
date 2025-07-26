@@ -1,10 +1,10 @@
-import type { Collection } from "logos:constants/database";
-import { DocumentQuery } from "logos/adapters/databases/adapter";
-import { MongoDBDocumentConventions } from "logos/adapters/databases/mongodb/conventions";
-import type { MongoDBDocument } from "logos/adapters/databases/mongodb/document";
-import type { MongoDBDocumentSession } from "logos/adapters/databases/mongodb/session";
-import type { Model } from "logos/models/model";
+import type { Collection } from "rost:constants/database";
 import type mongodb from "mongodb";
+import { DocumentQuery } from "rost/adapters/databases/adapter";
+import { MongoDBDocumentConventions } from "rost/adapters/databases/mongodb/conventions";
+import type { MongoDBDocument } from "rost/adapters/databases/mongodb/document";
+import type { MongoDBDocumentSession } from "rost/adapters/databases/mongodb/session";
+import type { Model } from "rost/models/model";
 
 class MongoDBDocumentQuery<M extends Model> extends DocumentQuery<M> {
 	readonly #mongoDatabase: mongodb.Db;

@@ -1,4 +1,4 @@
-import directories from "logos:constants/directories";
+import directories from "rost:constants/directories";
 
 export default Object.freeze({
 	stdout: {

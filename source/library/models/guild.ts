@@ -1,9 +1,8 @@
-import type { Client } from "logos/client";
+import type { Client } from "rost/client";
 // biome-ignore lint/nursery/noExportedImports: The re-export of `RateLimit` is okay for now.
-import type { FeatureManagement, GuildDocument, RateLimit } from "logos/models/documents/guild";
-import { GuildStatistics } from "logos/models/guild-statistics";
-import { type CreateModelOptions, GuildModel, type IdentifierData, Model } from "logos/models/model";
-import type { DatabaseStore } from "logos/stores/database";
+import type { FeatureManagement, GuildDocument, RateLimit } from "rost/models/documents/guild";
+import { type CreateModelOptions, GuildModel, type IdentifierData, Model } from "rost/models/model";
+import type { DatabaseStore } from "rost/stores/database";
 
 type CreateGuildOptions = CreateModelOptions<Guild, GuildDocument>;
 
@@ -17,16 +16,11 @@ class Guild extends GuildModel {
 
 	constructor(
 		database: DatabaseStore,
-		{ createdAt, isNative, languages, enabledFeatures, journalling, features, ...data }: CreateGuildOptions,
+		{ createdAt, enabledFeatures, journalling, features, ...data }: CreateGuildOptions,
 	) {
 		super(database, data, { collection: "Guilds" });
 
 		this.createdAt = createdAt ?? Date.now();
-		this.languages = languages ?? {
-			localisation: constants.defaults.LOCALISATION_LANGUAGE,
-			target: constants.defaults.LEARNING_LANGUAGE,
-			feature: constants.defaults.FEATURE_LANGUAGE,
-		};
 		this.enabledFeatures = enabledFeatures ?? {
 			journalling: false,
 			notices: false,
@@ -34,17 +28,8 @@ class Guild extends GuildModel {
 			resourceNotices: false,
 			roleNotices: false,
 			welcomeNotices: false,
-			answers: false,
-			corrections: false,
-			cefr: false,
-			game: false,
 			resources: false,
-			translate: false,
-			word: false,
-			wordSigils: false,
-			context: false,
 			targetOnly: false,
-			roleLanguages: false,
 			alerts: false,
 			policy: false,
 			rules: false,
@@ -79,7 +64,6 @@ class Guild extends GuildModel {
 			praises: false,
 		};
 		this.features = features ?? {};
-		this.isNative = isNative ?? false;
 	}
 
 	static async get(client: Client, data: IdentifierData<Guild>): Promise<Guild | undefined> {
@@ -97,8 +81,6 @@ class Guild extends GuildModel {
 		const guildDocument = await client.database.withSession((session) => {
 			return session.set(new Guild(client.database, data));
 		});
-
-		await GuildStatistics.getOrCreate(client, { guildId: guildDocument.id.toString() });
 
 		return guildDocument;
 	}

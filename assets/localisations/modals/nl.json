@@ -1,0 +1,19 @@
+{
+  "verification.title": "Verificatievragen",
+  "verification.fields.reason": "Wat is jouw reden om {language} te leren?",
+  "verification.fields.aim": "How will you benefit from becoming a member?",
+  "verification.fields.whereFound": "Waar heb je de server gevonden?",
+  "report.title": "Gebruikersrapport",
+  "report.fields.reason": "Wat is de reden voor het rapport?",
+  "report.fields.users": "Gebruikers om te rapporteren",
+  "report.fields.link": "Link naar het bericht voor context",
+  "suggestion.title": "Suggestie",
+  "suggestion.fields.suggestion": "Wat is je suggestie?",
+  "prompts.continue": "Doorgaan",
+  "prompts.cancel": "Annuleren",
+  "prompts.stay": "Teruggaan",
+  "prompts.leave": "Verlaten",
+  "resource.title": "Bron",
+  "resource.fields.resource": "Welke bron wil je indienen?",
+  "form.failedToSubmit.title": "Er ging iets mis"
+}

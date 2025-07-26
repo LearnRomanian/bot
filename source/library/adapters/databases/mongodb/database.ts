@@ -1,13 +1,13 @@
-import type { Collection } from "logos:constants/database";
-import type { Environment } from "logos:core/loaders/environment";
-import { DatabaseAdapter, type DocumentConventions } from "logos/adapters/databases/adapter";
-import { MongoDBDocumentConventions } from "logos/adapters/databases/mongodb/conventions";
-import type { MongoDBDocumentMetadata } from "logos/adapters/databases/mongodb/document";
-import { MongoDBDocumentSession } from "logos/adapters/databases/mongodb/session";
-import type { IdentifierDataOrMetadata, Model } from "logos/models/model";
-import type { DatabaseStore } from "logos/stores/database";
+import type { Collection } from "rost:constants/database";
+import type { Environment } from "rost:core/loaders/environment";
 import mongodb from "mongodb";
 import type pino from "pino";
+import { DatabaseAdapter, type DocumentConventions } from "rost/adapters/databases/adapter";
+import { MongoDBDocumentConventions } from "rost/adapters/databases/mongodb/conventions";
+import type { MongoDBDocumentMetadata } from "rost/adapters/databases/mongodb/document";
+import { MongoDBDocumentSession } from "rost/adapters/databases/mongodb/session";
+import type { IdentifierDataOrMetadata, Model } from "rost/models/model";
+import type { DatabaseStore } from "rost/stores/database";
 
 class MongoDBAdapter extends DatabaseAdapter {
 	readonly #mongoClient: mongodb.MongoClient;
@@ -46,7 +46,7 @@ class MongoDBAdapter extends DatabaseAdapter {
 			environment.mongodbDatabase === undefined
 		) {
 			log.error(
-				"One or more of `MONGODB_HOST`, `MONGODB_PORT` or `MONGODB_DATABASE` have not been provided. Logos will run in memory.",
+				"One or more of `MONGODB_HOST`, `MONGODB_PORT` or `MONGODB_DATABASE` have not been provided. Rost will run in memory.",
 			);
 			return undefined;
 		}

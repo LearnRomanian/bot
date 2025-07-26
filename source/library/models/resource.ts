@@ -1,13 +1,13 @@
-import type { Client } from "logos/client";
-import type { ResourceDocument } from "logos/models/documents/resource";
+import type { Client } from "rost/client";
+import type { ResourceDocument } from "rost/models/documents/resource";
 import {
 	type ClientOrDatabaseStore,
 	type CreateModelOptions,
 	type IdentifierData,
 	Model,
 	ResourceModel,
-} from "logos/models/model";
-import type { DatabaseStore } from "logos/stores/database";
+} from "rost/models/model";
+import type { DatabaseStore } from "rost/stores/database";
 
 type CreateResourceOptions = CreateModelOptions<Resource, ResourceDocument, "formData">;
 

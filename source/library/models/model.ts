@@ -1,10 +1,10 @@
-import { type Collection, isValidCollection } from "logos:constants/database";
-import { capitalise, decapitalise } from "logos:constants/formatting";
-import { timeStructToMilliseconds } from "logos:constants/time";
-import type { DocumentConventions } from "logos/adapters/databases/adapter";
-import type { Client } from "logos/client";
-import type { RateLimit } from "logos/models/guild";
-import type { DatabaseStore } from "logos/stores/database";
+import { type Collection, isValidCollection } from "rost:constants/database";
+import { capitalise, decapitalise } from "rost:constants/formatting";
+import { timeStructToMilliseconds } from "rost:constants/time";
+import type { DocumentConventions } from "rost/adapters/databases/adapter";
+import type { Client } from "rost/client";
+import type { RateLimit } from "rost/models/guild";
+import type { DatabaseStore } from "rost/stores/database";
 
 type ClientOrDatabaseStore = Client | DatabaseStore;
 type ModelConstructor = { new (database: DatabaseStore, data: any): Model };
@@ -80,7 +80,7 @@ abstract class Model<Generic extends { collection: Collection; idParts: readonly
 		const [collectionCamelcase, ...data] = id.split(constants.special.database.separator) as [string, string[]];
 		const collection = capitalise(collectionCamelcase);
 		if (!isValidCollection(collection)) {
-			throw new Error(`Collection "${collectionCamelcase}" encoded in ID "${id}" is unknown.`);
+			throw new Error(`Collection '${collectionCamelcase}' encoded in ID '${id}' is unknown.`);
 		}
 
 		return [collection, data as IdentifierParts<M>];
@@ -175,7 +175,6 @@ abstract class Model<Generic extends { collection: Collection; idParts: readonly
 const DatabaseMetadataModel = Model<{ collection: "DatabaseMetadata"; idParts: [] }>;
 const EntryRequestModel = Model<{ collection: "EntryRequests"; idParts: ["guildId", "authorId"] }>;
 const GuildModel = Model<{ collection: "Guilds"; idParts: ["guildId"] }>;
-const GuildStatisticsModel = Model<{ collection: "GuildStatistics"; idParts: ["guildId"] }>;
 const PraiseModel = Model<{ collection: "Praises"; idParts: ["guildId", "authorId", "targetId", "createdAt"] }>;
 const ReportModel = Model<{ collection: "Reports"; idParts: ["guildId", "authorId", "createdAt"] }>;
 const ResourceModel = Model<{ collection: "Resources"; idParts: ["guildId", "authorId", "createdAt"] }>;
@@ -197,7 +196,6 @@ export {
 	DatabaseMetadataModel,
 	EntryRequestModel,
 	GuildModel,
-	GuildStatisticsModel,
 	PraiseModel,
 	ReportModel,
 	ResourceModel,
